@@ -1,0 +1,17 @@
+[PrefixDeclaration]
+:		http://isagog.com/ontologies/civil_registry#
+dc:		http://purl.org/dc/elements/1.1/
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+top:		http://isagog.com/ontologies/top.owl/1.0#
+xml:		http://www.w3.org/XML/1998/namespace
+xsd:		http://www.w3.org/2001/XMLSchema#
+obda:		https://w3id.org/obda/vocabulary#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+time:		http://isagog.com/ontologies/time/1.0#
+descr:		http://isagog.com/ontologies/descriptions.owl/1.0#
+places:		http://isagog.com/ontologies/places/1.0#
+
+[MappingDeclaration] @collection [[
+]]
+

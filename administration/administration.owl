@@ -1,0 +1,189 @@
+Prefix: : <http://www.isagog.com/ontologies/administration.owl#>
+Prefix: dc: <http://purl.org/dc/elements/1.1/>
+Prefix: obda: <https://w3id.org/obda/vocabulary#>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+
+Ontology: <http://www.isagog.com/ontologies/administration.owl>
+<http://www.isagog.com/ontologies/administration.owl/1.0/>
+Import: <http://isagog.com/ontologies/organization.owl/1.0>
+Import: <http://www.isagog.com/ontologies/documents.owl/1.0>
+
+Annotations: 
+    dc:creator "Guido Vetere",
+    <http://purl.org/dc/terms/license> "creative commons attribution",
+    <http://purl.org/dc/terms/license> "https://creativecommons.org/licenses/by/4.0/
+Isagog. S.r.l.",
+    rdfs:comment "An ontology of administrative structures, documents, acts",
+    rdfs:label "Isagog Administration Ontology"
+
+AnnotationProperty: <http://purl.org/dc/terms/license>
+
+    
+AnnotationProperty: dc:creator
+
+    
+AnnotationProperty: rdfs:comment
+
+    
+AnnotationProperty: rdfs:label
+
+    
+Datatype: rdf:PlainLiteral
+
+    
+ObjectProperty: <http://isagog.com/ontologies/organization.owl#membership>
+
+    
+ObjectProperty: <http://isagog.com/ontologies/organization.owl#role>
+
+    
+ObjectProperty: <http://isagog.com/ontologies/top.owl#carrier>
+
+    
+ObjectProperty: <http://isagog.com/ontologies/top.owl#experience>
+
+    
+ObjectProperty: <http://isagog.com/ontologies/top.owl#initiator>
+
+    
+ObjectProperty: <http://isagog.com/ontologies/top.owl#instance>
+
+    
+ObjectProperty: <http://isagog.com/ontologies/top.owl#phase>
+
+    
+ObjectProperty: <http://isagog.com/ontologies/top.owl#type>
+
+    
+ObjectProperty: <http://www.isagog.com/ontologies/documents.owl#referenced-by>
+
+    
+ObjectProperty: emitter
+
+    Annotations: 
+        rdfs:comment "For an act, the promulgating organization"
+    
+    SubPropertyOf: 
+        <http://isagog.com/ontologies/top.owl#carrier>
+    
+    Domain: 
+        AdministrativeAct
+    
+    Range: 
+        <http://isagog.com/ontologies/organization.owl#Organization>
+    
+    
+ObjectProperty: responsible
+
+    SubPropertyOf: 
+        <http://isagog.com/ontologies/top.owl#initiator>
+    
+    Domain: 
+        AdministrativeAct
+    
+    Range: 
+        PublicOfficier
+    
+    
+Class: <http://isagog.com/ontologies/organization.owl#Membership>
+
+    
+Class: <http://isagog.com/ontologies/organization.owl#MembershipType>
+
+    
+Class: <http://isagog.com/ontologies/organization.owl#Organization>
+
+    
+Class: <http://isagog.com/ontologies/organization.owl#OrganizationRole>
+
+    
+Class: <http://isagog.com/ontologies/organization.owl#OrganizationStatus>
+
+    
+Class: <http://isagog.com/ontologies/top.owl#Action>
+
+    
+Class: <http://isagog.com/ontologies/top.owl#Course>
+
+    
+Class: <http://isagog.com/ontologies/top.owl#Human>
+
+    
+Class: <http://www.isagog.com/ontologies/documents.owl#Document>
+
+    
+Class: Administration
+
+    SubClassOf: 
+        <http://isagog.com/ontologies/organization.owl#Organization>,
+        <http://isagog.com/ontologies/organization.owl#membership> some AdministrationTenure
+    
+    
+Class: AdministrationRole
+
+    Annotations: 
+        rdfs:label "Ruolo amministrativo"@it,
+        rdfs:comment "Rome in an administration"@it
+    
+    SubClassOf: 
+        <http://isagog.com/ontologies/organization.owl#MembershipType>
+    
+    
+Class: AdministrationTenure
+
+    Annotations: 
+        rdfs:label "Status organizzativo",
+        rdfs:comment "The tenure of an administrative role"
+    
+    SubClassOf: 
+        <http://isagog.com/ontologies/organization.owl#Membership>,
+        <http://isagog.com/ontologies/organization.owl#role> only AdministrationRole
+    
+    
+Class: AdministrativeAct
+
+    Annotations: 
+        rdfs:comment "Administrative act",
+        rdfs:label "Atto amministrativo"@it
+    
+    SubClassOf: 
+        <http://isagog.com/ontologies/top.owl#Course>,
+        emitter some Administration,
+        responsible some PublicOfficier,
+        <http://www.isagog.com/ontologies/documents.owl#referenced-by> some AdministrativeDocument,
+        <http://isagog.com/ontologies/top.owl#phase> only AdministrativeStatus
+    
+    
+Class: AdministrativeDocument
+
+    SubClassOf: 
+        <http://www.isagog.com/ontologies/documents.owl#Document>
+    
+    
+Class: AdministrativeStatus
+
+    SubClassOf: 
+        <http://isagog.com/ontologies/organization.owl#OrganizationStatus>
+    
+    
+Class: Certification
+
+    SubClassOf: 
+        AdministrativeDocument
+    
+    
+Class: PublicOfficier
+
+    EquivalentTo: 
+        <http://isagog.com/ontologies/top.owl#experience> some AdministrationTenure
+    
+    SubClassOf: 
+        <http://isagog.com/ontologies/top.owl#Human>
+    
+    

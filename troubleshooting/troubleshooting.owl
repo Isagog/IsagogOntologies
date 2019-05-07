@@ -1,0 +1,438 @@
+Prefix: : <http://isagog.com/ontologies/troubleshooting.owl#>
+Prefix: dc: <http://purl.org/dc/elements/1.1/>
+Prefix: descriptions: <http://isagog.com/ontologies/descriptions.owl#>
+Prefix: events: <http://isagog.com/ontologies/events.owl#>
+Prefix: language: <http://isagog.com/ontologies/language.owl#>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix: top: <http://isagog.com/ontologies/top.owl#>
+Prefix: troubleshooting: <http://isagog.com/ontologies/troubleshooting.owl#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+
+Ontology: <http://isagog.com/ontologies/troubleshooting.owl>
+
+Import: <http://isagog.com/ontologies/descriptions.owl>
+Import: <http://isagog.com/ontologies/events.owl>
+Import: <http://isagog.com/ontologies/language.owl>
+
+AnnotationProperty: rdfs:comment
+
+    
+AnnotationProperty: top:linguistic-annotation
+
+    
+AnnotationProperty: top:nominal
+
+    
+AnnotationProperty: troubleshooting:option
+
+    SubPropertyOf: 
+        top:linguistic-annotation
+    
+    
+Datatype: rdf:PlainLiteral
+
+    
+Datatype: xsd:string
+
+    
+ObjectProperty: descriptions:constraint
+
+    
+ObjectProperty: descriptions:core-slot
+
+    
+ObjectProperty: descriptions:domain-topic
+
+    
+ObjectProperty: descriptions:referent
+
+    
+ObjectProperty: descriptions:referring
+
+    
+ObjectProperty: top:generalization
+
+    
+ObjectProperty: troubleshooting:affirmative
+
+    SubPropertyOf: 
+        troubleshooting:check
+    
+    Range: 
+        troubleshooting:YesNoQuestion
+    
+    
+ObjectProperty: troubleshooting:check
+
+    SubPropertyOf: 
+        descriptions:referring
+    
+    Range: 
+        troubleshooting:Check
+    
+    InverseOf: 
+        troubleshooting:checkedBy
+    
+    
+ObjectProperty: troubleshooting:checkedBy
+
+    SubPropertyOf: 
+        descriptions:referent
+    
+    InverseOf: 
+        troubleshooting:check,
+        troubleshooting:solve
+    
+    
+ObjectProperty: troubleshooting:negative
+
+    SubPropertyOf: 
+        troubleshooting:check
+    
+    Range: 
+        troubleshooting:YesNoQuestion
+    
+    
+ObjectProperty: troubleshooting:select
+
+    SubPropertyOf: 
+        troubleshooting:check
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:select-1
+
+    SubPropertyOf: 
+        troubleshooting:select
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:select-2
+
+    SubPropertyOf: 
+        troubleshooting:select
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:select-3
+
+    SubPropertyOf: 
+        troubleshooting:select
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:select-4
+
+    SubPropertyOf: 
+        troubleshooting:select
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:select-5
+
+    SubPropertyOf: 
+        troubleshooting:select
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:select-6
+
+    SubPropertyOf: 
+        troubleshooting:select
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:select-7
+
+    SubPropertyOf: 
+        troubleshooting:select
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:select-8
+
+    SubPropertyOf: 
+        troubleshooting:select
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:select-9
+
+    SubPropertyOf: 
+        troubleshooting:select
+    
+    Range: 
+        troubleshooting:CheckListQuestion
+    
+    
+ObjectProperty: troubleshooting:solve
+
+    SubPropertyOf: 
+        descriptions:referring
+    
+    Range: 
+        troubleshooting:Guideline
+    
+    InverseOf: 
+        troubleshooting:checkedBy
+    
+    
+DataProperty: descriptions:headline
+
+    
+DataProperty: top:identifier
+
+    
+DataProperty: top:realization
+
+    
+DataProperty: troubleshooting:choice
+
+    SubPropertyOf: 
+        top:realization
+    
+    
+DataProperty: troubleshooting:choice-1
+
+    SubPropertyOf: 
+        troubleshooting:choice
+    
+    
+DataProperty: troubleshooting:choice-2
+
+    SubPropertyOf: 
+        troubleshooting:choice
+    
+    
+DataProperty: troubleshooting:choice-3
+
+    SubPropertyOf: 
+        troubleshooting:choice
+    
+    
+DataProperty: troubleshooting:choice-4
+
+    SubPropertyOf: 
+        troubleshooting:choice
+    
+    
+DataProperty: troubleshooting:choice-5
+
+    SubPropertyOf: 
+        troubleshooting:choice
+    
+    
+DataProperty: troubleshooting:choice-6
+
+    SubPropertyOf: 
+        troubleshooting:choice
+    
+    
+DataProperty: troubleshooting:choice-7
+
+    SubPropertyOf: 
+        troubleshooting:choice
+    
+    
+DataProperty: troubleshooting:choice-8
+
+    SubPropertyOf: 
+        troubleshooting:choice
+    
+    
+DataProperty: troubleshooting:choice-9
+
+    SubPropertyOf: 
+        troubleshooting:choice
+    
+    
+DataProperty: troubleshooting:question
+
+    SubPropertyOf: 
+        top:realization
+    
+    
+Class: descriptions:BinaryRelationship
+
+    SubClassOf: 
+        descriptions:Relationship
+    
+    
+Class: descriptions:Frame
+
+    
+Class: descriptions:Procedure
+
+    SubClassOf: 
+        descriptions:headline min 1 xsd:string
+    
+    
+Class: descriptions:Question
+
+    
+Class: descriptions:Relationship
+
+    
+Class: descriptions:Role
+
+    
+Class: descriptions:Situation
+
+    Annotations: 
+        rdfs:comment "Description of a state-of-affairs"
+    
+    
+Class: descriptions:Topic
+
+    
+Class: language:Assertion
+
+    
+Class: language:Question
+
+    
+Class: language:Request
+
+    
+Class: top:Classifier
+
+    
+Class: top:Information
+
+    
+Class: troubleshooting:Check
+
+    Annotations: 
+        rdfs:comment "A question to ascertain a state of affair"
+    
+    SubClassOf: 
+        descriptions:Question,
+        troubleshooting:question some xsd:string
+    
+    
+Class: troubleshooting:CheckListQuestion
+
+    SubClassOf: 
+        troubleshooting:Check,
+        troubleshooting:choice some xsd:string
+    
+    
+Class: troubleshooting:Guideline
+
+    Annotations: 
+        rdfs:comment "Description of a procedure that drives a course of operations"
+    
+    SubClassOf: 
+        descriptions:Procedure
+    
+    
+Class: troubleshooting:HowToQuestion
+
+    SubClassOf: 
+        language:Question,
+        descriptions:referent some descriptions:Procedure
+    
+    
+Class: troubleshooting:InformationRequest
+
+    SubClassOf: 
+        language:Request,
+        descriptions:referent some top:Information
+    
+    
+Class: troubleshooting:OpenQuestion
+
+    SubClassOf: 
+        troubleshooting:Check
+    
+    
+Class: troubleshooting:ProblemStatement
+
+    SubClassOf: 
+        language:Assertion,
+        descriptions:referent some descriptions:Situation
+    
+    
+Class: troubleshooting:YesNoQuestion
+
+    SubClassOf: 
+        troubleshooting:Check
+    
+    
+Individual: events:Failure
+
+    Annotations: 
+        rdfs:comment "reified class"
+    
+    Types: 
+        top:Classifier
+    
+    
+Individual: events:cause
+
+    Annotations: 
+        rdfs:comment "reified property"
+    
+    Types: 
+        descriptions:BinaryRelationship
+    
+    
+Individual: language:DialogFrame
+
+    
+Individual: troubleshooting:CauseRole
+
+    Types: 
+        descriptions:Role
+    
+    Facts:  
+     descriptions:constraint  events:cause,
+     descriptions:domain-topic  troubleshooting:ProblemTopic,
+     top:identifier  "cause"
+    
+    
+Individual: troubleshooting:ProblemFrame
+
+    Types: 
+        descriptions:Frame
+    
+    Facts:  
+     descriptions:core-slot  troubleshooting:CauseRole,
+     descriptions:core-slot  troubleshooting:ProblemTopic,
+     top:generalization  language:DialogFrame,
+     top:identifier  "ProblemFrame"
+    
+    
+Individual: troubleshooting:ProblemTopic
+
+    Types: 
+        descriptions:Topic
+    
+    Facts:  
+     descriptions:constraint  events:Failure,
+     top:identifier  "problem"
+    
+    

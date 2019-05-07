@@ -1,0 +1,392 @@
+Prefix: : <http://isagog.com/ontologies/infotech.owl#>
+Prefix: dc: <http://purl.org/dc/elements/1.1/>
+Prefix: descr: <http://isagog.com/ontologies/descriptions.owl#>
+Prefix: events: <http://isagog.com/ontologies/events.owl#>
+Prefix: infotech: <http://isagog.com/ontologies/infotech.owl#>
+Prefix: lang: <http://isagog.com/ontologies/language.owl#>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix: top: <http://isagog.com/ontologies/top.owl#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+
+Ontology: <http://isagog.com/ontologies/infotech.owl>
+
+Import: <http://isagog.com/ontologies/descriptions.owl>
+Import: <http://isagog.com/ontologies/events.owl>
+Import: <http://isagog.com/ontologies/language.owl>
+Import: <http://isagog.com/ontologies/top.owl>
+
+Annotations: 
+    rdfs:comment "An IT ontology"
+
+AnnotationProperty: lang:category
+
+    
+AnnotationProperty: lang:description
+
+    
+AnnotationProperty: lang:keyword
+
+    
+AnnotationProperty: lang:noun
+
+    
+AnnotationProperty: rdfs:comment
+
+    
+AnnotationProperty: rdfs:label
+
+    
+AnnotationProperty: rdfs:seeAlso
+
+    
+AnnotationProperty: top:denotator
+
+    
+AnnotationProperty: top:description
+
+    
+AnnotationProperty: top:nominal
+
+    
+AnnotationProperty: top:role
+
+    
+AnnotationProperty: top:verbal
+
+    
+Datatype: rdf:PlainLiteral
+
+    
+ObjectProperty: descr:referent
+
+    
+ObjectProperty: infotech:facet
+
+    SubPropertyOf: 
+        top:abstract-part
+    
+    Domain: 
+        infotech:Record
+    
+    Range: 
+        top:Information
+    
+    
+ObjectProperty: infotech:host
+
+    Annotations: 
+        top:description "For a system, the role of hosting a service",
+        top:denotator "host"
+    
+    SubPropertyOf: 
+        top:carrier
+    
+    Domain: 
+        infotech:Process
+    
+    Range: 
+        infotech:System
+    
+    
+ObjectProperty: infotech:service
+
+    SubPropertyOf: 
+        top:experience
+    
+    Domain: 
+        top:Human
+    
+    Range: 
+        infotech:Service
+    
+    
+ObjectProperty: infotech:specification
+
+    SubPropertyOf: 
+        top:type
+    
+    Domain: 
+        infotech:Process
+    
+    Range: 
+        infotech:Software
+    
+    
+ObjectProperty: infotech:user
+
+    SubPropertyOf: 
+        top:experiencer
+    
+    Domain: 
+        infotech:Service
+    
+    Range: 
+        top:Human
+    
+    
+ObjectProperty: top:abstract-part
+
+    
+ObjectProperty: top:bearer
+
+    SubPropertyOf: 
+        top:dependee
+    
+    Domain: 
+        infotech:ProcessStatus,
+        top:State
+    
+    Range: 
+        infotech:Process
+    
+    
+ObjectProperty: top:begin
+
+    
+ObjectProperty: top:carrier
+
+    
+ObjectProperty: top:concrete-part
+
+    
+ObjectProperty: top:dependee
+
+    
+ObjectProperty: top:end
+
+    
+ObjectProperty: top:experience
+
+    
+ObjectProperty: top:experiencer
+
+    
+ObjectProperty: top:type
+
+    
+DataProperty: top:realization
+
+    
+Class: descr:Situation
+
+    
+Class: events:Failure
+
+    
+Class: infotech:Account
+
+    Annotations: 
+        top:nominal "utenza"@it
+    
+    SubClassOf: 
+        infotech:Record,
+        descr:referent exactly 1 infotech:System,
+        descr:referent exactly 1 infotech:User,
+        infotech:facet exactly 1 infotech:Password,
+        infotech:facet exactly 1 infotech:UserID
+    
+    
+Class: infotech:Application
+
+    Annotations: 
+        top:nominal "application"@en,
+        lang:description "A process which runs on a personal device",
+        top:nominal "applicazione"@it
+    
+    SubClassOf: 
+        infotech:Process
+    
+    
+Class: infotech:Battery
+
+    SubClassOf: 
+        infotech:Component
+    
+    
+Class: infotech:Component
+
+    SubClassOf: 
+        top:Artifact
+    
+    
+Class: infotech:Hang
+
+    Annotations: 
+        rdfs:comment "For a process (bearer) to stay unresponsive"@en
+    
+    SubClassOf: 
+        infotech:ProcessStatus
+    
+    
+Class: infotech:Mobile
+
+    SubClassOf: 
+        infotech:System,
+        top:concrete-part exactly 1 infotech:Battery
+    
+    
+Class: infotech:Password
+
+    Annotations: 
+        top:nominal "password"@it,
+        top:nominal "password"@en
+    
+    SubClassOf: 
+        top:Information
+    
+    
+Class: infotech:Printer
+
+    Annotations: 
+        top:nominal "printer"@en,
+        top:nominal "stampante"@it
+    
+    SubClassOf: 
+        infotech:System
+    
+    
+Class: infotech:ProblemStatement
+
+    SubClassOf: 
+        descr:Situation
+    
+    
+Class: infotech:Process
+
+    SubClassOf: 
+        top:Course,
+        infotech:host exactly 1 infotech:System,
+        infotech:specification exactly 1 infotech:Software
+    
+    
+Class: infotech:ProcessStatus
+
+    SubClassOf: 
+        top:State,
+        top:bearer exactly 1 infotech:Process
+    
+    
+Class: infotech:Record
+
+    Annotations: 
+        rdfs:comment "Possibly structured information item"@en
+    
+    SubClassOf: 
+        top:Information,
+        infotech:facet some top:Information
+    
+    
+Class: infotech:Run
+
+    Annotations: 
+        rdfs:comment "For a process (bearer), to be up and work as expected"@en
+    
+    SubClassOf: 
+        infotech:ProcessStatus
+    
+    
+Class: infotech:Server
+
+    Annotations: 
+        top:nominal "server"@en
+    
+    SubClassOf: 
+        infotech:System
+    
+    
+Class: infotech:Service
+
+    Annotations: 
+        top:nominal "servizio"@it,
+        top:nominal "service"@en
+    
+    SubClassOf: 
+        infotech:Process,
+        infotech:host only infotech:Server
+    
+    
+Class: infotech:Software
+
+    SubClassOf: 
+        top:Information
+    
+    
+Class: infotech:Stop
+
+    Annotations: 
+        top:verbal "bloccare, bloccarsi, fermarsi"@it,
+        rdfs:comment "The change of a process, from working to not working"
+    
+    SubClassOf: 
+        top:Change,
+        top:begin only infotech:Run,
+        top:end only infotech:Hang
+    
+    
+Class: infotech:System
+
+    SubClassOf: 
+        top:Artifact,
+        top:concrete-part some infotech:Component
+    
+    
+Class: infotech:SystemFailure
+
+    Annotations: 
+        top:nominal "problema"@it,
+        rdfs:comment "a failure of a system, which is preceived as a problem by the user"
+    
+    SubClassOf: 
+        events:Failure,
+        top:carrier some infotech:System
+    
+    
+Class: infotech:SystemStatus
+
+    SubClassOf: 
+        top:State,
+        top:carrier exactly 1 infotech:System
+    
+    
+Class: infotech:User
+
+    Annotations: 
+        top:nominal "user"@en,
+        top:nominal "utente"@it
+    
+    EquivalentTo: 
+        infotech:service some infotech:Service
+    
+    SubClassOf: 
+        top:Human
+    
+    
+Class: infotech:UserID
+
+    SubClassOf: 
+        top:Information
+    
+    
+Class: top:Artifact
+
+    
+Class: top:Change
+
+    
+Class: top:Course
+
+    
+Class: top:Human
+
+    
+Class: top:Information
+
+    
+Class: top:State
+
+    

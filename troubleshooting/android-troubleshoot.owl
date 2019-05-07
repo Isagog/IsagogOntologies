@@ -1,0 +1,511 @@
+Prefix: android-troubleshoot: <http://isagog.com/ontologies/android-troubleshoot.owl#>
+Prefix: dc: <http://purl.org/dc/elements/1.1/>
+Prefix: descriptions: <http://isagog.com/ontologies/descriptions.owl#>
+Prefix: events: <http://isagog.com/ontologies/events.owl#>
+Prefix: infotech: <http://isagog.com/ontologies/infotech.owl#>
+Prefix: language: <http://isagog.com/ontologies/language.owl#>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix: top: <http://isagog.com/ontologies/top.owl#>
+Prefix: troubleshooting: <http://isagog.com/ontologies/troubleshooting.owl#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+
+Ontology: <http://isagog.com/ontologies/android-troubleshoot.owl>
+
+Import: <http://isagog.com/ontologies/infotech.owl>
+Import: <http://isagog.com/ontologies/troubleshooting.owl>
+
+AnnotationProperty: rdfs:comment
+
+    
+AnnotationProperty: top:description
+
+    
+AnnotationProperty: top:nominal
+
+    
+Datatype: rdf:PlainLiteral
+
+    
+ObjectProperty: events:cause
+
+    
+ObjectProperty: top:carrier
+
+    
+ObjectProperty: troubleshooting:check
+
+    
+ObjectProperty: troubleshooting:solve
+
+    
+DataProperty: descriptions:headline
+
+    
+DataProperty: descriptions:link
+
+    
+DataProperty: top:realization
+
+    
+DataProperty: troubleshooting:choice-1
+
+    
+DataProperty: troubleshooting:choice-2
+
+    
+DataProperty: troubleshooting:question
+
+    
+Class: android-troubleshoot:AndroidApp
+
+    SubClassOf: 
+        infotech:Application
+    
+    
+Class: android-troubleshoot:AndroidDevice
+
+    SubClassOf: 
+        infotech:Mobile
+    
+    
+Class: android-troubleshoot:AndroidOccurrent
+
+    EquivalentTo: 
+        top:carrier some android-troubleshoot:AndroidDevice
+    
+    SubClassOf: 
+        top:Occurrent
+    
+    
+Class: android-troubleshoot:AppInstallationFailure
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "è impossibile installare nuove applicazioni"@it,
+        top:nominal "impossibilità di installare applicazioni"@it
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemFailure,
+        events:cause some android-troubleshoot:StorageMemoryExausted
+    
+    
+Class: android-troubleshoot:BatteryInefficiency
+
+    Annotations: 
+        top:description "la batteria si esaurisce subito"@it,
+        rdfs:comment "reified class",
+        top:nominal "batteria inefficiente"@it
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemFailure,
+        events:cause some 
+            (android-troubleshoot:ConnectedOnMobile or android-troubleshoot:ManyRunningApps),
+        troubleshooting:check value android-troubleshoot:BatteryCheck
+    
+    
+Class: android-troubleshoot:ConnectedOnMobile
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "Il dispositivo è connesso tramite rete mobile"@it,
+        top:nominal "connessione su rete mobile"@it
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemStatus,
+        troubleshooting:check value android-troubleshoot:CheckConnectionOnMobile
+    
+    
+Class: android-troubleshoot:ConnectedOnWiFi
+
+    Annotations: 
+        top:nominal "connessione su rete wi-fi"@it,
+        top:description "il dispositivo è connesso tramite wi-fi"@it,
+        rdfs:comment "reified class"
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemStatus,
+        troubleshooting:check value android-troubleshoot:CheckConnectionOnWiFi
+    
+    
+Class: android-troubleshoot:ConnectionLatency
+
+    Annotations: 
+        top:nominal "lentezza della connessione"@it,
+        rdfs:comment "reified class",
+        top:description "la connessione è lenta"@it
+    
+    SubClassOf: 
+        infotech:SystemFailure,
+        events:cause some 
+            (android-troubleshoot:MobileNetworkLatency or android-troubleshoot:WiFiLatency)
+    
+    
+Class: android-troubleshoot:DeviceLatency
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "Il dispositivo è lento"@it,
+        top:nominal "lentezza del dispositivo"@it
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemFailure,
+        events:cause some 
+            (android-troubleshoot:ManyRunningApps or android-troubleshoot:StorageMemoryExausted or (android-troubleshoot:ConnectedOnMobile
+             and android-troubleshoot:MobileNetworkLatency) or (android-troubleshoot:ConnectedOnWiFi
+             and android-troubleshoot:WiFiLatency))
+    
+    
+Class: android-troubleshoot:ManyRunningApps
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "elevato numero di applicazioni in background"@it,
+        top:nominal "applicazioni in background"@it
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemStatus,
+        troubleshooting:check value android-troubleshoot:BackgroundAppCheck,
+        troubleshooting:solve value android-troubleshoot:BackgroundAppPruning
+    
+    
+Class: android-troubleshoot:MobileNetworkLatency
+
+    Annotations: 
+        top:nominal "lentezza della connessione su rete mobile"@it,
+        rdfs:comment "reified class",
+        top:description "la connessione sulla rete mobile è lenta"@it
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemFailure
+    
+    
+Class: android-troubleshoot:RamExausted
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "la RAM è esaurita"@it,
+        top:nominal "RAM insufficiente"@it
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemStatus,
+        events:cause some android-troubleshoot:ManyRunningApps
+    
+    
+Class: android-troubleshoot:StorageMemoryExausted
+
+    Annotations: 
+        top:description "la memoria di massa è esaurita"@it,
+        top:nominal "esaurimento della memoria di massa"@it,
+        rdfs:comment "reified class"
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemStatus,
+        troubleshooting:check value android-troubleshoot:StorageCheck,
+        troubleshooting:solve value android-troubleshoot:FreeStorage
+    
+    
+Class: android-troubleshoot:UnexpectedAppTermination
+
+    Annotations: 
+        top:description "chiusura inattesa delle applicazioni"@it,
+        rdfs:comment "reified class",
+        top:nominal "chiusura inattesa delle applicazioni"@it
+    
+    SubClassOf: 
+        infotech:SystemFailure,
+        events:cause some android-troubleshoot:StorageMemoryExausted
+    
+    
+Class: android-troubleshoot:WiFiLatency
+
+    Annotations: 
+        top:description "la connessione wi-fi è lenta"@it,
+        rdfs:comment "reified class",
+        top:nominal "lentezza della connessione wi-fi"@it
+    
+    SubClassOf: 
+        android-troubleshoot:AndroidOccurrent,
+        infotech:SystemFailure
+    
+    
+Class: descriptions:Classifier
+
+    
+Class: infotech:Application
+
+    
+Class: infotech:Mobile
+
+    
+Class: infotech:SystemFailure
+
+    
+Class: infotech:SystemStatus
+
+    
+Class: top:Change
+
+    
+Class: top:Occurrent
+
+    
+Class: troubleshooting:Check
+
+    
+Class: troubleshooting:CheckListQuestion
+
+    
+Class: troubleshooting:Guideline
+
+    
+Class: troubleshooting:YesNoQuestion
+
+    
+Individual: android-troubleshoot:AppInstallationFailure
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "è impossibile installare nuove applicazioni"@it,
+        top:nominal "impossibilità di installare applicazioni"@it
+    
+    
+Individual: android-troubleshoot:BackgroundAppCheck
+
+    Types: 
+        troubleshooting:YesNoQuestion
+    
+    Facts:  
+     top:realization  "vi sono molte applicazioni aperte in background?"@it
+    
+    
+Individual: android-troubleshoot:BackgroundAppPruning
+
+    Annotations: 
+        top:description "procedura per la chiusura delle applicazioni in background"@it
+    
+    Types: 
+        troubleshooting:Guideline
+    
+    Facts:  
+     descriptions:headline  "chiudere le applicazioni in background"@it,
+     descriptions:link  "https://www.androidpit.it/bloccare-applicazioni-background"@it
+    
+    
+Individual: android-troubleshoot:BatteryCheck
+
+    Types: 
+        troubleshooting:YesNoQuestion
+    
+    Facts:  
+     top:realization  "la batteria si esaurisce rapidamente?"@it
+    
+    
+Individual: android-troubleshoot:BatteryInefficiency
+
+    Annotations: 
+        top:description "la batteria si esaurisce subito"@it,
+        rdfs:comment "reified class",
+        top:nominal "batteria inefficiente"@it
+    
+    Facts:  
+     troubleshooting:check  android-troubleshoot:BatteryCheck
+    
+    
+Individual: android-troubleshoot:CheckConnectionOnMobile
+
+    Types: 
+        troubleshooting:Check
+    
+    Facts:  
+     troubleshooting:question  "il dispositivo è connesso sulla rete mobile?"@it
+    
+    
+Individual: android-troubleshoot:CheckConnectionOnWiFi
+
+    Types: 
+        troubleshooting:Check
+    
+    Facts:  
+     troubleshooting:question  "il dispositivo è connesso sulla Wi-Fi?"@it
+    
+    
+Individual: android-troubleshoot:ConnectedOnMobile
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "Il dispositivo è connesso tramite rete mobile"@it,
+        top:nominal "connessione su rete mobile"@it
+    
+    Types: 
+        descriptions:Classifier
+    
+    
+Individual: android-troubleshoot:ConnectedOnWiFi
+
+    Annotations: 
+        top:nominal "connessione su rete wi-fi"@it,
+        top:description "il dispositivo è connesso tramite wi-fi"@it,
+        rdfs:comment "reified class"
+   Types: 
+        descriptions:Classifier
+     
+    
+Individual: android-troubleshoot:ConnectionLatency
+
+    Annotations: 
+        top:nominal "lentezza della connessione"@it,
+        rdfs:comment "reified class",
+        top:description "la connessione è lenta"@it
+    Types: 
+        descriptions:Classifier
+    
+    
+Individual: android-troubleshoot:ConnectionStatusCheck
+
+    Types: 
+        troubleshooting:CheckListQuestion
+    
+    Facts:  
+     troubleshooting:choice-1  "rete mobile"@it,
+     troubleshooting:choice-2  "wi-fi"@it,
+     troubleshooting:question  "su quale rete è connesso il dispositivo?"@it
+    
+    
+Individual: android-troubleshoot:DeviceLatency
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "Il dispositivo è lento"@it,
+        top:nominal "lentezza del dispositivo"@it
+   Types: 
+        descriptions:Classifier
+     
+    
+Individual: android-troubleshoot:FreeRAM
+
+    Annotations: 
+        top:description "procedura per la liberazione della RAM"
+    
+    Types: 
+        troubleshooting:Guideline
+    
+    Facts:  
+     descriptions:headline  "liberare la memoria ad accesso casuale (RAM)"@it
+    
+    
+Individual: android-troubleshoot:FreeStorage
+
+    Annotations: 
+        top:description "procedura per la liberazione della memoria di massa"
+    
+    Types: 
+        troubleshooting:Guideline
+    
+    Facts:  
+     descriptions:headline  "liberare la memoria di massa"@it
+    
+    
+Individual: android-troubleshoot:ManyRunningApps
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "elevato numero di applicazioni in background"@it,
+        top:nominal "applicazioni in background"@it
+    
+    Facts:  
+     troubleshooting:check  android-troubleshoot:BackgroundAppCheck,
+     troubleshooting:solve  android-troubleshoot:BackgroundAppPruning
+   Types: 
+        descriptions:Classifier
+     
+    
+Individual: android-troubleshoot:MobileDisconnection
+
+    Annotations: 
+        top:description "procedura per la disconnessione dalla rete mobile"
+    
+    Types: 
+        troubleshooting:Guideline
+    
+    
+Individual: android-troubleshoot:MobileNetworkLatency
+
+    Annotations: 
+        top:nominal "lentezza della connessione su rete mobile"@it,
+        rdfs:comment "reified class",
+        top:description "la connessione sulla rete mobile è lenta"@it
+  Types: 
+        descriptions:Classifier
+      
+    
+Individual: android-troubleshoot:RamExausted
+
+    Annotations: 
+        rdfs:comment "reified class",
+        top:description "la RAM è esaurita"@it,
+        top:nominal "RAM insufficiente"@it
+   Types: 
+        descriptions:Classifier
+     
+    
+Individual: android-troubleshoot:StorageCheck
+
+    Annotations: 
+        rdfs:comment "A procedure to check the amount of available storage"
+    
+    Types: 
+        troubleshooting:YesNoQuestion
+    
+    Facts:  
+     top:realization  "la memoria di massa è esaurita?"@it
+    
+    
+Individual: android-troubleshoot:StorageMemoryExausted
+
+    Annotations: 
+        top:description "la memoria di massa è esaurita"@it,
+        top:nominal "esaurimento della memoria di massa"@it,
+        rdfs:comment "reified class"
+    
+    Facts:  
+     troubleshooting:check  android-troubleshoot:StorageCheck,
+     troubleshooting:solve  android-troubleshoot:FreeStorage
+  Types: 
+        descriptions:Classifier
+      
+    
+Individual: android-troubleshoot:UnexpectedAppTermination
+
+    Annotations: 
+        top:description "chiusura inattesa delle applicazioni"@it,
+        rdfs:comment "reified class",
+        top:nominal "chiusura inattesa delle applicazioni"@it
+    
+   Types: 
+        descriptions:Classifier
+     
+Individual: android-troubleshoot:WiFiLatency
+
+    Annotations: 
+        top:description "la connessione wi-fi è lenta"@it,
+        rdfs:comment "reified class",
+        top:nominal "lentezza della connessione wi-fi"@it
+    
+	Types: 
+        descriptions:Classifier
+    
+    
