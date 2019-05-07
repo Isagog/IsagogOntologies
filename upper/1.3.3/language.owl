@@ -52,6 +52,11 @@ by Isagog S.r.l.""" ;
             rdfs:subPropertyOf :linguistic-annotation .
 
 
+###  http://isagog.com/ontologies/language.owl#intent
+:intent rdf:type owl:AnnotationProperty ;
+        rdfs:subPropertyOf :linguistic-annotation .
+
+
 ###  http://isagog.com/ontologies/language.owl#lemma
 :lemma rdf:type owl:AnnotationProperty ;
        rdfs:comment "Base form of a lexeme" ;
@@ -657,8 +662,8 @@ top:Sign rdf:type owl:Class .
 #    Annotations
 #################################################################
 
-:Sentence rdfs:comment "Reified class" ,
-                       "A sequence of words" .
+:Sentence rdfs:comment "A sequence of words" ,
+                       "Reified class" .
 
 
 :definition rdfs:comment "A descriptive sentence" .
