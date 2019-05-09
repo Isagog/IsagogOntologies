@@ -9,14 +9,14 @@
 @prefix descr: <http://isagog.com/ontologies/descriptions.owl#> .
 
 <http://isagog.com/ontologies/language.owl> a owl:Ontology ;
-	owl:versionIRI <http://isagog.com/ontologies/language.owl/1.1> ;
+	owl:versionIRI <http://isagog.com/ontologies/language.owl/1.1.2> ;
 	owl:imports <http://isagog.com/ontologies/descriptions.owl> ;
 	top:authors "Guido Vetere" ;
 	top:copyright """(CC BY-NC 4.0)
 https://creativecommons.org/licenses/by-nc/4.0/
 by Isagog S.r.l.""" ;
 	rdfs:comment "Isagog Language Ontology" ;
-	owl:versionInfo "1.1.1" .
+	owl:versionInfo "1.1.2" .
 # 
 # 
 # #################################################################

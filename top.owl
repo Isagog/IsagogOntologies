@@ -9,13 +9,13 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://isagog.com/ontologies/top.owl> a owl:Ontology ;
-	owl:versionIRI <http://isagog.com/ontologies/top.owl/1.1> ;
+	owl:versionIRI <http://isagog.com/ontologies/top.owl/1.1.2> ;
 	dc:creator "Guido Vetere" ;
 	dct:license """https://creativecommons.org/licenses/by/4.0/
 Isagog S.r.l.""" ;
 	rdfs:comment "An introductory upper-level ontology. At the basis of this ontology there are few primitive formal and material notions, including space, time, parthood, dependency, and agentivity." ;
 	rdfs:label "Isagog Upper Ontology" ;
-	owl:versionInfo "1.1.3" .
+	owl:versionInfo "1.1.2" .
 # 
 # 
 # #################################################################

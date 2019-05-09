@@ -6,7 +6,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://isagog.com/ontologies/infosystems.owl> a owl:Ontology ;
-	owl:versionIRI <http://isagog.com/ontologies/infosystems.owl/1.1> ;
+	owl:versionIRI <http://isagog.com/ontologies/infosystems.owl/1.1.2> ;
 	owl:imports <http://isagog.com/ontologies/descriptions.owl> .
 # 
 # 

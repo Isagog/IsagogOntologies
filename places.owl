@@ -9,13 +9,13 @@
 @base <http://isagog.com/ontologies/places> .
 
 <http://isagog.com/ontologies/places> rdf:type owl:Ontology ;
-                                       owl:versionIRI <http://isagog.com/ontologies/places/1.1.3> ;
+                                       owl:versionIRI <http://isagog.com/ontologies/places/1.1.2> ;
                                        owl:imports <http://isagog.com/ontologies/top.owl> ;
                                        dc:creator "Guido Vetere" ;
                                        <http://purl.org/dc/terms/license> "https://creativecommons.org/licenses/by/4.0/" ;
                                        rdfs:comment "An ontology of places" ;
                                        rdfs:label "Isagog Places Ontology" ;
-                                       owl:versionInfo "1.1.3" .
+                                       owl:versionInfo "1.1.2" .
 
 #################################################################
 #    Annotation properties

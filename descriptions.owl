@@ -9,7 +9,7 @@
 @prefix events: <http://isagog.com/ontologies/events.owl#> .
 
 <http://isagog.com/ontologies/descriptions.owl> a owl:Ontology ;
-	owl:versionIRI <http://isagog.com/ontologies/descriptions.owl/1.1> ;
+	owl:versionIRI <http://isagog.com/ontologies/descriptions.owl/1.1.2> ;
 	owl:imports <http://isagog.com/ontologies/top.owl> ;
 	dc:creator "Guido Vetere" ;
 	<http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by/4.0/
