@@ -9,14 +9,14 @@
 @prefix events: <http://isagog.com/ontologies/events.owl#> .
 
 <http://isagog.com/ontologies/descriptions.owl> a owl:Ontology ;
-	owl:versionIRI <http://isagog.com/ontologies/descriptions.owl/1.1.2> ;
+	owl:versionIRI <http://isagog.com/ontologies/descriptions.owl/1.1.3> ;
 	owl:imports <http://isagog.com/ontologies/top.owl> ;
 	dc:creator "Guido Vetere" ;
 	<http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by/4.0/
 Isagog S.r.l.""" ;
 	rdfs:comment "An ontology of descriptions" ;
 	rdfs:label "Isagog Description Ontology" ;
-	owl:versionInfo "1.1.2" .
+	owl:versionInfo "1.1.3" .
 # 
 # 
 # #################################################################
