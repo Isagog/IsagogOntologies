@@ -10,14 +10,14 @@
 @base <http://isagog.com/ontologies/language.owl> .
 
 <http://isagog.com/ontologies/language.owl> rdf:type owl:Ontology ;
-                                             owl:versionIRI <http://isagog.com/ontologies/language.owl/1.1.3> ;
+                                             owl:versionIRI <http://isagog.com/ontologies/language.owl/1.1.4> ;
                                              owl:imports <http://isagog.com/ontologies/descriptions.owl> ;
-                                             top:authors "Guido Vetere" ;
-                                             top:copyright """(CC BY-NC 4.0)
+                                             dc:creator "Guido Vetere" ;
+                                             <http://purl.org/dc/terms/license> """(CC BY-NC 4.0)
 https://creativecommons.org/licenses/by-nc/4.0/
 by Isagog S.r.l.""" ;
                                              rdfs:comment "Isagog Language Ontology" ;
-                                             owl:versionInfo "1.1.3" .
+                                             owl:versionInfo "1.1.4" .
 
 #################################################################
 #    Annotation properties
@@ -318,7 +318,7 @@ descr:Topic rdf:type owl:Class .
 
 ###  http://isagog.com/ontologies/language.owl#Lexeme
 :Lexeme rdf:type owl:Class ;
-        rdfs:subClassOf top:Classifier ,
+        rdfs:subClassOf top:Denotator ,
                         [ rdf:type owl:Restriction ;
                           owl:onProperty :form ;
                           owl:someValuesFrom :Word
@@ -370,7 +370,7 @@ descr:Topic rdf:type owl:Class .
 
 ###  http://isagog.com/ontologies/language.owl#LinguisticType
 :LinguisticType rdf:type owl:Class ;
-                rdfs:subClassOf top:Classifier ,
+                rdfs:subClassOf top:Denotator ,
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty top:instance ;
                                   owl:allValuesFrom :LinguisticToken
@@ -662,8 +662,8 @@ top:Sign rdf:type owl:Class .
 #    Annotations
 #################################################################
 
-:Sentence rdfs:comment "A sequence of words" ,
-                       "Reified class" .
+:Sentence rdfs:comment "Reified class" ,
+                       "A sequence of words" .
 
 
 :definition rdfs:comment "A descriptive sentence" .

@@ -10,13 +10,13 @@
 @base <http://isagog.com/ontologies/top.owl> .
 
 <http://isagog.com/ontologies/top.owl> rdf:type owl:Ontology ;
-                                        owl:versionIRI <http://isagog.com/ontologies/top.owl/1.1.3> ;
+                                        owl:versionIRI <http://isagog.com/ontologies/top.owl/1.1.4> ;
                                         dc:creator "Guido Vetere" ;
                                         dct:license """https://creativecommons.org/licenses/by/4.0/
 Isagog S.r.l.""" ;
                                         rdfs:comment "An introductory upper-level ontology. At the basis of this ontology there are few primitive formal and material notions, including space, time, parthood, dependency, and agentivity." ;
                                         rdfs:label "Isagog Upper Ontology" ;
-                                        owl:versionInfo "1.1.3" .
+                                        owl:versionInfo "1.1.4" .
 
 #################################################################
 #    Annotation properties
@@ -183,14 +183,14 @@ owl:real rdf:type rdfs:Datatype .
 :denoted rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :logically-related ;
          owl:inverseOf :denoter ;
-         rdfs:domain :Denotator ;
+         rdfs:domain :AbstractEntity ;
          rdfs:comment "Relationship of a denotation with the entity it denotes" .
 
 
 ###  http://isagog.com/ontologies/top.owl#denoter
 :denoter rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :logically-related ;
-         rdfs:range :Denotator .
+         rdfs:range :AbstractEntity .
 
 
 ###  http://isagog.com/ontologies/top.owl#dependee
@@ -242,8 +242,8 @@ owl:real rdf:type rdfs:Datatype .
 :generalization rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf :logically-related ;
                 owl:inverseOf :specialization ;
-                rdfs:domain :Classifier ;
-                rdfs:range :Classifier ;
+                rdfs:domain :Denotator ;
+                rdfs:range :Denotator ;
                 rdfs:comment "Informatiive generalization" .
 
 
@@ -283,9 +283,8 @@ owl:real rdf:type rdfs:Datatype .
 :instance rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :denoted ;
           owl:inverseOf :type ;
-          rdfs:domain :Classifier ;
-          rdfs:comment "Instantiation relation. Abstract entities that have instances are known as Classifiers" ;
-          rdfs:seeAlso :Classifier .
+          rdfs:domain :Denotator ;
+          rdfs:comment "Instantiation relation. Abstract entities that have instances are known as Classifiers" .
 
 
 ###  http://isagog.com/ontologies/top.owl#location
@@ -403,8 +402,8 @@ owl:real rdf:type rdfs:Datatype .
 ###  http://isagog.com/ontologies/top.owl#specialization
 :specialization rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf :logically-related ;
-                rdfs:domain :Classifier ;
-                rdfs:range :Classifier ;
+                rdfs:domain :Denotator ;
+                rdfs:range :Denotator ;
                 rdfs:comment "Informative specialization" .
 
 
@@ -476,7 +475,7 @@ owl:real rdf:type rdfs:Datatype .
 ###  http://isagog.com/ontologies/top.owl#type
 :type rdf:type owl:ObjectProperty ;
       rdfs:subPropertyOf :denoter ;
-      rdfs:range :Classifier ;
+      rdfs:range :Denotator ;
       rdfs:comment "Typological characterization" .
 
 
@@ -550,16 +549,16 @@ owl:topObjectProperty rdf:type owl:ObjectProperty .
                                                            ]
                                                          ) ;
                                       rdf:type owl:Class
-                                    ] .
+                                    ] ;
+                    owl:disjointWith :PhysicalCollection .
 
 
 ###  http://isagog.com/ontologies/top.owl#AbstractEntity
 :AbstractEntity rdf:type owl:Class ;
                 rdfs:subClassOf :Continuant ;
                 owl:disjointWith :PhysicalEntity ;
-                rdfs:comment "Continuant entities not located in space insofar they are dependent on mental states, social relations, linguistic interactions, etc (aka social objects)" ;
-                rdfs:seeAlso "DOLCE (ExtendedDnS) social-object" ,
-                             "DOLCE abstract" .
+                rdfs:comment "Continuant entities not located in space" ;
+                rdfs:seeAlso "DOLCE abstract" .
 
 
 ###  http://isagog.com/ontologies/top.owl#AbstractQuality
@@ -627,7 +626,8 @@ owl:topObjectProperty rdf:type owl:ObjectProperty .
 :Classifier rdf:type owl:Class ;
             rdfs:subClassOf :Denotator ;
             rdfs:comment "Denotation of classes of entities, based on an explicit membership criterion, e.g. Linnaean 'taxa'" ;
-            rdfs:seeAlso "SKOS Concept" .
+            rdfs:seeAlso "SKOS Concept" ;
+            owl:deprecated "It is hard to judge whether a denotation criterion is really explicit, and to what extent" .
 
 
 ###  http://isagog.com/ontologies/top.owl#Collection
@@ -665,7 +665,9 @@ owl:topObjectProperty rdf:type owl:ObjectProperty .
                              owl:onProperty :denoted ;
                              owl:someValuesFrom :Entity
                            ] ;
-           rdfs:comment "Social object which potentially denotes some entity" .
+           rdfs:comment "Abstract object which denotes some entity, based on social conventions, thus dependent on mental states, social relations, linguistic interactions (aka Social Object)" ;
+           rdfs:seeAlso "DOLCE (ExtendedDnS) social-object" ,
+                        "SKOS Concept" .
 
 
 ###  http://isagog.com/ontologies/top.owl#Entity
@@ -731,8 +733,8 @@ owl:topObjectProperty rdf:type owl:ObjectProperty .
 
 ###  http://isagog.com/ontologies/top.owl#Number
 :Number rdf:type owl:Class ;
-        rdfs:subClassOf :Denotator ;
-        rdfs:comment "Denotator of a number" .
+        rdfs:subClassOf :Region ;
+        rdfs:comment "Numeric region" .
 
 
 ###  http://isagog.com/ontologies/top.owl#Object
@@ -775,15 +777,15 @@ owl:topObjectProperty rdf:type owl:ObjectProperty .
 
 ###  http://isagog.com/ontologies/top.owl#PhysicalCollection
 :PhysicalCollection rdf:type owl:Class ;
-                    rdfs:subClassOf :PhysicalEntity ,
-                                    [ owl:intersectionOf ( :Collection
-                                                           [ rdf:type owl:Restriction ;
-                                                             owl:onProperty :element ;
-                                                             owl:allValuesFrom :PhysicalEntity
-                                                           ]
-                                                         ) ;
-                                      rdf:type owl:Class
-                                    ] .
+                    owl:equivalentClass [ owl:intersectionOf ( :Collection
+                                                               [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty :element ;
+                                                                 owl:allValuesFrom :PhysicalEntity
+                                                               ]
+                                                             ) ;
+                                          rdf:type owl:Class
+                                        ] ;
+                    rdfs:subClassOf :PhysicalEntity .
 
 
 ###  http://isagog.com/ontologies/top.owl#PhysicalEntity
@@ -799,7 +801,11 @@ owl:topObjectProperty rdf:type owl:ObjectProperty .
 
 ###  http://isagog.com/ontologies/top.owl#Quality
 :Quality rdf:type owl:Class ;
-         rdfs:subClassOf :Continuant ;
+         rdfs:subClassOf :Continuant ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :qualified ;
+                           owl:someValuesFrom :Entity
+                         ] ;
          rdfs:comment "Existentially dependent continuants, such as features, shapes, colors" ;
          rdfs:seeAlso "DOLCE quality" .
 

@@ -8,14 +8,14 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://isagog.com/ontologies/organization.owl> a owl:Ontology ;
-	owl:versionIRI <http://isagog.com/ontologies/organization.owl/1.1.3> ;
+	owl:versionIRI <http://isagog.com/ontologies/organization.owl/1.1.4> ;
 	owl:imports <http://isagog.com/ontologies/descriptions.owl> ;
 	dc:creator "Guido Vetere" ;
 	dct:license <https://creativecommons.org/licenses/by/4.0/> ;
 	rdfs:comment "An ontology for organizations, including roles, branches, procedures, etc" ;
 	rdfs:label "Isagog Organization Ontology" ;
 	rdfs:seeAlso "http://www.w3.org/ns/org" ;
-	owl:versionInfo "1.1.3" .
+	owl:versionInfo "1.1.4" .
 # 
 # 
 # #################################################################
@@ -235,7 +235,7 @@ rdf:PlainLiteral a rdfs:Datatype .
 # http://isagog.com/ontologies/organization.owl#ActivityType
 
 :ActivityType a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Classifier> ;
+	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Denotator> ;
 	rdfs:label "Tipo di attivita'"@it ;
 	rdfs:seeAlso <https://w3id.org/italia/onto/COV#ActivityType> .
 # 
@@ -260,14 +260,14 @@ _:genid1 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#LegalStatus
 
 :LegalStatus a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Classifier> ;
+	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Denotator> ;
 	rdfs:label "Forma giuridica"@it ;
 	rdfs:seeAlso <https://w3id.org/italia/onto/COV#LegalStatus> .
 # 
 # http://isagog.com/ontologies/organization.owl#Membership
 
 :Membership a owl:Class ;
-	rdfs:subClassOf :OrganizationStatus , _:genid2 .
+	rdfs:subClassOf <http://isagog.com/ontologies/descriptions.owl#Relationship> , :OrganizationStatus , _:genid2 .
 
 _:genid2 a owl:Restriction ;
 	owl:onProperty <http://isagog.com/ontologies/top.owl#participant> ;
@@ -278,48 +278,35 @@ _:genid2 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#Organization
 
 :Organization a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Collection> , <http://isagog.com/ontologies/top.owl#Denotator> , _:genid3 .
+	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#AbstractEntity> , _:genid3 .
 
-_:genid3 a owl:Restriction ;
-	owl:onProperty :role-feature ;
-	owl:someValuesFrom :OrganizationRole .
+_:genid3 owl:intersectionOf _:genid7 .
 
-:Organization rdfs:subClassOf _:genid4 .
-
-_:genid4 a owl:Restriction ;
-	owl:onProperty <http://isagog.com/ontologies/top.owl#denoted> ;
-	owl:allValuesFrom _:genid5 .
-
-_:genid5 owl:intersectionOf _:genid9 .
-
-_:genid9 a rdf:List ;
+_:genid7 a rdf:List ;
 	rdf:first <http://isagog.com/ontologies/top.owl#Collection> ;
-	rdf:rest _:genid6 .
+	rdf:rest _:genid4 .
 
-_:genid6 a rdf:List ;
-	rdf:first _:genid7 .
+_:genid4 a rdf:List ;
+	rdf:first _:genid5 .
 
-_:genid7 a owl:Restriction ;
+_:genid5 a owl:Restriction ;
 	owl:onProperty <http://isagog.com/ontologies/top.owl#element> ;
-	owl:allValuesFrom _:genid8 .
+	owl:allValuesFrom _:genid6 .
+
+_:genid6 a owl:Restriction ;
+	owl:onProperty <http://isagog.com/ontologies/top.owl#denoted> ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass <http://isagog.com/ontologies/top.owl#Human> .
+
+_:genid4 rdf:rest rdf:nil .
+
+_:genid3 a owl:Class .
+
+:Organization rdfs:subClassOf _:genid8 .
 
 _:genid8 a owl:Restriction ;
-	owl:onProperty <http://isagog.com/ontologies/top.owl#denoted> ;
-	owl:allValuesFrom <http://isagog.com/ontologies/top.owl#Human> .
-
-_:genid6 rdf:rest rdf:nil .
-
-_:genid5 a owl:Class .
-
-:Organization rdfs:subClassOf _:genid10 .
-
-_:genid10 a owl:Restriction ;
-	owl:onProperty <http://isagog.com/ontologies/top.owl#element> ;
-	owl:allValuesFrom _:genid11 .
-
-_:genid11 a owl:Restriction ;
-	owl:onProperty <http://isagog.com/ontologies/top.owl#denoted> ;
-	owl:someValuesFrom <http://isagog.com/ontologies/top.owl#Human> .
+	owl:onProperty :role-feature ;
+	owl:someValuesFrom :OrganizationRole .
 
 :Organization rdfs:comment "A collective human agent ruled by a statute, with purposes, roles and responsibilities"@en , "Associazione di persone governata da uno statuto che definisce scopi, ruoli e resposabilità"@it ;
 	rdfs:label "Organizzazione"@it ;
@@ -328,15 +315,15 @@ _:genid11 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#OrganizationChange
 
 :OrganizationChange a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/descriptions.owl#Procedure> , _:genid12 .
+	rdfs:subClassOf <http://isagog.com/ontologies/descriptions.owl#Procedure> , _:genid9 .
 
-_:genid12 a owl:Restriction ;
+_:genid9 a owl:Restriction ;
 	owl:onProperty <http://isagog.com/ontologies/top.owl#begin> ;
 	owl:allValuesFrom :OrganizationStatus .
 
-:OrganizationChange rdfs:subClassOf _:genid13 .
+:OrganizationChange rdfs:subClassOf _:genid10 .
 
-_:genid13 a owl:Restriction ;
+_:genid10 a owl:Restriction ;
 	owl:onProperty <http://isagog.com/ontologies/top.owl#end> ;
 	owl:allValuesFrom :OrganizationStatus .
 
@@ -346,9 +333,9 @@ _:genid13 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#OrganizationRole
 
 :OrganizationRole a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Denotator> , _:genid14 .
+	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Denotator> , _:genid11 .
 
-_:genid14 a owl:Restriction ;
+_:genid11 a owl:Restriction ;
 	owl:onProperty <http://isagog.com/ontologies/top.owl#denoted> ;
 	owl:allValuesFrom :OrganizationStatus .
 
@@ -357,14 +344,14 @@ _:genid14 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#OrganizationStatus
 
 :OrganizationStatus a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/descriptions.owl#Situation> .
+	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Denotator> .
 # 
 # http://isagog.com/ontologies/organization.owl#OrganizationUnit
 
 :OrganizationUnit a owl:Class ;
-	rdfs:subClassOf :Organization , _:genid15 .
+	rdfs:subClassOf :Organization , _:genid12 .
 
-_:genid15 a owl:Restriction ;
+_:genid12 a owl:Restriction ;
 	owl:onProperty :super-organization ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Organization .
@@ -407,4 +394,4 @@ _:genid15 a owl:Restriction ;
 
 <http://isagog.com/ontologies/top.owl#State> a owl:Class .
 # 
-# Generated by the OWL API (version 4.5.6.2018-09-06T00:27:41Z) https://github.com/owlcs/owlapi
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
