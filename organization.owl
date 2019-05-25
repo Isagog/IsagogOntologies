@@ -374,10 +374,6 @@ _:genid12 a owl:Restriction ;
 
 <http://isagog.com/ontologies/top.owl#Change> a owl:Class .
 # 
-# http://isagog.com/ontologies/top.owl#Classifier
-
-<http://isagog.com/ontologies/top.owl#Classifier> a owl:Class .
-# 
 # http://isagog.com/ontologies/top.owl#Collection
 
 <http://isagog.com/ontologies/top.owl#Collection> a owl:Class .
