@@ -10,14 +10,13 @@
 @base <http://isagog.com/ontologies/descriptions.owl> .
 
 <http://isagog.com/ontologies/descriptions.owl> rdf:type owl:Ontology ;
-                                                 owl:versionIRI <http://isagog.com/ontologies/descriptions.owl/1.1.4> ;
+                                                 owl:versionIRI <http://isagog.com/ontologies/descriptions.owl/1.1.5> ;
                                                  owl:imports <http://isagog.com/ontologies/top.owl> ;
                                                  dc:creator "Guido Vetere" ;
                                                  <http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by/4.0/
 Isagog S.r.l.""" ;
                                                  rdfs:comment "An ontology of descriptions" ;
-                                                 rdfs:label "Isagog Description Ontology" ;
-                                                 owl:versionInfo "1.1.4" .
+                                                 rdfs:label "Isagog Description Ontology".
 
 #################################################################
 #    Annotation properties
@@ -110,7 +109,7 @@ xsd:anyURI rdf:type rdfs:Datatype .
 
 ###  http://isagog.com/ontologies/descriptions.owl#domain
 :domain rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf top:instance .
+        rdfs:subPropertyOf :instance .
 
 
 ###  http://isagog.com/ontologies/descriptions.owl#domain-topic
@@ -142,6 +141,12 @@ xsd:anyURI rdf:type rdfs:Datatype .
       rdfs:subPropertyOf top:informative-part ;
       rdfs:domain :Procedure ;
       rdfs:range :Situation .
+
+
+###  http://isagog.com/ontologies/descriptions.owl#instance
+:instance rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf top:denoted ;
+          rdfs:domain :Classifier .
 
 
 ###  http://isagog.com/ontologies/descriptions.owl#next-info
@@ -183,7 +188,7 @@ xsd:anyURI rdf:type rdfs:Datatype .
 
 ###  http://isagog.com/ontologies/descriptions.owl#range
 :range rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf top:instance .
+       rdfs:subPropertyOf :instance .
 
 
 ###  http://isagog.com/ontologies/descriptions.owl#range-topic
@@ -244,10 +249,6 @@ top:informative-part rdf:type owl:ObjectProperty .
 top:informative-whole rdf:type owl:ObjectProperty .
 
 
-###  http://isagog.com/ontologies/top.owl#instance
-top:instance rdf:type owl:ObjectProperty .
-
-
 ###  http://isagog.com/ontologies/top.owl#logically-related
 top:logically-related rdf:type owl:ObjectProperty .
 
@@ -257,8 +258,7 @@ top:sign rdf:type owl:ObjectProperty .
 
 
 ###  http://isagog.com/ontologies/top.owl#signified
-top:signified rdf:type owl:ObjectProperty ;
-              rdfs:range top:Denotator .
+top:signified rdf:type owl:ObjectProperty .
 
 
 #################################################################

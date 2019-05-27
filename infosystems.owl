@@ -6,13 +6,12 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 <http://isagog.com/ontologies/infosystems.owl> a owl:Ontology ;
-	owl:versionIRI <http://isagog.com/ontologies/infosystems.owl/1.1.4> ;
+	owl:versionIRI <http://isagog.com/ontologies/infosystems.owl/1.1.5> ;
 	owl:imports <http://isagog.com/ontologies/descriptions.owl> ;
 	<http://purl.org/dc/elements/1.1/creator> "Guido Vetere" ;
 	<http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by/4.0/
 Isagog S.r.l.""" ;
-	rdfs:label "Isagog Information Systems Ontology" ;
-	owl:versionInfo "1.1.4" .
+	rdfs:label "Isagog Information Systems Ontology" .
 # 
 # 
 # #################################################################
