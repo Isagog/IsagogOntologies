@@ -212,6 +212,10 @@ _:genid3 a owl:Restriction ;
 
 :MINIMUM a owl:NamedIndividual , :QueryType .
 # 
+# http://isagog.com/ontologies/infosystems.owl#MONEY
+
+:MONEY a owl:NamedIndividual .
+# 
 # http://isagog.com/ontologies/infosystems.owl#NUMBER
 
 :NUMBER a owl:NamedIndividual , :AttributeType .
