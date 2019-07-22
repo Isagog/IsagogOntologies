@@ -15,7 +15,7 @@
 	rdfs:comment "An ontology for organizations, including roles, branches, procedures, etc" ;
 	rdfs:label "Isagog Organization Ontology" ;
 	rdfs:seeAlso "http://www.w3.org/ns/org" .
-#  
+# 
 # 
 # #################################################################
 # #
@@ -266,7 +266,7 @@ _:genid1 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#Membership
 
 :Membership a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/descriptions.owl#Relationship> , :OrganizationStatus , _:genid2 .
+	rdfs:subClassOf :OrganizationStatus , _:genid2 .
 
 _:genid2 a owl:Restriction ;
 	owl:onProperty <http://isagog.com/ontologies/top.owl#participant> ;
@@ -277,33 +277,9 @@ _:genid2 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#Organization
 
 :Organization a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#AbstractEntity> , _:genid3 .
+	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#AbstractCollection> , _:genid3 .
 
-_:genid3 owl:intersectionOf _:genid7 .
-
-_:genid7 a rdf:List ;
-	rdf:first <http://isagog.com/ontologies/top.owl#Collection> ;
-	rdf:rest _:genid4 .
-
-_:genid4 a rdf:List ;
-	rdf:first _:genid5 .
-
-_:genid5 a owl:Restriction ;
-	owl:onProperty <http://isagog.com/ontologies/top.owl#element> ;
-	owl:allValuesFrom _:genid6 .
-
-_:genid6 a owl:Restriction ;
-	owl:onProperty <http://isagog.com/ontologies/top.owl#denoted> ;
-	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onClass <http://isagog.com/ontologies/top.owl#Human> .
-
-_:genid4 rdf:rest rdf:nil .
-
-_:genid3 a owl:Class .
-
-:Organization rdfs:subClassOf _:genid8 .
-
-_:genid8 a owl:Restriction ;
+_:genid3 a owl:Restriction ;
 	owl:onProperty :role-feature ;
 	owl:someValuesFrom :OrganizationRole .
 
@@ -314,15 +290,15 @@ _:genid8 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#OrganizationChange
 
 :OrganizationChange a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/descriptions.owl#Procedure> , _:genid9 .
+	rdfs:subClassOf <http://isagog.com/ontologies/descriptions.owl#Procedure> , _:genid4 .
 
-_:genid9 a owl:Restriction ;
+_:genid4 a owl:Restriction ;
 	owl:onProperty <http://isagog.com/ontologies/top.owl#begin> ;
 	owl:allValuesFrom :OrganizationStatus .
 
-:OrganizationChange rdfs:subClassOf _:genid10 .
+:OrganizationChange rdfs:subClassOf _:genid5 .
 
-_:genid10 a owl:Restriction ;
+_:genid5 a owl:Restriction ;
 	owl:onProperty <http://isagog.com/ontologies/top.owl#end> ;
 	owl:allValuesFrom :OrganizationStatus .
 
@@ -332,9 +308,9 @@ _:genid10 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#OrganizationRole
 
 :OrganizationRole a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Denotator> , _:genid11 .
+	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Denotator> , _:genid6 .
 
-_:genid11 a owl:Restriction ;
+_:genid6 a owl:Restriction ;
 	owl:onProperty <http://isagog.com/ontologies/top.owl#denoted> ;
 	owl:allValuesFrom :OrganizationStatus .
 
@@ -343,14 +319,14 @@ _:genid11 a owl:Restriction ;
 # http://isagog.com/ontologies/organization.owl#OrganizationStatus
 
 :OrganizationStatus a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Denotator> .
+	rdfs:subClassOf <http://isagog.com/ontologies/top.owl#State> .
 # 
 # http://isagog.com/ontologies/organization.owl#OrganizationUnit
 
 :OrganizationUnit a owl:Class ;
-	rdfs:subClassOf :Organization , _:genid12 .
+	rdfs:subClassOf :Organization , _:genid7 .
 
-_:genid12 a owl:Restriction ;
+_:genid7 a owl:Restriction ;
 	owl:onProperty :super-organization ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Organization .
