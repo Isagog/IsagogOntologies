@@ -441,45 +441,39 @@ _:genid10 a owl:Restriction ;
 	owl:onProperty :slot ;
 	owl:someValuesFrom :Slot .
 
-:Frame rdfs:subClassOf _:genid11 .
-
-_:genid11 a owl:Restriction ;
-	owl:onProperty top:element ;
-	owl:allValuesFrom :Slot .
-
 :Frame rdfs:comment "Denotation of collections of interrelated entities.In general, a frame depicts a typical situation. Specifically, here is an ontology pattern, i.e. a 'view' over an ontology, along with a 'higher-order' characterization. A frame type is a set of slots which accommodate distinguished entities (topic slots), roles (relation slots), and values (property slot). A frame instance is a network of related entities which features the pattern the frame depicts." .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Procedure
 
 :Procedure a owl:Class ;
-	rdfs:subClassOf :Description , _:genid12 .
+	rdfs:subClassOf :Description , _:genid11 .
 
-_:genid12 a owl:Restriction ;
+_:genid11 a owl:Restriction ;
 	owl:onProperty :referent ;
 	owl:allValuesFrom top:Course .
 
-:Procedure rdfs:subClassOf _:genid13 .
+:Procedure rdfs:subClassOf _:genid12 .
 
-_:genid13 a owl:Restriction ;
+_:genid12 a owl:Restriction ;
 	owl:onProperty :goal ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Situation .
 
-:Procedure rdfs:subClassOf _:genid14 .
+:Procedure rdfs:subClassOf _:genid13 .
 
-_:genid14 a owl:Restriction ;
+_:genid13 a owl:Restriction ;
 	owl:onProperty :first-step ;
 	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onClass _:genid15 .
+	owl:onClass _:genid14 .
 
-_:genid15 a owl:Class ;
-	owl:unionOf _:genid17 .
-
-_:genid17 a rdf:List ;
-	rdf:first :Alternative ;
-	rdf:rest _:genid16 .
+_:genid14 a owl:Class ;
+	owl:unionOf _:genid16 .
 
 _:genid16 a rdf:List ;
+	rdf:first :Alternative ;
+	rdf:rest _:genid15 .
+
+_:genid15 a rdf:List ;
 	rdf:first :Directive ;
 	rdf:rest rdf:nil .
 
@@ -494,16 +488,16 @@ _:genid16 a rdf:List ;
 # http://isagog.com/ontologies/descriptions.owl#Relationship
 
 :Relationship a owl:Class ;
-	rdfs:subClassOf top:Denotator , _:genid18 .
+	rdfs:subClassOf top:Denotator , _:genid17 .
 
-_:genid18 a owl:Restriction ;
+_:genid17 a owl:Restriction ;
 	owl:onProperty :domain ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass top:Entity .
 
-:Relationship rdfs:subClassOf _:genid19 .
+:Relationship rdfs:subClassOf _:genid18 .
 
-_:genid19 a owl:Restriction ;
+_:genid18 a owl:Restriction ;
 	owl:onProperty :range ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass top:Entity .
@@ -513,9 +507,9 @@ _:genid19 a owl:Restriction ;
 # http://isagog.com/ontologies/descriptions.owl#Role
 
 :Role a owl:Class ;
-	rdfs:subClassOf :Slot , _:genid20 .
+	rdfs:subClassOf :Slot , _:genid19 .
 
-_:genid20 a owl:Restriction ;
+_:genid19 a owl:Restriction ;
 	owl:onProperty :binding ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Relationship .
@@ -525,21 +519,21 @@ _:genid20 a owl:Restriction ;
 # http://isagog.com/ontologies/descriptions.owl#Situation
 
 :Situation a owl:Class ;
-	rdfs:subClassOf :Description , _:genid21 .
+	rdfs:subClassOf :Description , _:genid20 .
 
-_:genid21 a owl:Restriction ;
+_:genid20 a owl:Restriction ;
 	owl:onProperty :referent ;
 	owl:allValuesFrom top:State .
+
+:Situation rdfs:subClassOf _:genid21 .
+
+_:genid21 a owl:Restriction ;
+	owl:onProperty top:initial-time ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
 
 :Situation rdfs:subClassOf _:genid22 .
 
 _:genid22 a owl:Restriction ;
-	owl:onProperty top:initial-time ;
-	owl:cardinality "1"^^xsd:nonNegativeInteger .
-
-:Situation rdfs:subClassOf _:genid23 .
-
-_:genid23 a owl:Restriction ;
 	owl:onProperty top:final-time ;
 	owl:maxCardinality "1"^^xsd:nonNegativeInteger .
 
@@ -548,33 +542,33 @@ _:genid23 a owl:Restriction ;
 # http://isagog.com/ontologies/descriptions.owl#Slot
 
 :Slot a owl:Class ;
-	rdfs:subClassOf top:Denotator , _:genid24 .
+	rdfs:subClassOf top:Denotator , _:genid23 .
 
-_:genid24 a owl:Restriction ;
+_:genid23 a owl:Restriction ;
 	owl:onProperty :binding ;
 	owl:someValuesFrom top:Denotator .
 
-:Slot rdfs:subClassOf _:genid25 .
+:Slot rdfs:subClassOf _:genid24 .
 
-_:genid25 a owl:Restriction ;
+_:genid24 a owl:Restriction ;
 	owl:onProperty :frame ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Frame .
 
-:Slot rdfs:subClassOf _:genid26 .
+:Slot rdfs:subClassOf _:genid25 .
 
-_:genid26 a owl:Restriction ;
+_:genid25 a owl:Restriction ;
 	owl:onProperty :slot-id ;
-	owl:cardinality "1"^^xsd:nonNegativeInteger .
+	owl:maxCardinality "1"^^xsd:nonNegativeInteger .
 
-:Slot rdfs:comment "Part of a Frame" .
+:Slot rdfs:comment "Denotation of reified relationships which are part of some Frame" .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Topic
 
 :Topic a owl:Class ;
-	rdfs:subClassOf :Slot , _:genid27 .
+	rdfs:subClassOf :Slot , _:genid26 .
 
-_:genid27 a owl:Restriction ;
+_:genid26 a owl:Restriction ;
 	owl:onProperty :binding ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Classifier .
@@ -635,18 +629,18 @@ owl:Thing a owl:Class .
 # 
 # 
 
-_:genid28 a owl:AllDisjointClasses ;
-	owl:members _:genid31 .
-
-_:genid31 a rdf:List ;
-	rdf:first :Feature ;
-	rdf:rest _:genid30 .
+_:genid27 a owl:AllDisjointClasses ;
+	owl:members _:genid30 .
 
 _:genid30 a rdf:List ;
-	rdf:first :Role ;
+	rdf:first :Feature ;
 	rdf:rest _:genid29 .
 
 _:genid29 a rdf:List ;
+	rdf:first :Role ;
+	rdf:rest _:genid28 .
+
+_:genid28 a rdf:List ;
 	rdf:first :Topic ;
 	rdf:rest rdf:nil .
 # 
