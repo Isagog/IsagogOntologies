@@ -11,9 +11,10 @@
 <http://isagog.com/ontologies/events.owl> rdf:type owl:Ontology ;
                                            owl:versionIRI <http://isagog.com/ontologies/events.owl/1.2> ;
                                            owl:imports <http://isagog.com/ontologies/top.owl> ;
+                                           top:status "UNDER DEVELOPMENT" ;
                                            dc:creator "Guido Vetere" ;
-                                           <http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by/4.0/
-Isagog S.r.l.""" ;
+                                           <http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by-sa/4.0/
+by isagog.com""" ;
                                            rdfs:comment "An ontology of events" ;
                                            rdfs:label "Isagog Events Ontology" .
 

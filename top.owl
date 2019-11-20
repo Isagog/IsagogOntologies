@@ -13,8 +13,8 @@
                                         owl:versionIRI <http://isagog.com/ontologies/top.owl/1.2> ;
                                         :status "UNDER DEVELOPMENT" ;
                                         dc:creator "Guido Vetere" ;
-                                        dct:license """https://creativecommons.org/licenses/by/4.0/
-Isagog S.r.l.""" ;
+                                        dct:license """https://creativecommons.org/licenses/by-sa/4.0/
+by isagog.com""" ;
                                         rdfs:comment "An introductory upper-level ontology. At the basis of this ontology there are few primitive formal and material notions, including space, time, parthood, dependency, and agentivity."@en ;
                                         rdfs:label "Isagog Upper Ontology" .
 
