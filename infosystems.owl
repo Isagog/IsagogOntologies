@@ -255,7 +255,7 @@ _:genid7 a owl:Restriction ;
 # 
 # http://isagog.com/ontologies/infosystems.owl#MONEY
 
-:MONEY a owl:NamedIndividual .
+:MONEY a owl:NamedIndividual , :AttributeType .
 # 
 # http://isagog.com/ontologies/infosystems.owl#NUMBER
 

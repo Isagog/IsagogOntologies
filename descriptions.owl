@@ -9,8 +9,9 @@
 @prefix events: <http://isagog.com/ontologies/events.owl#> .
 
 <http://isagog.com/ontologies/descriptions.owl> a owl:Ontology ;
-	owl:versionIRI <http://isagog.com/ontologies/descriptions.owl/1.1.5> ;
+	owl:versionIRI <http://isagog.com/ontologies/descriptions.owl/1.2> ;
 	owl:imports <http://isagog.com/ontologies/top.owl> ;
+	top:status "UNDER DEVELOPMENT" ;
 	dc:creator "Guido Vetere" ;
 	<http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by/4.0/
 Isagog S.r.l.""" ;
@@ -214,7 +215,9 @@ _:genid2 a rdf:List ;
 # http://isagog.com/ontologies/descriptions.owl#range-topic
 
 :range-topic a owl:ObjectProperty ;
-	rdfs:subPropertyOf :constraint .
+	rdfs:subPropertyOf :constraint ;
+	rdfs:domain :Slot ;
+	rdfs:range :Topic .
 # 
 # http://isagog.com/ontologies/descriptions.owl#referent
 
@@ -383,7 +386,7 @@ _:genid4 a owl:Restriction ;
 
 _:genid5 a owl:Restriction ;
 	owl:onProperty :domain ;
-	owl:someValuesFrom top:Entity .
+	owl:someValuesFrom :Classifier .
 
 :Attribute rdfs:subClassOf _:genid6 .
 
@@ -396,25 +399,21 @@ _:genid6 a owl:Restriction ;
 # http://isagog.com/ontologies/descriptions.owl#Classifier
 
 :Classifier a owl:Class ;
-	rdfs:subClassOf top:Denotator , _:genid7 .
-
-_:genid7 a owl:Restriction ;
-	owl:onProperty top:denoted ;
-	owl:someValuesFrom top:Entity .
-
-:Classifier rdfs:comment "Denotation of entities. This class reifies Entity, i.e. the class for instances representing classes in the Entity hierarchy." .
+	rdfs:subClassOf top:Denotator ;
+	rdfs:comment "Denotation of entities. This class reifies Entity, i.e. is a class of instances representing classes in the Entity hierarchy."@en .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Description
 
 :Description a owl:Class ;
-	rdfs:subClassOf top:Information .
+	rdfs:subClassOf top:Denotator ;
+	rdfs:comment "Description of s state of affairs"@en .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Directive
 
 :Directive a owl:Class ;
-	rdfs:subClassOf :Description , _:genid8 .
+	rdfs:subClassOf :Description , _:genid7 .
 
-_:genid8 a owl:Restriction ;
+_:genid7 a owl:Restriction ;
 	owl:onProperty :referent ;
 	owl:allValuesFrom top:Action .
 
@@ -423,9 +422,9 @@ _:genid8 a owl:Restriction ;
 # http://isagog.com/ontologies/descriptions.owl#Feature
 
 :Feature a owl:Class ;
-	rdfs:subClassOf :Slot , _:genid9 .
+	rdfs:subClassOf :Slot , _:genid8 .
 
-_:genid9 a owl:Restriction ;
+_:genid8 a owl:Restriction ;
 	owl:onProperty :binding ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Attribute .
@@ -435,45 +434,60 @@ _:genid9 a owl:Restriction ;
 # http://isagog.com/ontologies/descriptions.owl#Frame
 
 :Frame a owl:Class ;
-	rdfs:subClassOf top:Denotator , _:genid10 .
+	rdfs:subClassOf top:Denotator , _:genid9 .
 
-_:genid10 a owl:Restriction ;
+_:genid9 a owl:Restriction ;
 	owl:onProperty :slot ;
 	owl:someValuesFrom :Slot .
 
-:Frame rdfs:comment "Denotation of collections of interrelated entities.In general, a frame depicts a typical situation. Specifically, here is an ontology pattern, i.e. a 'view' over an ontology, along with a 'higher-order' characterization. A frame type is a set of slots which accommodate distinguished entities (topic slots), roles (relation slots), and values (property slot). A frame instance is a network of related entities which features the pattern the frame depicts." .
+:Frame rdfs:comment "Denotation of collections of interrelated entities.In general, a frame depicts a typical situation. Specifically, here is an ontology pattern, i.e. a 'view' over an ontology, along with a 'higher-order' characterization. A frame type is a set of slots which accommodate distinguished entities (topic slots), roles (relation slots), and values (property slot). A frame instance is a network of related entities which features the pattern the frame depicts."@en .
+# 
+# http://isagog.com/ontologies/descriptions.owl#HowManyQuestion
+
+:HowManyQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
+# 
+# http://isagog.com/ontologies/descriptions.owl#HowMuchQuestion
+
+:HowMuchQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
+# 
+# http://isagog.com/ontologies/descriptions.owl#HowQuestion
+
+:HowQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Procedure
 
 :Procedure a owl:Class ;
-	rdfs:subClassOf :Description , _:genid11 .
+	rdfs:subClassOf :Description , _:genid10 .
 
-_:genid11 a owl:Restriction ;
+_:genid10 a owl:Restriction ;
 	owl:onProperty :referent ;
 	owl:allValuesFrom top:Course .
 
-:Procedure rdfs:subClassOf _:genid12 .
+:Procedure rdfs:subClassOf _:genid11 .
 
-_:genid12 a owl:Restriction ;
+_:genid11 a owl:Restriction ;
 	owl:onProperty :goal ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Situation .
 
-:Procedure rdfs:subClassOf _:genid13 .
+:Procedure rdfs:subClassOf _:genid12 .
 
-_:genid13 a owl:Restriction ;
+_:genid12 a owl:Restriction ;
 	owl:onProperty :first-step ;
 	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onClass _:genid14 .
+	owl:onClass _:genid13 .
 
-_:genid14 a owl:Class ;
-	owl:unionOf _:genid16 .
-
-_:genid16 a rdf:List ;
-	rdf:first :Alternative ;
-	rdf:rest _:genid15 .
+_:genid13 a owl:Class ;
+	owl:unionOf _:genid15 .
 
 _:genid15 a rdf:List ;
+	rdf:first :Alternative ;
+	rdf:rest _:genid14 .
+
+_:genid14 a rdf:List ;
 	rdf:first :Directive ;
 	rdf:rest rdf:nil .
 
@@ -482,34 +496,34 @@ _:genid15 a rdf:List ;
 # http://isagog.com/ontologies/descriptions.owl#Question
 
 :Question a owl:Class ;
-	rdfs:subClassOf top:Information ;
-	rdfs:comment "Request of information about some entity" .
+	rdfs:subClassOf top:Denotator ;
+	rdfs:comment "Request of information about some entity"@en .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Relationship
 
 :Relationship a owl:Class ;
-	rdfs:subClassOf top:Denotator , _:genid17 .
+	rdfs:subClassOf top:Denotator , _:genid16 .
 
-_:genid17 a owl:Restriction ;
+_:genid16 a owl:Restriction ;
 	owl:onProperty :domain ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onClass top:Entity .
+	owl:onClass :Classifier .
 
-:Relationship rdfs:subClassOf _:genid18 .
+:Relationship rdfs:subClassOf _:genid17 .
 
-_:genid18 a owl:Restriction ;
+_:genid17 a owl:Restriction ;
 	owl:onProperty :range ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onClass top:Entity .
+	owl:onClass :Classifier .
 
-:Relationship rdfs:comment "Denotation of pair of entities, insofar as they are bound each other by some conceptual link. Instances of this class may correspond to owl:ObjectProperties, e.g. via 'punning'" .
+:Relationship rdfs:comment "Denotation of pair of entities, insofar as they are bound each other by some conceptual link. This class reifies ObjectProperty, i.e. is the class of binary relationships which may correspond to owl ObjectProperties via 'punning'"@en .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Role
 
 :Role a owl:Class ;
-	rdfs:subClassOf :Slot , _:genid19 .
+	rdfs:subClassOf :Slot , _:genid18 .
 
-_:genid19 a owl:Restriction ;
+_:genid18 a owl:Restriction ;
 	owl:onProperty :binding ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Relationship .
@@ -519,21 +533,21 @@ _:genid19 a owl:Restriction ;
 # http://isagog.com/ontologies/descriptions.owl#Situation
 
 :Situation a owl:Class ;
-	rdfs:subClassOf :Description , _:genid20 .
+	rdfs:subClassOf :Description , _:genid19 .
 
-_:genid20 a owl:Restriction ;
+_:genid19 a owl:Restriction ;
 	owl:onProperty :referent ;
 	owl:allValuesFrom top:State .
+
+:Situation rdfs:subClassOf _:genid20 .
+
+_:genid20 a owl:Restriction ;
+	owl:onProperty top:initial-time ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
 
 :Situation rdfs:subClassOf _:genid21 .
 
 _:genid21 a owl:Restriction ;
-	owl:onProperty top:initial-time ;
-	owl:cardinality "1"^^xsd:nonNegativeInteger .
-
-:Situation rdfs:subClassOf _:genid22 .
-
-_:genid22 a owl:Restriction ;
 	owl:onProperty top:final-time ;
 	owl:maxCardinality "1"^^xsd:nonNegativeInteger .
 
@@ -542,38 +556,73 @@ _:genid22 a owl:Restriction ;
 # http://isagog.com/ontologies/descriptions.owl#Slot
 
 :Slot a owl:Class ;
-	rdfs:subClassOf top:Denotator , _:genid23 .
+	rdfs:subClassOf top:Denotator , _:genid22 .
 
-_:genid23 a owl:Restriction ;
+_:genid22 a owl:Restriction ;
 	owl:onProperty :binding ;
 	owl:someValuesFrom top:Denotator .
 
-:Slot rdfs:subClassOf _:genid24 .
+:Slot rdfs:subClassOf _:genid23 .
 
-_:genid24 a owl:Restriction ;
+_:genid23 a owl:Restriction ;
 	owl:onProperty :frame ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Frame .
 
-:Slot rdfs:subClassOf _:genid25 .
+:Slot rdfs:subClassOf _:genid24 .
 
-_:genid25 a owl:Restriction ;
+_:genid24 a owl:Restriction ;
 	owl:onProperty :slot-id ;
 	owl:maxCardinality "1"^^xsd:nonNegativeInteger .
 
-:Slot rdfs:comment "Denotation of reified relationships which are part of some Frame" .
+:Slot rdfs:comment "Denotation of reified relationships as part of some Frame" .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Topic
 
 :Topic a owl:Class ;
-	rdfs:subClassOf :Slot , _:genid26 .
+	rdfs:subClassOf :Slot , _:genid25 .
 
-_:genid26 a owl:Restriction ;
+_:genid25 a owl:Restriction ;
 	owl:onProperty :binding ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Classifier .
 
 :Topic rdfs:comment "A slot bound to a Classifier" .
+# 
+# http://isagog.com/ontologies/descriptions.owl#WhatQuestion
+
+:WhatQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
+# 
+# http://isagog.com/ontologies/descriptions.owl#WhenQuestion
+
+:WhenQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
+# 
+# http://isagog.com/ontologies/descriptions.owl#WhereQuestion
+
+:WhereQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
+# 
+# http://isagog.com/ontologies/descriptions.owl#WhichQuestion
+
+:WhichQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
+# 
+# http://isagog.com/ontologies/descriptions.owl#WhoQuestion
+
+:WhoQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
+# 
+# http://isagog.com/ontologies/descriptions.owl#WhoseQuestion
+
+:WhoseQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
+# 
+# http://isagog.com/ontologies/descriptions.owl#WhyQuestion
+
+:WhyQuestion a owl:Class ;
+	rdfs:subClassOf :Question .
 # 
 # http://isagog.com/ontologies/top.owl#AbstractEntity
 
@@ -629,18 +678,18 @@ owl:Thing a owl:Class .
 # 
 # 
 
-_:genid27 a owl:AllDisjointClasses ;
-	owl:members _:genid30 .
-
-_:genid30 a rdf:List ;
-	rdf:first :Feature ;
-	rdf:rest _:genid29 .
+_:genid26 a owl:AllDisjointClasses ;
+	owl:members _:genid29 .
 
 _:genid29 a rdf:List ;
-	rdf:first :Role ;
+	rdf:first :Feature ;
 	rdf:rest _:genid28 .
 
 _:genid28 a rdf:List ;
+	rdf:first :Role ;
+	rdf:rest _:genid27 .
+
+_:genid27 a rdf:List ;
 	rdf:first :Topic ;
 	rdf:rest rdf:nil .
 # 

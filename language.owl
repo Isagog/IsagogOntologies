@@ -130,7 +130,7 @@ descr:constraint rdf:type owl:ObjectProperty .
 
 ###  http://isagog.com/ontologies/language.owl#form
 :form rdf:type owl:ObjectProperty ;
-      rdfs:subPropertyOf top:abstract-part ;
+      rdfs:subPropertyOf top:element ;
       rdfs:domain :Lexeme .
 
 
@@ -232,12 +232,14 @@ descr:Topic rdf:type owl:Class .
 
 ###  http://isagog.com/ontologies/language.owl#Adjective
 :Adjective rdf:type owl:Class ;
-           owl:equivalentClass [ rdf:type owl:Restriction ;
-                                 owl:onProperty :word-class ;
-                                 owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                 owl:onClass :AdjectiveClass
-                               ] ;
-           rdfs:subClassOf :LexicalWord .
+           rdfs:subClassOf [ owl:intersectionOf ( :LexicalWord
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :word-class ;
+                                                    owl:allValuesFrom :AdjectiveClass
+                                                  ]
+                                                ) ;
+                             rdf:type owl:Class
+                           ] .
 
 
 ###  http://isagog.com/ontologies/language.owl#AdjectiveClass
@@ -247,12 +249,14 @@ descr:Topic rdf:type owl:Class .
 
 ###  http://isagog.com/ontologies/language.owl#Adverb
 :Adverb rdf:type owl:Class ;
-        owl:equivalentClass [ rdf:type owl:Restriction ;
-                              owl:onProperty :word-class ;
-                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                              owl:onClass :AdverbClass
-                            ] ;
-        rdfs:subClassOf :LexicalWord .
+        rdfs:subClassOf [ owl:intersectionOf ( :LexicalWord
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :word-class ;
+                                                 owl:allValuesFrom :AdverbClass
+                                               ]
+                                             ) ;
+                          rdf:type owl:Class
+                        ] .
 
 
 ###  http://isagog.com/ontologies/language.owl#AdverbClass
@@ -292,6 +296,16 @@ descr:Topic rdf:type owl:Class .
             rdfs:subClassOf :Sentence .
 
 
+###  http://isagog.com/ontologies/language.owl#Conjunction
+:Conjunction rdf:type owl:Class ;
+             rdfs:subClassOf :FunctionWord .
+
+
+###  http://isagog.com/ontologies/language.owl#Determiner
+:Determiner rdf:type owl:Class ;
+            rdfs:subClassOf :FunctionWord .
+
+
 ###  http://isagog.com/ontologies/language.owl#Directive
 :Directive rdf:type owl:Class ;
            owl:equivalentClass [ rdf:type owl:Restriction ;
@@ -325,7 +339,8 @@ descr:Topic rdf:type owl:Class .
                           owl:onProperty :base-form ;
                           owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                           owl:onClass :Word
-                        ] .
+                        ] ;
+        rdfs:comment "A lexical unit, i.e. word and all its forms"@en .
 
 
 ###  http://isagog.com/ontologies/language.owl#LexicalWord
@@ -350,17 +365,25 @@ descr:Topic rdf:type owl:Class .
 
 ###  http://isagog.com/ontologies/language.owl#LinguisticToken
 :LinguisticToken rdf:type owl:Class ;
-                 rdfs:subClassOf top:Denotator ,
+                 rdfs:subClassOf top:Information ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty :token ;
                                    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                    owl:onDataRange xsd:string
-                                 ] .
+                                 ] ;
+                 rdfs:comment "The occurrence of a linguistic element"@en .
 
 
 ###  http://isagog.com/ontologies/language.owl#LinguisticType
 :LinguisticType rdf:type owl:Class ;
-                rdfs:subClassOf top:Denotator .
+                rdfs:subClassOf [ owl:intersectionOf ( top:Denotator
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty top:denoted ;
+                                                         owl:allValuesFrom :LinguisticToken
+                                                       ]
+                                                     ) ;
+                                  rdf:type owl:Class
+                                ] .
 
 
 ###  http://isagog.com/ontologies/language.owl#Morph
@@ -370,7 +393,14 @@ descr:Topic rdf:type owl:Class .
 
 ###  http://isagog.com/ontologies/language.owl#MorphType
 :MorphType rdf:type owl:Class ;
-           rdfs:subClassOf :LinguisticType .
+           rdfs:subClassOf [ owl:intersectionOf ( :LinguisticType
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty top:denoted ;
+                                                    owl:allValuesFrom :Morph
+                                                  ]
+                                                ) ;
+                             rdf:type owl:Class
+                           ] .
 
 
 ###  http://isagog.com/ontologies/language.owl#NominalLexeme
@@ -380,12 +410,14 @@ descr:Topic rdf:type owl:Class .
 
 ###  http://isagog.com/ontologies/language.owl#Noun
 :Noun rdf:type owl:Class ;
-      owl:equivalentClass [ rdf:type owl:Restriction ;
-                            owl:onProperty :word-class ;
-                            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onClass :NounClass
-                          ] ;
-      rdfs:subClassOf :LexicalWord .
+      rdfs:subClassOf [ owl:intersectionOf ( :LexicalWord
+                                             [ rdf:type owl:Restriction ;
+                                               owl:onProperty :word-class ;
+                                               owl:allValuesFrom :NounClass
+                                             ]
+                                           ) ;
+                        rdf:type owl:Class
+                      ] .
 
 
 ###  http://isagog.com/ontologies/language.owl#NounClass
@@ -393,14 +425,21 @@ descr:Topic rdf:type owl:Class .
            rdfs:subClassOf :WordClass .
 
 
+###  http://isagog.com/ontologies/language.owl#Preposition
+:Preposition rdf:type owl:Class ;
+             rdfs:subClassOf :FunctionWord .
+
+
 ###  http://isagog.com/ontologies/language.owl#Pronoun
 :Pronoun rdf:type owl:Class ;
-         owl:equivalentClass [ rdf:type owl:Restriction ;
-                               owl:onProperty :word-class ;
-                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                               owl:onClass :PronounClass
-                             ] ;
-         rdfs:subClassOf :FunctionWord .
+         rdfs:subClassOf [ owl:intersectionOf ( :FunctionWord
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty :word-class ;
+                                                  owl:allValuesFrom :PronounClass
+                                                ]
+                                              ) ;
+                           rdf:type owl:Class
+                         ] .
 
 
 ###  http://isagog.com/ontologies/language.owl#PronounClass
@@ -458,23 +497,39 @@ descr:Topic rdf:type owl:Class .
 
 ###  http://isagog.com/ontologies/language.owl#SentenceType
 :SentenceType rdf:type owl:Class ;
-              rdfs:subClassOf :LinguisticType ;
+              rdfs:subClassOf [ owl:intersectionOf ( :LinguisticType
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty top:denoted ;
+                                                       owl:allValuesFrom :Sentence
+                                                     ]
+                                                   ) ;
+                                rdf:type owl:Class
+                              ] ;
               rdfs:comment "Illocutionary act conveyed by the sentence" .
 
 
 ###  http://isagog.com/ontologies/language.owl#SyntagmType
 :SyntagmType rdf:type owl:Class ;
-             rdfs:subClassOf :LinguisticType .
+             rdfs:subClassOf [ owl:intersectionOf ( :LinguisticType
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty top:denoted ;
+                                                      owl:allValuesFrom :Sentence
+                                                    ]
+                                                  ) ;
+                               rdf:type owl:Class
+                             ] .
 
 
 ###  http://isagog.com/ontologies/language.owl#Verb
 :Verb rdf:type owl:Class ;
-      owl:equivalentClass [ rdf:type owl:Restriction ;
-                            owl:onProperty :word-class ;
-                            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onClass :VerbClass
-                          ] ;
-      rdfs:subClassOf :LexicalWord .
+      rdfs:subClassOf [ owl:intersectionOf ( :LexicalWord
+                                             [ rdf:type owl:Restriction ;
+                                               owl:onProperty :word-class ;
+                                               owl:allValuesFrom :VerbClass
+                                             ]
+                                           ) ;
+                        rdf:type owl:Class
+                      ] .
 
 
 ###  http://isagog.com/ontologies/language.owl#VerbClass
@@ -503,7 +558,14 @@ descr:Topic rdf:type owl:Class .
 
 ###  http://isagog.com/ontologies/language.owl#WordClass
 :WordClass rdf:type owl:Class ;
-           rdfs:subClassOf :LinguisticType .
+           rdfs:subClassOf [ owl:intersectionOf ( :LinguisticType
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty top:denoted ;
+                                                    owl:allValuesFrom :Word
+                                                  ]
+                                                ) ;
+                             rdf:type owl:Class
+                           ] .
 
 
 ###  http://isagog.com/ontologies/top.owl#AbstractEntity
