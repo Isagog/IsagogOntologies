@@ -405,7 +405,7 @@ _:genid6 a owl:Restriction ;
 # http://isagog.com/ontologies/descriptions.owl#Description
 
 :Description a owl:Class ;
-	rdfs:subClassOf top:Denotator ;
+	rdfs:subClassOf top:Information ;
 	rdfs:comment "Description of s state of affairs"@en .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Directive
@@ -496,7 +496,7 @@ _:genid14 a rdf:List ;
 # http://isagog.com/ontologies/descriptions.owl#Question
 
 :Question a owl:Class ;
-	rdfs:subClassOf top:Denotator ;
+	rdfs:subClassOf top:Information ;
 	rdfs:comment "Request of information about some entity"@en .
 # 
 # http://isagog.com/ontologies/descriptions.owl#Relationship

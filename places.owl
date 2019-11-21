@@ -9,12 +9,13 @@
 @base <http://isagog.com/ontologies/places> .
 
 <http://isagog.com/ontologies/places> rdf:type owl:Ontology ;
-                                       owl:versionIRI <http://isagog.com/ontologies/places/1.1.5> ;
-                                       owl:imports <http://isagog.com/ontologies/top.owl> ;
+                                       owl:versionIRI <http://isagog.com/ontologies/places/1.2> ;
+                                       owl:imports <http://isagog.com/ontologies/top.owl> ,
+                                                   <http://isagog.com/ontologies/descriptions.owl/1.2> ;
                                        dc:creator "Guido Vetere" ;
                                        <http://purl.org/dc/terms/license> "https://creativecommons.org/licenses/by/4.0/" ;
                                        rdfs:comment "An ontology of places" ;
-                                       rdfs:label "Isagog Places Ontology"  .
+                                       rdfs:label "Isagog Places Ontology" .
 
 #################################################################
 #    Annotation properties
@@ -97,17 +98,25 @@ owl:versionInfo rdf:type owl:AnnotationProperty .
                    rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Denotator> ,
                                    [ rdf:type owl:Restriction ;
                                      owl:onProperty <http://isagog.com/ontologies/top.owl#denoted> ;
-                                     owl:allValuesFrom <http://isagog.com/ontologies/top.owl#SpaceRegion>
+                                     owl:someValuesFrom :Place
                                    ] .
+
+
+###  http://isagog.com/ontologies/places#Place
+:Place rdf:type owl:Class ;
+       rdfs:subClassOf <http://isagog.com/ontologies/top.owl#PhysicalQuality> ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty <http://isagog.com/ontologies/top.owl#location> ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass <http://isagog.com/ontologies/top.owl#SpaceRegion>
+                       ] ;
+       rdfs:comment "Physical quality of a space region" .
 
 
 ###  http://isagog.com/ontologies/places#StateName
 :StateName rdf:type owl:Class ;
            rdfs:subClassOf :LocationReference .
 
-
-###  http://isagog.com/ontologies/top.owl#Classifier
-<http://isagog.com/ontologies/top.owl#Classifier> rdf:type owl:Class .
 
 
 ###  http://isagog.com/ontologies/top.owl#Denotator
