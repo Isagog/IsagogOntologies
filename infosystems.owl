@@ -77,9 +77,15 @@ owl:maxQualifiedCardinality a owl:AnnotationProperty .
 # http://isagog.com/ontologies/infosystems.owl#distinguished
 
 :distinguished a owl:DatatypeProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#data-value> ;
+	rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#property> ;
 	rdfs:domain :QuerySlot ;
 	rdfs:range xsd:boolean .
+# 
+# http://isagog.com/ontologies/infosystems.owl#informative
+
+:informative a owl:DatatypeProperty ;
+	rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#property> ;
+	rdfs:domain :QuerySlot .
 # 
 # http://isagog.com/ontologies/infosystems.owl#object-topic
 
