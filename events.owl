@@ -135,14 +135,6 @@ xsd:string rdf:type rdfs:Datatype .
 top:collector rdf:type owl:ObjectProperty .
 
 
-###  http://isagog.com/ontologies/top.owl#context
-top:context rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#context-element
-top:context-element rdf:type owl:ObjectProperty .
-
-
 ###  http://isagog.com/ontologies/top.owl#dependee
 top:dependee rdf:type owl:ObjectProperty .
 
@@ -194,16 +186,6 @@ top:time-subregion rdf:type owl:ObjectProperty .
 ###  http://isagog.com/ontologies/events.owl#Achievement
 :Achievement rdf:type owl:Class ;
              rdfs:subClassOf top:Change .
-
-
-###  http://isagog.com/ontologies/events.owl#Cause
-:Cause rdf:type owl:Class ;
-       rdfs:subClassOf top:Event ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :effect ;
-                         owl:someValuesFrom top:Event
-                       ] ;
-       rdfs:seeAlso "An event which fills the role of cause" .
 
 
 ###  http://isagog.com/ontologies/events.owl#Commitment
