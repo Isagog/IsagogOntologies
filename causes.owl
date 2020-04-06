@@ -20,10 +20,26 @@ by isagog.com""" ;
 #    Object Properties
 #################################################################
 
-###  http://isagog.com/ontologies/causes.owl#confidence
-:confidence rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#informative-part> ;
-            rdfs:domain :Observation .
+###  http://isagog.com/ontologies/causes.owl#certain-cause
+:certain-cause rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf <http://isagog.com/ontologies/events.owl#cause> ;
+               owl:inverseOf :certain-effect .
+
+
+###  http://isagog.com/ontologies/causes.owl#certain-effect
+:certain-effect rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <http://isagog.com/ontologies/events.owl#effect> .
+
+
+###  http://isagog.com/ontologies/causes.owl#certain-observed
+:certain-observed rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :observed ;
+                  owl:inverseOf :certain-observed-by .
+
+
+###  http://isagog.com/ontologies/causes.owl#certain-observed-by
+:certain-observed-by rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf :observed-by .
 
 
 ###  http://isagog.com/ontologies/causes.owl#context
@@ -33,12 +49,6 @@ by isagog.com""" ;
                   owl:TransitiveProperty ;
          rdfs:domain <http://isagog.com/ontologies/top.owl#Occurrent> ;
          rdfs:range <http://isagog.com/ontologies/top.owl#Occurrent> .
-
-
-###  http://isagog.com/ontologies/causes.owl#evidence
-:evidence rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#informative-part> ;
-          rdfs:domain :Observation .
 
 
 ###  http://isagog.com/ontologies/causes.owl#fix
@@ -69,6 +79,28 @@ by isagog.com""" ;
           rdfs:range <http://isagog.com/ontologies/top.owl#PhysicalEntity> .
 
 
+###  http://isagog.com/ontologies/causes.owl#likely-cause
+:likely-cause rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://isagog.com/ontologies/events.owl#cause> ;
+              owl:inverseOf :likely-effect .
+
+
+###  http://isagog.com/ontologies/causes.owl#likely-effect
+:likely-effect rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf <http://isagog.com/ontologies/events.owl#effect> .
+
+
+###  http://isagog.com/ontologies/causes.owl#likely-observed
+:likely-observed rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :observed ;
+                 owl:inverseOf :likely-observed-by .
+
+
+###  http://isagog.com/ontologies/causes.owl#likely-observed-by
+:likely-observed-by rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :observed-by .
+
+
 ###  http://isagog.com/ontologies/causes.owl#observed
 :observed rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#dependee> ;
@@ -88,10 +120,58 @@ by isagog.com""" ;
         rdfs:range <http://isagog.com/ontologies/top.owl#PhysicalEntity> .
 
 
+###  http://isagog.com/ontologies/causes.owl#possible-cause
+:possible-cause rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <http://isagog.com/ontologies/events.owl#cause> ;
+                owl:inverseOf :possible-effect .
+
+
+###  http://isagog.com/ontologies/causes.owl#possible-effect
+:possible-effect rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf <http://isagog.com/ontologies/events.owl#effect> .
+
+
+###  http://isagog.com/ontologies/causes.owl#possible-observed
+:possible-observed rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :observed ;
+                   owl:inverseOf :possible-observed-by .
+
+
+###  http://isagog.com/ontologies/causes.owl#possible-observed-by
+:possible-observed-by rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :observed-by .
+
+
 ###  http://isagog.com/ontologies/causes.owl#report
 :report rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#informative-part> ;
         rdfs:domain :Observation .
+
+
+###  http://isagog.com/ontologies/infosystems.owl#bind-property
+<http://isagog.com/ontologies/infosystems.owl#bind-property> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/causes.owl#confidence
+:confidence rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#data-value> ;
+            rdfs:domain :Observation ;
+            rdfs:range xsd:double .
+
+
+###  http://isagog.com/ontologies/causes.owl#evidence
+:evidence rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#data-value> ;
+          rdfs:domain :Observation ;
+          rdfs:range xsd:double .
+
+
+###  http://isagog.com/ontologies/infosystems.owl#subject-topic
+<http://isagog.com/ontologies/infosystems.owl#subject-topic> rdf:type owl:DatatypeProperty .
 
 
 #################################################################
@@ -120,65 +200,9 @@ by isagog.com""" ;
                   rdfs:subClassOf :Observation .
 
 
-###  http://isagog.com/ontologies/causes.owl#InformationFrame
-:InformationFrame rdf:type owl:Class ;
-                  rdfs:subClassOf descr:Frame ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty descr:slot ;
-                                    owl:someValuesFrom [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty descr:bind-property ;
-                                                                                owl:hasValue :involved
-                                                                              ]
-                                                                              [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty descr:object-topic ;
-                                                                                owl:hasValue "entity"
-                                                                              ]
-                                                                            ) ;
-                                                         rdf:type owl:Class
-                                                       ]
-                                  ] ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty descr:slot ;
-                                    owl:someValuesFrom [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty descr:bind-property ;
-                                                                                owl:hasValue :origin
-                                                                              ]
-                                                                              [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty descr:object-topic ;
-                                                                                owl:hasValue "entity"
-                                                                              ]
-                                                                            ) ;
-                                                         rdf:type owl:Class
-                                                       ]
-                                  ] ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty descr:slot ;
-                                    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                    owl:onClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                                         owl:onProperty descr:bind-concept ;
-                                                                         owl:hasValue :PhysicalEntity
-                                                                       ]
-                                                                       [ rdf:type owl:Restriction ;
-                                                                         owl:onProperty descr:topic-id ;
-                                                                         owl:hasValue "entity"
-                                                                       ]
-                                                                     ) ;
-                                                  rdf:type owl:Class
-                                                ]
-                                  ] .
-
-
 ###  http://isagog.com/ontologies/causes.owl#Observation
 :Observation rdf:type owl:Class ;
              rdfs:subClassOf <http://isagog.com/ontologies/top.owl#Action> ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :confidence ;
-                               owl:someValuesFrom :ConfidenceMeasure
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :evidence ;
-                               owl:someValuesFrom :EvidenceMeasure
-                             ] ,
                              [ rdf:type owl:Restriction ;
                                owl:onProperty :observed ;
                                owl:someValuesFrom :Situation
@@ -186,6 +210,16 @@ by isagog.com""" ;
                              [ rdf:type owl:Restriction ;
                                owl:onProperty :report ;
                                owl:someValuesFrom <http://isagog.com/ontologies/top.owl#Information>
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :confidence ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onDataRange xsd:double
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :evidence ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onDataRange xsd:double
                              ] .
 
 
@@ -195,8 +229,26 @@ by isagog.com""" ;
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty descr:slot ;
                                     owl:someValuesFrom [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                                                owl:onProperty descr:bind-property ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#bind-property> ;
+                                                                                owl:hasValue :context
+                                                                              ]
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#subject-topic> ;
+                                                                                owl:hasValue "obsv"
+                                                                              ]
+                                                                            ) ;
+                                                         rdf:type owl:Class
+                                                       ]
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty descr:slot ;
+                                    owl:someValuesFrom [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#bind-property> ;
                                                                                 owl:hasValue :involved
+                                                                              ]
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty descr:object-topic ;
+                                                                                owl:hasValue "entity"
                                                                               ]
                                                                               [ rdf:type owl:Restriction ;
                                                                                 owl:onProperty descr:subject-topic ;
@@ -220,21 +272,23 @@ by isagog.com""" ;
                                                                      ) ;
                                                   rdf:type owl:Class
                                                 ]
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty descr:slot ;
+                                    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                         owl:onProperty descr:bind-concept ;
+                                                                         owl:hasValue :PhysicalEntity
+                                                                       ]
+                                                                       [ rdf:type owl:Restriction ;
+                                                                         owl:onProperty descr:topic-id ;
+                                                                         owl:hasValue "entity"
+                                                                       ]
+                                                                     ) ;
+                                                  rdf:type owl:Class
+                                                ]
                                   ] ;
                   rdfs:comment "A statement which refers to an observation" .
-
-
-###  http://isagog.com/ontologies/causes.owl#ObservedSituation
-:ObservedSituation rdf:type owl:Class ;
-                   owl:equivalentClass [ owl:intersectionOf ( :Situation
-                                                              [ rdf:type owl:Restriction ;
-                                                                owl:onProperty :observed-by ;
-                                                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                owl:onClass :Observation
-                                                              ]
-                                                            ) ;
-                                         rdf:type owl:Class
-                                       ] .
 
 
 ###  http://isagog.com/ontologies/causes.owl#Procedure
@@ -263,10 +317,6 @@ by isagog.com""" ;
                            ] ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty <http://isagog.com/ontologies/events.owl#cause> ;
-                             owl:someValuesFrom <http://isagog.com/ontologies/top.owl#Occurrent>
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty <http://isagog.com/ontologies/events.owl#effect> ;
                              owl:someValuesFrom <http://isagog.com/ontologies/top.owl#Occurrent>
                            ] ,
                            [ rdf:type owl:Restriction ;
@@ -317,6 +367,16 @@ descr:ProcedureDescription rdf:type owl:Class .
 ###  http://isagog.com/ontologies/causes.owl#Situation
 :Situation rdf:type owl:NamedIndividual ,
                     descr:Classifier .
+
+
+###  http://isagog.com/ontologies/causes.owl#context
+:context rdf:type owl:NamedIndividual ,
+                  descr:Relationship .
+
+
+###  http://isagog.com/ontologies/causes.owl#fixed-by
+:fixed-by rdf:type owl:NamedIndividual ,
+                   descr:Relationship .
 
 
 ###  http://isagog.com/ontologies/causes.owl#involved
