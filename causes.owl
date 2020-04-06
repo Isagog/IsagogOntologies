@@ -148,6 +148,10 @@ by isagog.com""" ;
         rdfs:domain :Observation .
 
 
+###  http://isagog.com/ontologies/infosystems.owl#bind-concept
+<http://isagog.com/ontologies/infosystems.owl#bind-concept> rdf:type owl:ObjectProperty .
+
+
 ###  http://isagog.com/ontologies/infosystems.owl#bind-property
 <http://isagog.com/ontologies/infosystems.owl#bind-property> rdf:type owl:ObjectProperty .
 
@@ -172,6 +176,10 @@ by isagog.com""" ;
 
 ###  http://isagog.com/ontologies/infosystems.owl#subject-topic
 <http://isagog.com/ontologies/infosystems.owl#subject-topic> rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/infosystems.owl#topic-id
+<http://isagog.com/ontologies/infosystems.owl#topic-id> rdf:type owl:DatatypeProperty .
 
 
 #################################################################
@@ -229,6 +237,20 @@ by isagog.com""" ;
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty descr:slot ;
                                     owl:someValuesFrom [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#bind-concept> ;
+                                                                                owl:hasValue :PhysicalEntity
+                                                                              ]
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#topic-id> ;
+                                                                                owl:hasValue "entity"
+                                                                              ]
+                                                                            ) ;
+                                                         rdf:type owl:Class
+                                                       ]
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty descr:slot ;
+                                    owl:someValuesFrom [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
                                                                                 owl:onProperty <http://isagog.com/ontologies/infosystems.owl#bind-property> ;
                                                                                 owl:hasValue :context
                                                                               ]
@@ -268,21 +290,6 @@ by isagog.com""" ;
                                                                        [ rdf:type owl:Restriction ;
                                                                          owl:onProperty descr:topic-id ;
                                                                          owl:hasValue "obsv"
-                                                                       ]
-                                                                     ) ;
-                                                  rdf:type owl:Class
-                                                ]
-                                  ] ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty descr:slot ;
-                                    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                    owl:onClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                                         owl:onProperty descr:bind-concept ;
-                                                                         owl:hasValue :PhysicalEntity
-                                                                       ]
-                                                                       [ rdf:type owl:Restriction ;
-                                                                         owl:onProperty descr:topic-id ;
-                                                                         owl:hasValue "entity"
                                                                        ]
                                                                      ) ;
                                                   rdf:type owl:Class
