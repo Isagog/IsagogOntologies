@@ -110,7 +110,8 @@ by isagog.com""" ;
 
 ###  http://isagog.com/ontologies/causes.owl#observed-by
 :observed-by rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#dependent> .
+             rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#dependent> ;
+             rdfs:range :Observation .
 
 
 ###  http://isagog.com/ontologies/causes.owl#origin
@@ -170,8 +171,15 @@ by isagog.com""" ;
 ###  http://isagog.com/ontologies/causes.owl#evidence
 :evidence rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#data-value> ;
-          rdfs:domain :Observation ;
+          rdfs:domain :Situation ;
           rdfs:range xsd:double .
+
+
+###  http://isagog.com/ontologies/causes.owl#support
+:support rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf <http://isagog.com/ontologies/top.owl#data-value> ;
+         rdfs:domain :Observation ;
+         rdfs:range xsd:double .
 
 
 ###  http://isagog.com/ontologies/infosystems.owl#subject-topic
@@ -220,15 +228,16 @@ by isagog.com""" ;
                                owl:someValuesFrom <http://isagog.com/ontologies/top.owl#Information>
                              ] ,
                              [ rdf:type owl:Restriction ;
-                               owl:onProperty :confidence ;
+                               owl:onProperty :evidence ;
                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                owl:onDataRange xsd:double
                              ] ,
                              [ rdf:type owl:Restriction ;
-                               owl:onProperty :evidence ;
+                               owl:onProperty :support ;
                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                owl:onDataRange xsd:double
-                             ] .
+                             ] ;
+             owl:disjointWith :Situation .
 
 
 ###  http://isagog.com/ontologies/causes.owl#ObservationFrame
@@ -329,6 +338,11 @@ by isagog.com""" ;
                            [ rdf:type owl:Restriction ;
                              owl:onProperty <http://isagog.com/ontologies/top.owl#bearer> ;
                              owl:someValuesFrom <http://isagog.com/ontologies/top.owl#PhysicalEntity>
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :evidence ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:double
                            ] .
 
 
