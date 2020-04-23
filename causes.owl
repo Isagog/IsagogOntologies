@@ -8,8 +8,8 @@
 @base <http://isagog.com/ontologies/causes.owl> .
 
 <http://isagog.com/ontologies/causes.owl> rdf:type owl:Ontology ;
-                                           owl:imports <http://isagog.com/ontologies/descriptions.owl/1.2> ,
-                                                       <http://isagog.com/ontologies/events.owl/1.2> ;
+                                           owl:imports <http://isagog.com/ontologies/descriptions.owl> ,
+                                                       <http://isagog.com/ontologies/events.owl> ;
                                            <http://isagog.com/ontologies/top.owl#authors> "David Valente, Guido Vetere" ;
                                            <http://isagog.com/ontologies/top.owl#copyright> """https://creativecommons.org/licenses/by-sa/4.0/
 by isagog.com""" ;
