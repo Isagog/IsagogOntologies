@@ -6,245 +6,265 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://isagog.com/ontologies/events.owl> .
 
-<http://isagog.com/ontologies/events.owl> rdf:type owl:Ontology ;
-                                           owl:versionIRI <http://isagog.com/ontologies/events.owl/1.2> ;
-                                           owl:imports <http://isagog.com/ontologies/top.owl> ;
-                                           top:status "UNDER DEVELOPMENT" ;
-                                           dc:creator "Guido Vetere" ;
-                                           <http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by-sa/4.0/
+<http://isagog.com/ontologies/events.owl> a owl:Ontology ;
+	owl:versionIRI <http://isagog.com/ontologies/events.owl/1.2> ;
+	owl:imports <http://isagog.com/ontologies/top.owl> ;
+	top:status "UNDER DEVELOPMENT" ;
+	dc:creator "Guido Vetere" ;
+	<http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by-sa/4.0/
 by isagog.com""" ;
-                                           rdfs:comment "An ontology of events" ;
-                                           rdfs:label "Isagog Events Ontology" .
-
-#################################################################
-#    Annotation properties
-#################################################################
-
-###  http://isagog.com/ontologies/top.owl#authors
-top:authors rdf:type owl:AnnotationProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#copyright
-top:copyright rdf:type owl:AnnotationProperty ;
-              rdfs:comment "An ontology of events: actions, procedures, causes, symptoms, etc" .
-
-
-###  http://isagog.com/ontologies/top.owl#nominal
-top:nominal rdf:type owl:AnnotationProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#ontolex-pattern
-top:ontolex-pattern rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/elements/1.1/creator
-dc:creator rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/license
-<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#comment
-rdfs:comment rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#isDefinedBy
-rdfs:isDefinedBy rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#label
-rdfs:label rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#seeAlso
-rdfs:seeAlso rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2002/07/owl#versionInfo
-owl:versionInfo rdf:type owl:AnnotationProperty .
-
-
-#################################################################
-#    Datatypes
-#################################################################
-
-###  http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral
-rdf:PlainLiteral rdf:type rdfs:Datatype .
-
-
-###  http://www.w3.org/2001/XMLSchema#string
-xsd:string rdf:type rdfs:Datatype .
-
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  http://isagog.com/ontologies/events.owl#cause
-:cause rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf top:dependee ;
-       owl:inverseOf :effect ;
-       rdfs:domain top:Occurrent ;
-       rdfs:range top:Occurrent ;
-       rdfs:comment "causal relation, cause(domain,range) reads: 'range' is the cause of 'domain', e.g. cause(smoke,fire)"@en .
-
-
-###  http://isagog.com/ontologies/events.owl#concomitant
-:concomitant rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf top:temporally-related ;
-             rdfs:domain top:Event ;
-             rdfs:range top:Event ;
-             top:ontolex-pattern "domain:Occurrent,(se,quando,mentre,nel momento in cui),range:Occurrent"@it .
-
-
-###  http://isagog.com/ontologies/events.owl#effect
-:effect rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf top:dependent ;
-        rdfs:domain top:Occurrent ;
-        rdfs:range top:Occurrent .
-
-
-###  http://isagog.com/ontologies/events.owl#next
-:next rdf:type owl:ObjectProperty ;
-      rdfs:subPropertyOf top:temporally-related ;
-      owl:inverseOf :previous .
-
-
-###  http://isagog.com/ontologies/events.owl#previous
-:previous rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf top:temporally-related .
-
-
-###  http://isagog.com/ontologies/events.owl#signal
-:signal rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf top:temporally-related ;
-        owl:inverseOf :signalled ;
-        rdfs:comment "signification relationship among occurents, e.g. fire symptom smoke" .
-
-
-###  http://isagog.com/ontologies/events.owl#signalled
-:signalled rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf top:temporally-related ;
-           rdfs:isDefinedBy "e.g. smoke manifest fire (smoke 'means' fire)" .
-
-
-###  http://isagog.com/ontologies/top.owl#collector
-top:collector rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#dependee
-top:dependee rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#dependent
-top:dependent rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#element
-top:element rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#initiator
-top:initiator rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#participant
-top:participant rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#sign
-top:sign rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#signified
-top:signified rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#temporal-part
-top:temporal-part rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#temporal-whole
-top:temporal-whole rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#temporally-related
-top:temporally-related rdf:type owl:ObjectProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#time-subregion
-top:time-subregion rdf:type owl:ObjectProperty .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://isagog.com/ontologies/events.owl#Achievement
-:Achievement rdf:type owl:Class ;
-             rdfs:subClassOf top:Change .
-
-
-###  http://isagog.com/ontologies/events.owl#Commitment
-:Commitment rdf:type owl:Class ;
-            rdfs:subClassOf top:State .
-
-
-###  http://isagog.com/ontologies/events.owl#Failure
-:Failure rdf:type owl:Class ;
-         rdfs:subClassOf top:State ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :cause ;
-                           owl:someValuesFrom top:Event
-                         ] ;
-         rdfs:comment "the inability to achieve a goal" .
-
-
-###  http://isagog.com/ontologies/events.owl#Goal
-:Goal rdf:type owl:Class ;
-      rdfs:subClassOf top:State ;
-      rdfs:comment "The final state of a telic occurrent (action)" .
-
-
-###  http://isagog.com/ontologies/events.owl#Signal
-:Signal rdf:type owl:Class ;
-        rdfs:subClassOf top:Event ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :signalled ;
-                          owl:someValuesFrom top:Event
-                        ] ;
-        rdfs:comment "The manifestation of some event, as a distinguished event"^^xsd:string .
-
-
-###  http://isagog.com/ontologies/top.owl#Action
-top:Action rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top.owl#Artifact
-top:Artifact rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top.owl#Change
-top:Change rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top.owl#Event
-top:Event rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top.owl#Sign
-top:Sign rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top.owl#State
-top:State rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top.owl#TimeRegion
-top:TimeRegion rdf:type owl:Class .
-
-
-###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+	rdfs:comment "An ontology of events" ;
+	rdfs:label "Isagog Events Ontology" .
+# 
+# 
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/top.owl#authors
+
+top:authors a owl:AnnotationProperty .
+# 
+# http://isagog.com/ontologies/top.owl#copyright
+
+top:copyright a owl:AnnotationProperty ;
+	rdfs:comment "An ontology of events: actions, procedures, causes, symptoms, etc" .
+# 
+# http://isagog.com/ontologies/top.owl#nominal
+
+top:nominal a owl:AnnotationProperty .
+# 
+# http://isagog.com/ontologies/top.owl#ontolex-pattern
+
+top:ontolex-pattern a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/elements/1.1/creator
+
+dc:creator a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/license
+
+<http://purl.org/dc/terms/license> a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2000/01/rdf-schema#comment
+
+rdfs:comment a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2000/01/rdf-schema#isDefinedBy
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2000/01/rdf-schema#label
+
+rdfs:label a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2000/01/rdf-schema#seeAlso
+
+rdfs:seeAlso a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2002/07/owl#versionInfo
+
+owl:versionInfo a owl:AnnotationProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Datatypes
+# #
+# #################################################################
+# 
+# 
+# http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral
+
+rdf:PlainLiteral a rdfs:Datatype .
+# 
+# http://www.w3.org/2001/XMLSchema#string
+
+xsd:string a rdfs:Datatype .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/events.owl#cause
+
+:cause a owl:ObjectProperty ;
+	rdfs:subPropertyOf top:dependee ;
+	owl:inverseOf :effect ;
+	rdfs:domain top:Occurrent ;
+	rdfs:range top:Occurrent ;
+	rdfs:comment "causal relation, cause(domain,range) reads: 'range' is the cause of 'domain', e.g. cause(smoke,fire)"@en .
+# 
+# http://isagog.com/ontologies/events.owl#concomitant
+
+:concomitant a owl:ObjectProperty ;
+	rdfs:subPropertyOf top:temporally-related ;
+	rdfs:domain top:Event ;
+	rdfs:range top:Event ;
+	top:ontolex-pattern "domain:Occurrent,(se,quando,mentre,nel momento in cui),range:Occurrent"@it .
+# 
+# http://isagog.com/ontologies/events.owl#effect
+
+:effect a owl:ObjectProperty ;
+	rdfs:subPropertyOf top:dependent ;
+	rdfs:domain top:Occurrent ;
+	rdfs:range top:Occurrent .
+# 
+# http://isagog.com/ontologies/events.owl#next
+
+:next a owl:ObjectProperty ;
+	rdfs:subPropertyOf top:temporally-related ;
+	owl:inverseOf :previous .
+# 
+# http://isagog.com/ontologies/events.owl#previous
+
+:previous a owl:ObjectProperty ;
+	rdfs:subPropertyOf top:temporally-related .
+# 
+# http://isagog.com/ontologies/events.owl#signal
+
+:signal a owl:ObjectProperty ;
+	rdfs:subPropertyOf top:temporally-related ;
+	owl:inverseOf :signalled ;
+	rdfs:comment "signification relationship among occurents, e.g. fire symptom smoke" .
+# 
+# http://isagog.com/ontologies/events.owl#signalled
+
+:signalled a owl:ObjectProperty ;
+	rdfs:subPropertyOf top:temporally-related ;
+	rdfs:isDefinedBy "e.g. smoke manifest fire (smoke 'means' fire)" .
+# 
+# http://isagog.com/ontologies/top.owl#agent
+
+top:agent a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#collector
+
+top:collector a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#dependee
+
+top:dependee a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#dependent
+
+top:dependent a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#element
+
+top:element a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#participant
+
+top:participant a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#sign
+
+top:sign a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#signified
+
+top:signified a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#temporal-part
+
+top:temporal-part a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#temporal-whole
+
+top:temporal-whole a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#temporally-related
+
+top:temporally-related a owl:ObjectProperty .
+# 
+# http://isagog.com/ontologies/top.owl#time-subregion
+
+top:time-subregion a owl:ObjectProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/events.owl#Achievement
+
+:Achievement a owl:Class ;
+	rdfs:subClassOf top:Change .
+# 
+# http://isagog.com/ontologies/events.owl#Commitment
+
+:Commitment a owl:Class ;
+	rdfs:subClassOf top:State .
+# 
+# http://isagog.com/ontologies/events.owl#Failure
+
+:Failure a owl:Class ;
+	rdfs:subClassOf top:State , _:genid1 .
+
+_:genid1 a owl:Restriction ;
+	owl:onProperty :cause ;
+	owl:someValuesFrom top:Event .
+
+:Failure rdfs:comment "the inability to achieve a goal" .
+# 
+# http://isagog.com/ontologies/events.owl#Goal
+
+:Goal a owl:Class ;
+	rdfs:subClassOf top:State ;
+	rdfs:comment "The final state of a telic occurrent (action)" .
+# 
+# http://isagog.com/ontologies/events.owl#Signal
+
+:Signal a owl:Class ;
+	rdfs:subClassOf top:Event , _:genid2 .
+
+_:genid2 a owl:Restriction ;
+	owl:onProperty :signalled ;
+	owl:someValuesFrom top:Event .
+
+:Signal rdfs:comment "The manifestation of some event, as a distinguished event"^^xsd:string .
+# 
+# http://isagog.com/ontologies/top.owl#Action
+
+top:Action a owl:Class .
+# 
+# http://isagog.com/ontologies/top.owl#Artifact
+
+top:Artifact a owl:Class .
+# 
+# http://isagog.com/ontologies/top.owl#Change
+
+top:Change a owl:Class .
+# 
+# http://isagog.com/ontologies/top.owl#Event
+
+top:Event a owl:Class .
+# 
+# http://isagog.com/ontologies/top.owl#Sign
+
+top:Sign a owl:Class .
+# 
+# http://isagog.com/ontologies/top.owl#State
+
+top:State a owl:Class .
+# 
+# http://isagog.com/ontologies/top.owl#TimeRegion
+
+top:TimeRegion a owl:Class .
+# 
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
