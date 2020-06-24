@@ -7,911 +7,981 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix obda: <https://w3id.org/obda/vocabulary#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://isagog.com/ontologies/top.owl> .
 
-<http://isagog.com/ontologies/top.owl> rdf:type owl:Ontology ;
-                                        owl:versionIRI <http://isagog.com/ontologies/top.owl/1.2> ;
-                                        :status "UNDER DEVELOPMENT" ;
-                                        dc:creator "Guido Vetere" ;
-                                        dct:license """https://creativecommons.org/licenses/by-sa/4.0/
+<http://isagog.com/ontologies/top.owl> a owl:Ontology ;
+	owl:versionIRI <http://isagog.com/ontologies/top.owl/1.2> ;
+	:status "UNDER DEVELOPMENT" ;
+	dc:creator "Guido Vetere" ;
+	dct:license """https://creativecommons.org/licenses/by-sa/4.0/
 by isagog.com""" ;
-                                        rdfs:comment "An introductory upper-level ontology. At the basis of this ontology there are few primitive formal and material notions, including space, time, parthood, dependency, and agentivity."@en ;
-                                        rdfs:label "Isagog Upper Ontology" .
-
-#################################################################
-#    Annotation properties
-#################################################################
-
-###  http://isagog.com/ontologies/top.owl#authors
-:authors rdf:type owl:AnnotationProperty ;
-         :authors "Guido Vetere" .
-
-
-###  http://isagog.com/ontologies/top.owl#category
-:category rdf:type owl:AnnotationProperty ;
-          rdfs:comment "Ontological commitment of linguistic senses"@en ;
-          rdfs:subPropertyOf :ontological-annotation ;
-          rdfs:range xsd:anyURI .
-
-
-###  http://isagog.com/ontologies/top.owl#copyright
-:copyright rdf:type owl:AnnotationProperty ;
-           :authors "(CC-BY) Isagog S.r.l." .
-
-
-###  http://isagog.com/ontologies/top.owl#definition
-:definition rdf:type owl:AnnotationProperty ;
-            rdfs:subPropertyOf :ontological-annotation .
-
-
-###  http://isagog.com/ontologies/top.owl#ontological-annotation
-:ontological-annotation rdf:type owl:AnnotationProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#status
-:status rdf:type owl:AnnotationProperty ;
-        rdfs:comment "The state of development of a resource (e.g. COMPLETE, DRAFT)" .
-
-
-###  http://isagog.com/ontologies/top.owl#support
-:support rdf:type owl:AnnotationProperty ;
-         rdfs:comment "Possibilistic support for membership assertions in the interval (0,1)"@en ;
-         rdfs:range xsd:double .
-
-
-###  http://purl.org/dc/elements/1.1/creator
-dc:creator rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/license
-dct:license rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#comment
-rdfs:comment rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#isDefinedBy
-rdfs:isDefinedBy rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#label
-rdfs:label rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#seeAlso
-rdfs:seeAlso rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2002/07/owl#versionInfo
-owl:versionInfo rdf:type owl:AnnotationProperty .
-
-
-#################################################################
-#    Datatypes
-#################################################################
-
-###  http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral
-rdf:PlainLiteral rdf:type rdfs:Datatype .
-
-
-###  http://www.w3.org/2001/XMLSchema#anyURI
-xsd:anyURI rdf:type rdfs:Datatype .
-
-
-###  http://www.w3.org/2001/XMLSchema#string
-xsd:string rdf:type rdfs:Datatype .
-
-
-###  http://www.w3.org/2002/07/owl#real
-owl:real rdf:type rdfs:Datatype .
-
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  http://isagog.com/ontologies/top.owl#abstract-part
-:abstract-part rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf :logically-related ,
-                                  :part ;
-               owl:inverseOf :abstract-whole ;
-               rdfs:range :AbstractEntity ;
-               rdfs:comment "Parthood among abstracta"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#abstract-whole
-:abstract-whole rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf :logically-related ,
-                                   :whole ;
-                owl:propertyDisjointWith :concrete-whole .
-
-
-###  http://isagog.com/ontologies/top.owl#agent
-:agent rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf :participant ;
-       owl:inverseOf :initiated ;
-       rdfs:domain :Event ;
-       rdfs:range :Agent ;
-       rdfs:comment "Active participant"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#bearer
-:bearer rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :dependee ,
-                           :participant ;
-        rdfs:domain :Occurrent ;
-        rdfs:range :Continuant ;
-        rdfs:comment "Relates an occurrent to the continuants it depends upon"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#begin
-:begin rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf :phase ;
-       rdfs:range :Event ;
-       rdfs:comment "the beginning part of an event"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#collector
-:collector rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :whole ;
-           owl:inverseOf :element ;
-           rdfs:domain :Continuant ;
-           rdfs:range :Collection ;
-           rdfs:comment "Inverse of element"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#collocation
-:collocation rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf :participant ,
-                                :spatially-related ;
-             owl:inverseOf :located-host ;
-             rdfs:domain :Entity ;
-             rdfs:range :Object .
-
-
-###  http://isagog.com/ontologies/top.owl#component
-:component rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :material-part ;
-           rdfs:domain :Object ;
-           rdfs:range :Object .
-
-
-###  http://isagog.com/ontologies/top.owl#concrete-whole
-:concrete-whole rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf :whole .
-
-
-###  http://isagog.com/ontologies/top.owl#constituent
-:constituent rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf :material-part ;
-             owl:inverseOf :material-item ;
-             rdfs:domain :Object ;
-             rdfs:range :Substance ;
-             rdfs:comment "Material constituency, e.g. this table is constituted (made) of wood"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#created
-:created rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :dependent ;
-         owl:inverseOf :creator .
-
-
-###  http://isagog.com/ontologies/top.owl#creator
-:creator rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :dependee ;
-         rdfs:domain :Continuant ;
-         rdfs:range :Agent ;
-         rdfs:comment "Relates a continuant to the agent that brought it into existence"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#denoted
-:denoted rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :logically-related ;
-         owl:inverseOf :denoter ;
-         rdf:type owl:AsymmetricProperty ;
-         rdfs:domain :AbstractEntity ;
-         rdfs:comment "Generic semiotic relationship"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#denoter
-:denoter rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :logically-related ;
-         rdfs:range :AbstractEntity .
-
-
-###  http://isagog.com/ontologies/top.owl#dependee
-:dependee rdf:type owl:ObjectProperty ;
-          owl:inverseOf :dependent ;
-          rdfs:domain :Entity ;
-          rdfs:range :Entity ;
-          rdfs:comment "Inverse of dependent"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#dependent
-:dependent rdf:type owl:ObjectProperty ;
-           rdfs:domain :Entity ;
-           rdfs:range :Entity ;
-           rdfs:comment "Existential dependency relation: the dependent entity (range) wouldn't exist without another entity of some kind (domain) - e.g. dependent (cause,effect)"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#element
-:element rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :part ;
-         rdfs:domain :Collection ;
-         rdfs:range :Entity ;
-         rdfs:comment "Part relationship which does not yield dependency"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#end
-:end rdf:type owl:ObjectProperty ;
-     rdfs:subPropertyOf :phase ;
-     rdfs:range :Event ;
-     rdfs:comment "the ending part of an event"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#experience
-:experience rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :participated ;
-            owl:inverseOf :experiencer .
-
-
-###  http://isagog.com/ontologies/top.owl#experiencer
-:experiencer rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf :participant ;
-             rdfs:comment "Passive participant"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#generalization
-:generalization rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf :logically-related ;
-                owl:inverseOf :specialization ;
-                rdfs:domain :Denotator ;
-                rdfs:range :Denotator ;
-                rdfs:comment "Informatiive generalization"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#grounding
-:grounding rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :dependee ;
-           rdfs:domain :AbstractEntity ;
-           rdfs:range :PhysicalEntity ;
-           rdfs:comment "The spatio-temporal entity in which an abstraction grounds"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#informative-part
-:informative-part rdf:type owl:ObjectProperty ;
-                  rdfs:subPropertyOf :abstract-part ,
-                                     :logically-related ;
-                  owl:inverseOf :informative-whole ;
-                  rdfs:range :Information .
-
-
-###  http://isagog.com/ontologies/top.owl#informative-whole
-:informative-whole rdf:type owl:ObjectProperty ;
-                   rdfs:subPropertyOf :whole .
-
-
-###  http://isagog.com/ontologies/top.owl#initiated
-:initiated rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :participated .
-
-
-###  http://isagog.com/ontologies/top.owl#located-host
-:located-host rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf :spatially-related ;
-              rdfs:domain :Object ;
-              rdfs:range :Occurrent .
-
-
-###  http://isagog.com/ontologies/top.owl#logically-related
-:logically-related rdf:type owl:ObjectProperty ;
-                   rdfs:subPropertyOf :related ;
-                   rdfs:comment "Logical relatioships, i.e. dependent on cognitive, linguistic activities"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#material-item
-:material-item rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf :spatial-whole ;
-               rdfs:comment "Inverse of material constituent, e.g. this wood constitutes a table"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#material-part
-:material-part rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf :part ;
-               owl:inverseOf :spatial-whole ;
-               rdfs:domain :PhysicalEntity ;
-               rdfs:range :PhysicalEntity ;
-               rdfs:comment "Material (spatial) parthood"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#part
-:part rdf:type owl:ObjectProperty ;
-      owl:inverseOf :whole ;
-      rdfs:domain :Entity ;
-      rdfs:range :Entity ;
-      rdfs:comment "Composition relationship, where domain is the whole and range the part, e.g. part(bike,wheel)"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#participant
-:participant rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf owl:topObjectProperty ;
-             owl:inverseOf :participated ;
-             rdfs:domain :Occurrent ;
-             rdfs:range :Object ;
-             rdfs:comment "Event participation, e.g. participant(match,player)"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#participated
-:participated rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf owl:topObjectProperty ;
-              rdfs:domain :Continuant ;
-              rdfs:range :Occurrent ;
-              rdfs:comment "The event role in a participation, inverse of participant, e.g. eventuality(player, match)"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#phase
-:phase rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf :temporal-part ;
-       rdfs:comment "Ordered temporal part"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#qualified
-:qualified rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :dependee ;
-           owl:inverseOf :quality ;
-           rdfs:domain :Quality .
-
-
-###  http://isagog.com/ontologies/top.owl#quality
-:quality rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :dependent ;
-         rdfs:domain :Entity ;
-         rdfs:range :Quality .
-
-
-###  http://isagog.com/ontologies/top.owl#related
-:related rdf:type owl:ObjectProperty ;
-         rdfs:domain :Entity ;
-         rdfs:range :Entity ;
-         rdfs:comment "Generic relationship"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#sign
-:sign rdf:type owl:ObjectProperty ;
-      rdfs:subPropertyOf :denoter ;
-      owl:inverseOf :signified ;
-      rdfs:range :Sign ;
-      rdfs:comment "Signification relationship (see inverse). e.g. object sign name"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#signified
-:signified rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :denoted ;
-           rdfs:domain :Sign ;
-           rdfs:comment "Relationships which brings toghether social abstractions and entities of any kind (including abstractions). The domain entity (a social object) stands for the range one 'under some aspect or capacity' within semiotic processes, e.g. linguistic."@en .
-
-
-###  http://isagog.com/ontologies/top.owl#signifier
-:signifier rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :logically-related ;
-           rdfs:domain :Sign ;
-           rdfs:comment "The relationship between a sign and its concrete realization"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#space-location
-:space-location rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf :spatially-related ;
-                rdfs:range :SpaceRegion .
-
-
-###  http://isagog.com/ontologies/top.owl#spatial-whole
-:spatial-whole rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf :concrete-whole .
-
-
-###  http://isagog.com/ontologies/top.owl#spatially-related
-:spatially-related rdf:type owl:ObjectProperty ;
-                   rdfs:subPropertyOf :related ;
-                   rdfs:comment "Spatial proximity"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#specialization
-:specialization rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf :logically-related ;
-                rdfs:domain :Denotator ;
-                rdfs:range :Denotator ;
-                rdfs:comment "Informative specialization"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#state-experience
-:state-experience rdf:type owl:ObjectProperty ;
-                  rdfs:subPropertyOf :experience ;
-                  rdfs:range :State .
-
-
-###  http://isagog.com/ontologies/top.owl#subregion
-:subregion rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :part ;
-           rdfs:domain :Region .
-
-
-###  http://isagog.com/ontologies/top.owl#temporal-constituent
-:temporal-constituent rdf:type owl:ObjectProperty ;
-                      rdfs:subPropertyOf :temporal-part ;
-                      owl:inverseOf :temporal-ensemble ;
-                      rdfs:domain :Event ;
-                      rdfs:range :Event ;
-                      rdfs:comment "Temporal constituency, e.g. the violin play in a quartet"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#temporal-ensemble
-:temporal-ensemble rdf:type owl:ObjectProperty ;
-                   rdfs:subPropertyOf :temporal-whole ;
-                   rdfs:domain :Event ;
-                   rdfs:range :Event ;
-                   rdfs:comment "Inverse of temporal-constituent"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#temporal-part
-:temporal-part rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf :part ;
-               owl:inverseOf :temporal-whole ;
-               rdfs:domain :Event ;
-               rdfs:range :Event ;
-               rdfs:comment "Temporal parthood"^^xsd:string ,
-                            "Temporal whole"^^xsd:string .
-
-
-###  http://isagog.com/ontologies/top.owl#temporal-whole
-:temporal-whole rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf :concrete-whole .
-
-
-###  http://isagog.com/ontologies/top.owl#temporally-related
-:temporally-related rdf:type owl:ObjectProperty ;
-                    rdfs:subPropertyOf :related ;
-                    rdfs:comment "Temporal proximity"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#time-location
-:time-location rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf :temporally-related ;
-               rdfs:range :TimeRegion .
-
-
-###  http://isagog.com/ontologies/top.owl#time-subregion
-:time-subregion rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf :subregion ;
-                rdfs:domain :TimeRegion ;
-                rdfs:range :TimeRegion .
-
-
-###  http://isagog.com/ontologies/top.owl#type
-:type rdf:type owl:ObjectProperty ;
-      rdfs:subPropertyOf :denoter ;
-      rdfs:range :Denotator ;
-      rdfs:comment "Typological characterization"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#whole
-:whole rdf:type owl:ObjectProperty ;
-       rdfs:domain :Entity ;
-       rdfs:range :Entity ;
-       rdfs:comment "Inverse of part"@en .
-
-
-###  http://www.w3.org/2002/07/owl#topObjectProperty
-owl:topObjectProperty rdf:type owl:ObjectProperty .
-
-
-#################################################################
-#    Data properties
-#################################################################
-
-###  http://isagog.com/ontologies/top.owl#data-value
-:data-value rdf:type owl:DatatypeProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#final-time
-:final-time rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf :time-instant .
-
-
-###  http://isagog.com/ontologies/top.owl#identifier
-:identifier rdf:type owl:DatatypeProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#initial-time
-:initial-time rdf:type owl:DatatypeProperty ;
-              rdfs:subPropertyOf :time-instant .
-
-
-###  http://isagog.com/ontologies/top.owl#keyword
-:keyword rdf:type owl:DatatypeProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#property
-:property rdf:type owl:DatatypeProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#realization
-:realization rdf:type owl:DatatypeProperty ;
-             rdfs:domain :Sign .
-
-
-###  http://isagog.com/ontologies/top.owl#time-instant
-:time-instant rdf:type owl:DatatypeProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#time-span
-:time-span rdf:type owl:DatatypeProperty .
-
-
-###  http://isagog.com/ontologies/top.owl#uri
-:uri rdf:type owl:DatatypeProperty .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://isagog.com/ontologies/top.owl#AbstractCollection
-:AbstractCollection rdf:type owl:Class ;
-                    rdfs:subClassOf :AbstractEntity ,
-                                    [ owl:intersectionOf ( :Collection
-                                                           [ rdf:type owl:Restriction ;
-                                                             owl:onProperty :element ;
-                                                             owl:allValuesFrom :AbstractEntity
-                                                           ]
-                                                         ) ;
-                                      rdf:type owl:Class
-                                    ] ;
-                    rdfs:comment "Collezioni di entità non tangibili"@it ,
-                                 "Non tangible collection"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#AbstractEntity
-:AbstractEntity rdf:type owl:Class ;
-                rdfs:subClassOf :Continuant ;
-                owl:disjointWith :PhysicalEntity ;
-                rdfs:comment "Continuant entities not located in space (non tangible), e.g. a law, a meaning"@en ,
-                             "Continuanti non collocati nello spazio (non tangibili), es. una legge, un significato"@it ;
-                rdfs:seeAlso "BFO immaterial entity" ,
-                             "DOLCE abstract" .
-
-
-###  http://isagog.com/ontologies/top.owl#AbstractQuality
-:AbstractQuality rdf:type owl:Class ;
-                 rdfs:subClassOf :AbstractEntity ,
-                                 :Quality ;
-                 rdfs:comment "Qualities not located in space"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#AbstractRegion
-:AbstractRegion rdf:type owl:Class ;
-                rdfs:subClassOf :AbstractEntity ,
-                                :Region ;
-                owl:disjointWith :PhysicalRegion ;
-                rdfs:comment "Value fields, e.g. numbers, quality values"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Action
-:Action rdf:type owl:Class ;
-        rdfs:subClassOf [ owl:intersectionOf ( :Event
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :agent ;
-                                                 owl:someValuesFrom :Agent
-                                               ]
-                                             ) ;
-                          rdf:type owl:Class
-                        ] ;
-        rdfs:comment "An event initiated by some agent for some purpose"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Agent
-:Agent rdf:type owl:Class ;
-       rdfs:subClassOf :Object ;
-       rdfs:comment "A physical entity capable of initiating actions"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Artifact
-:Artifact rdf:type owl:Class ;
-          rdfs:subClassOf :Object ;
-          owl:disjointWith :Organism ;
-          rdfs:comment "Objects created by agents"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Change
-:Change rdf:type owl:Class ;
-        rdfs:subClassOf :Event ,
-                        [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :begin ;
-                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onClass :Occurrent
-                                               ]
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :end ;
-                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onClass :Occurrent
-                                               ]
-                                             ) ;
-                          rdf:type owl:Class
-                        ] ;
-        rdfs:comment "Event with two distinct ordered parts (before and after), e.g. a stop"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Collection
-:Collection rdf:type owl:Class ;
-            rdfs:subClassOf [ owl:intersectionOf ( :Continuant
-                                                   [ rdf:type owl:Restriction ;
-                                                     owl:onProperty :element ;
-                                                     owl:someValuesFrom :Continuant
-                                                   ]
-                                                 ) ;
-                              rdf:type owl:Class
-                            ] ;
-            rdfs:comment "Collective (i.e. with elements) continuants. Collections are intensional, i.e. their identity does not necessarily depend on their members)"@en ,
-                         "Entità collettive (i.e. con elementi)"@it .
-
-
-###  http://isagog.com/ontologies/top.owl#Continuant
-:Continuant rdf:type owl:Class ;
-            owl:equivalentClass [ rdf:type owl:Class ;
-                                  owl:unionOf ( :AbstractEntity
-                                                :PhysicalEntity
-                                              )
-                                ] ;
-            rdfs:subClassOf :Entity ;
-            owl:disjointWith :Occurrent ;
-            rdfs:comment "Entities fully present at every instant of their existence, e.g. a bottle, a cat, a law."@en ,
-                         "Entità completamente presenti ad ogni istante della loro esistenza, es. una bottiglia, un gatto, una legge"@it ;
-            rdfs:seeAlso "BFO continuant" ,
-                         "DOLCE endurant" .
-
-
-###  http://isagog.com/ontologies/top.owl#Course
-:Course rdf:type owl:Class ;
-        owl:equivalentClass [ rdf:type owl:Restriction ;
-                              owl:onProperty :phase ;
-                              owl:someValuesFrom :Event
-                            ] ;
-        rdfs:subClassOf :Event ;
-        rdfs:comment "An event with identified phases (states)"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Denotator
-:Denotator rdf:type owl:Class ;
-           rdfs:subClassOf :Information ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :denoted ;
-                             owl:someValuesFrom :Entity
-                           ] ;
-           rdfs:comment "Social object which identifies some entity in any possible world (state of affair)."@en ;
-           rdfs:seeAlso "DOLCE (ExtendedDnS) social-object" ,
-                        "SKOS Concept" .
-
-
-###  http://isagog.com/ontologies/top.owl#Entity
-:Entity rdf:type owl:Class ;
-        owl:equivalentClass [ rdf:type owl:Class ;
-                              owl:unionOf ( :Continuant
-                                            :Occurrent
-                                          )
-                            ] ;
-        rdfs:comment "Any identifiable thing"@en ;
-        rdfs:seeAlso "DOLCE particular" .
-
-
-###  http://isagog.com/ontologies/top.owl#Event
-:Event rdf:type owl:Class ;
-       rdfs:subClassOf :Occurrent ;
-       rdfs:comment "Occurrent whose phases have distinguished properties, e.g. a tennis match"@en ;
-       rdfs:seeAlso "DOLCE perdurant" .
-
-
-###  http://isagog.com/ontologies/top.owl#Feature
-:Feature rdf:type owl:Class ;
-         rdfs:subClassOf :PhysicalQuality ;
-         rdfs:comment "Dependent physical entity, e.g. a distinguished part"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Function
-:Function rdf:type owl:Class ;
-          rdfs:subClassOf :AbstractQuality ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :qualified ;
-                            owl:allValuesFrom :PhysicalEntity
-                          ] ;
-          rdfs:comment "For physical entities, the quality of playing a specific role in actions"@it .
-
-
-###  http://isagog.com/ontologies/top.owl#Human
-:Human rdf:type owl:Class ;
-       rdfs:subClassOf :Agent ,
-                       :Organism ;
-       rdfs:comment "Agentive organism capable of speaking articulated languages"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Information
-:Information rdf:type owl:Class ;
-             rdfs:subClassOf :AbstractEntity ;
-             rdfs:comment "Abstract entity produced by human communication activities, thus dependent on mental states, social relations, linguistic interactions (aka 'social object')"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#InorganicSubstance
-:InorganicSubstance rdf:type owl:Class ;
-                    rdfs:subClassOf :Substance ;
-                    rdfs:seeAlso "Non organic substances" .
-
-
-###  http://isagog.com/ontologies/top.owl#Measure
-:Measure rdf:type owl:Class ;
-         rdfs:subClassOf :Information ;
-         rdfs:comment "Observed value at a given scale"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Number
-:Number rdf:type owl:Class ;
-        rdfs:subClassOf :Denotator .
-
-
-###  http://isagog.com/ontologies/top.owl#NumericField
-:NumericField rdf:type owl:Class ;
-              rdfs:subClassOf :AbstractRegion ;
-              rdfs:comment "Numeric region"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Object
-:Object rdf:type owl:Class ;
-        rdfs:subClassOf :PhysicalEntity ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :constituent ;
-                          owl:someValuesFrom :Substance
-                        ] ;
-        owl:disjointWith :Substance ;
-        rdfs:comment "Independent, countable kind of continuant (sortal)"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Occurrent
-:Occurrent rdf:type owl:Class ;
-           owl:equivalentClass [ rdf:type owl:Class ;
-                                 owl:unionOf ( :Event
-                                               :State
-                                             )
-                               ] ;
-           rdfs:subClassOf :Entity ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :time-location ;
-                             owl:someValuesFrom :TimeRegion
-                           ] ;
-           rdfs:comment "Entities not fully present at any instant of their existence, i.e. events or states, e.g. a tennins match, a sit"@en ;
-           rdfs:seeAlso "DOLCE perdurant" .
-
-
-###  http://isagog.com/ontologies/top.owl#OrganicSubstance
-:OrganicSubstance rdf:type owl:Class ;
-                  rdfs:subClassOf :Substance ;
-                  rdfs:seeAlso "Carbon-based substances which compose organisms"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Organism
-:Organism rdf:type owl:Class ;
-          rdfs:subClassOf :Object ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :constituent ;
-                            owl:someValuesFrom :OrganicSubstance
-                          ] ;
-          rdfs:comment "Biological sortal entity"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#PhysicalCollection
-:PhysicalCollection rdf:type owl:Class ;
-                    rdfs:subClassOf :PhysicalEntity ,
-                                    [ owl:intersectionOf ( :Collection
-                                                           [ rdf:type owl:Restriction ;
-                                                             owl:onProperty :element ;
-                                                             owl:allValuesFrom :PhysicalEntity
-                                                           ]
-                                                         ) ;
-                                      rdf:type owl:Class
-                                    ] ;
-                    rdfs:comment "Collezione tangibile"@it ,
-                                 "Tangible collection"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#PhysicalEntity
-:PhysicalEntity rdf:type owl:Class ;
-                rdfs:subClassOf :Continuant ,
-                                [ rdf:type owl:Restriction ;
-                                  owl:onProperty :space-location ;
-                                  owl:someValuesFrom :SpaceRegion
-                                ] ;
-                rdfs:comment "BFO material entity" ,
-                             "Continuanti collocati nello spazio (tangibili)"@it ,
-                             "Continuants located in space (tangible)"@en ;
-                rdfs:seeAlso "DOLCE physical-endurant" .
-
-
-###  http://isagog.com/ontologies/top.owl#PhysicalQuality
-:PhysicalQuality rdf:type owl:Class ;
-                 rdfs:subClassOf :PhysicalEntity ,
-                                 :Quality ;
-                 rdfs:comment "Dependent continuants located in space, such as features or colors"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#PhysicalRegion
-:PhysicalRegion rdf:type owl:Class ;
-                rdfs:subClassOf :PhysicalEntity ,
-                                :Region .
-
-
-###  http://isagog.com/ontologies/top.owl#Property
-:Property rdf:type owl:Class ;
-          rdfs:subClassOf :AbstractQuality ;
-          rdfs:comment "Non tangible direct qualities such as colors, smells, etc"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Quality
-:Quality rdf:type owl:Class ;
-         rdfs:subClassOf :Continuant ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :qualified ;
-                           owl:someValuesFrom :Entity
-                         ] ;
-         rdfs:comment "Existentially dependent continuants, such as features, shapes, colors"@en ;
-         rdfs:seeAlso "BFO quality" ,
-                      "DOLCE quality" .
-
-
-###  http://isagog.com/ontologies/top.owl#QualityRegion
-:QualityRegion rdf:type owl:Class ;
-               rdfs:subClassOf :AbstractRegion ;
-               rdfs:comment "Values of qualities, e.g. colors, sizes"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#Region
-:Region rdf:type owl:Class ;
-        rdfs:subClassOf :Continuant .
-
-
-###  http://isagog.com/ontologies/top.owl#Sign
-:Sign rdf:type owl:Class ;
-      rdfs:subClassOf :Information ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :signifier ;
-                        owl:someValuesFrom :PhysicalEntity
-                      ] ;
-      rdfs:comment "A denotation which is manifested by an informative object (signifier), and denotes some entity (signified)"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#SpaceRegion
-:SpaceRegion rdf:type owl:Class ;
-             rdfs:subClassOf :PhysicalRegion ;
-             rdfs:comment "Space portions"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#State
-:State rdf:type owl:Class ;
-       rdfs:subClassOf :Occurrent ;
-       rdfs:comment "Occurrent whose phases are not distinguishable, e.g. a sit"@en ;
-       rdfs:seeAlso "DOLCE stative" .
-
-
-###  http://isagog.com/ontologies/top.owl#Substance
-:Substance rdf:type owl:Class ;
-           rdfs:subClassOf :PhysicalEntity ;
-           rdfs:comment "Non dependent, non sortal continuant (matter)"@en .
-
-
-###  http://isagog.com/ontologies/top.owl#TimeRegion
-:TimeRegion rdf:type owl:Class ;
-            rdfs:subClassOf :PhysicalRegion ;
-            rdfs:comment "Time spans"@en .
-
-
-###  http://www.w3.org/2002/07/owl#Thing
-owl:Thing rdf:type owl:Class .
-
-
-###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+	rdfs:comment "An introductory upper-level ontology. At the basis of this ontology there are few primitive formal and material notions, including space, time, parthood, dependency, and agentivity."@en ;
+	rdfs:label "Isagog Upper Ontology" .
+# 
+# 
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/top.owl#authors
+
+:authors a owl:AnnotationProperty ;
+	:authors "Guido Vetere" .
+# 
+# http://isagog.com/ontologies/top.owl#category
+
+:category a owl:AnnotationProperty ;
+	rdfs:comment "Ontological commitment of linguistic senses"@en ;
+	rdfs:subPropertyOf :ontological-annotation ;
+	rdfs:range xsd:anyURI .
+# 
+# http://isagog.com/ontologies/top.owl#copyright
+
+:copyright a owl:AnnotationProperty ;
+	:authors "(CC-BY) Isagog S.r.l." .
+# 
+# http://isagog.com/ontologies/top.owl#definition
+
+:definition a owl:AnnotationProperty ;
+	rdfs:subPropertyOf :ontological-annotation .
+# 
+# http://isagog.com/ontologies/top.owl#ontological-annotation
+
+:ontological-annotation a owl:AnnotationProperty .
+# 
+# http://isagog.com/ontologies/top.owl#status
+
+:status a owl:AnnotationProperty ;
+	rdfs:comment "The state of development of a resource (e.g. COMPLETE, DRAFT)" .
+# 
+# http://isagog.com/ontologies/top.owl#support
+
+:support a owl:AnnotationProperty ;
+	rdfs:comment "Possibilistic support for membership assertions in the interval (0,1)"@en ;
+	rdfs:range xsd:double .
+# 
+# http://purl.org/dc/elements/1.1/creator
+
+dc:creator a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/license
+
+dct:license a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2000/01/rdf-schema#comment
+
+rdfs:comment a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2000/01/rdf-schema#isDefinedBy
+
+rdfs:isDefinedBy a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2000/01/rdf-schema#label
+
+rdfs:label a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2000/01/rdf-schema#seeAlso
+
+rdfs:seeAlso a owl:AnnotationProperty .
+# 
+# http://www.w3.org/2002/07/owl#versionInfo
+
+owl:versionInfo a owl:AnnotationProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Datatypes
+# #
+# #################################################################
+# 
+# 
+# http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral
+
+rdf:PlainLiteral a rdfs:Datatype .
+# 
+# http://www.w3.org/2001/XMLSchema#anyURI
+
+xsd:anyURI a rdfs:Datatype .
+# 
+# http://www.w3.org/2001/XMLSchema#string
+
+xsd:string a rdfs:Datatype .
+# 
+# http://www.w3.org/2002/07/owl#real
+
+owl:real a rdfs:Datatype .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/top.owl#abstract-part
+
+:abstract-part a owl:ObjectProperty ;
+	rdfs:subPropertyOf :logically-related , :part ;
+	owl:inverseOf :abstract-whole ;
+	rdfs:range :AbstractEntity ;
+	rdfs:comment "Parthood among abstracta"@en .
+# 
+# http://isagog.com/ontologies/top.owl#abstract-whole
+
+:abstract-whole a owl:ObjectProperty ;
+	rdfs:subPropertyOf :logically-related , :whole ;
+	owl:propertyDisjointWith :concrete-whole .
+# 
+# http://isagog.com/ontologies/top.owl#agent
+
+:agent a owl:ObjectProperty ;
+	rdfs:subPropertyOf :participant ;
+	owl:inverseOf :initiated ;
+	rdfs:domain :Event ;
+	rdfs:range :Agent ;
+	rdfs:comment "Active participant"@en .
+# 
+# http://isagog.com/ontologies/top.owl#bearer
+
+:bearer a owl:ObjectProperty ;
+	rdfs:subPropertyOf :dependee , :participant ;
+	rdfs:domain :Occurrent ;
+	rdfs:range :Continuant ;
+	rdfs:comment "Relates an occurrent to the continuants it depends upon"@en .
+# 
+# http://isagog.com/ontologies/top.owl#begin
+
+:begin a owl:ObjectProperty ;
+	rdfs:subPropertyOf :phase ;
+	rdfs:range :Event ;
+	rdfs:comment "the beginning part of an event"@en .
+# 
+# http://isagog.com/ontologies/top.owl#collector
+
+:collector a owl:ObjectProperty ;
+	rdfs:subPropertyOf :whole ;
+	owl:inverseOf :element ;
+	rdfs:domain :Entity ;
+	rdfs:range :Collection ;
+	rdfs:comment "Inverse of element"@en .
+# 
+# http://isagog.com/ontologies/top.owl#collocation
+
+:collocation a owl:ObjectProperty ;
+	rdfs:subPropertyOf :participant , :spatially-related ;
+	owl:inverseOf :located-host ;
+	rdfs:domain :Entity ;
+	rdfs:range :Object .
+# 
+# http://isagog.com/ontologies/top.owl#component
+
+:component a owl:ObjectProperty ;
+	rdfs:subPropertyOf :material-part ;
+	rdfs:domain :Object ;
+	rdfs:range :Object .
+# 
+# http://isagog.com/ontologies/top.owl#concrete-whole
+
+:concrete-whole a owl:ObjectProperty ;
+	rdfs:subPropertyOf :whole .
+# 
+# http://isagog.com/ontologies/top.owl#constituent
+
+:constituent a owl:ObjectProperty ;
+	rdfs:subPropertyOf :material-part ;
+	owl:inverseOf :material-item ;
+	rdfs:domain :Object ;
+	rdfs:range :Substance ;
+	rdfs:comment "Material constituency, e.g. this table is constituted (made) of wood"@en .
+# 
+# http://isagog.com/ontologies/top.owl#created
+
+:created a owl:ObjectProperty ;
+	rdfs:subPropertyOf :dependent ;
+	owl:inverseOf :creator .
+# 
+# http://isagog.com/ontologies/top.owl#creator
+
+:creator a owl:ObjectProperty ;
+	rdfs:subPropertyOf :dependee ;
+	rdfs:domain :Continuant ;
+	rdfs:range :Agent ;
+	rdfs:comment "Relates a continuant to the agent that brought it into existence"@en .
+# 
+# http://isagog.com/ontologies/top.owl#denoted
+
+:denoted a owl:ObjectProperty ;
+	rdfs:subPropertyOf :logically-related ;
+	owl:inverseOf :denoter ;
+	a owl:AsymmetricProperty ;
+	rdfs:domain :AbstractEntity ;
+	rdfs:comment "Generic semiotic relationship"@en .
+# 
+# http://isagog.com/ontologies/top.owl#denoter
+
+:denoter a owl:ObjectProperty ;
+	rdfs:subPropertyOf :logically-related ;
+	rdfs:range :AbstractEntity .
+# 
+# http://isagog.com/ontologies/top.owl#dependee
+
+:dependee a owl:ObjectProperty ;
+	owl:inverseOf :dependent ;
+	rdfs:domain :Entity ;
+	rdfs:range :Entity ;
+	rdfs:comment "Inverse of dependent"@en .
+# 
+# http://isagog.com/ontologies/top.owl#dependent
+
+:dependent a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :Entity ;
+	rdfs:comment "Existential dependency relation: the dependent entity (range) wouldn't exist without another entity of some kind (domain) - e.g. dependent (cause,effect)"@en .
+# 
+# http://isagog.com/ontologies/top.owl#element
+
+:element a owl:ObjectProperty ;
+	rdfs:subPropertyOf :part ;
+	rdfs:domain :Collection ;
+	rdfs:range :Entity ;
+	rdfs:comment "Part relationship which does not yield dependency"@en .
+# 
+# http://isagog.com/ontologies/top.owl#end
+
+:end a owl:ObjectProperty ;
+	rdfs:subPropertyOf :phase ;
+	rdfs:range :Event ;
+	rdfs:comment "the ending part of an event"@en .
+# 
+# http://isagog.com/ontologies/top.owl#experience
+
+:experience a owl:ObjectProperty ;
+	rdfs:subPropertyOf :participated ;
+	owl:inverseOf :experiencer .
+# 
+# http://isagog.com/ontologies/top.owl#experiencer
+
+:experiencer a owl:ObjectProperty ;
+	rdfs:subPropertyOf :participant ;
+	rdfs:comment "Passive participant"@en .
+# 
+# http://isagog.com/ontologies/top.owl#generalization
+
+:generalization a owl:ObjectProperty ;
+	rdfs:subPropertyOf :logically-related ;
+	owl:inverseOf :specialization ;
+	rdfs:domain :Denotator ;
+	rdfs:range :Denotator ;
+	rdfs:comment "Informatiive generalization"@en .
+# 
+# http://isagog.com/ontologies/top.owl#grounding
+
+:grounding a owl:ObjectProperty ;
+	rdfs:subPropertyOf :dependee ;
+	rdfs:domain :AbstractEntity ;
+	rdfs:range :PhysicalEntity ;
+	rdfs:comment "The spatio-temporal entity in which an abstraction grounds"@en .
+# 
+# http://isagog.com/ontologies/top.owl#informative-part
+
+:informative-part a owl:ObjectProperty ;
+	rdfs:subPropertyOf :abstract-part , :logically-related ;
+	owl:inverseOf :informative-whole ;
+	rdfs:range :Information .
+# 
+# http://isagog.com/ontologies/top.owl#informative-whole
+
+:informative-whole a owl:ObjectProperty ;
+	rdfs:subPropertyOf :whole .
+# 
+# http://isagog.com/ontologies/top.owl#initiated
+
+:initiated a owl:ObjectProperty ;
+	rdfs:subPropertyOf :participated .
+# 
+# http://isagog.com/ontologies/top.owl#located-host
+
+:located-host a owl:ObjectProperty ;
+	rdfs:subPropertyOf :spatially-related ;
+	rdfs:domain :Object ;
+	rdfs:range :Occurrent .
+# 
+# http://isagog.com/ontologies/top.owl#logically-related
+
+:logically-related a owl:ObjectProperty ;
+	rdfs:subPropertyOf :related ;
+	rdfs:comment "Logical relatioships, i.e. dependent on cognitive, linguistic activities"@en .
+# 
+# http://isagog.com/ontologies/top.owl#material-item
+
+:material-item a owl:ObjectProperty ;
+	rdfs:subPropertyOf :spatial-whole ;
+	rdfs:comment "Inverse of material constituent, e.g. this wood constitutes a table"@en .
+# 
+# http://isagog.com/ontologies/top.owl#material-part
+
+:material-part a owl:ObjectProperty ;
+	rdfs:subPropertyOf :part ;
+	owl:inverseOf :spatial-whole ;
+	rdfs:domain :PhysicalEntity ;
+	rdfs:range :PhysicalEntity ;
+	rdfs:comment "Material (spatial) parthood"@en .
+# 
+# http://isagog.com/ontologies/top.owl#part
+
+:part a owl:ObjectProperty ;
+	owl:inverseOf :whole ;
+	rdfs:domain :Entity ;
+	rdfs:range :Entity ;
+	rdfs:comment "Composition relationship, where domain is the whole and range the part, e.g. part(bike,wheel)"@en .
+# 
+# http://isagog.com/ontologies/top.owl#participant
+
+:participant a owl:ObjectProperty ;
+	rdfs:subPropertyOf owl:topObjectProperty ;
+	owl:inverseOf :participated ;
+	rdfs:domain :Occurrent ;
+	rdfs:range :Object ;
+	rdfs:comment "Event participation, e.g. participant(match,player)"@en .
+# 
+# http://isagog.com/ontologies/top.owl#participated
+
+:participated a owl:ObjectProperty ;
+	rdfs:subPropertyOf owl:topObjectProperty ;
+	rdfs:domain :Continuant ;
+	rdfs:range :Occurrent ;
+	rdfs:comment "The event role in a participation, inverse of participant, e.g. eventuality(player, match)"@en .
+# 
+# http://isagog.com/ontologies/top.owl#phase
+
+:phase a owl:ObjectProperty ;
+	rdfs:subPropertyOf :element , :temporal-part ;
+	rdfs:comment "Ordered temporal part"@en .
+# 
+# http://isagog.com/ontologies/top.owl#qualified
+
+:qualified a owl:ObjectProperty ;
+	rdfs:subPropertyOf :dependee ;
+	owl:inverseOf :quality ;
+	rdfs:domain :Quality .
+# 
+# http://isagog.com/ontologies/top.owl#quality
+
+:quality a owl:ObjectProperty ;
+	rdfs:subPropertyOf :dependent ;
+	rdfs:domain :Entity ;
+	rdfs:range :Quality .
+# 
+# http://isagog.com/ontologies/top.owl#related
+
+:related a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :Entity ;
+	rdfs:comment "Generic relationship"@en .
+# 
+# http://isagog.com/ontologies/top.owl#sign
+
+:sign a owl:ObjectProperty ;
+	rdfs:subPropertyOf :denoter ;
+	owl:inverseOf :signified ;
+	rdfs:range :Sign ;
+	rdfs:comment "Signification relationship (see inverse). e.g. object sign name"@en .
+# 
+# http://isagog.com/ontologies/top.owl#signified
+
+:signified a owl:ObjectProperty ;
+	rdfs:subPropertyOf :denoted ;
+	rdfs:domain :Sign ;
+	rdfs:comment "Relationships which brings toghether social abstractions and entities of any kind (including abstractions). The domain entity (a social object) stands for the range one 'under some aspect or capacity' within semiotic processes, e.g. linguistic."@en .
+# 
+# http://isagog.com/ontologies/top.owl#signifier
+
+:signifier a owl:ObjectProperty ;
+	rdfs:subPropertyOf :logically-related ;
+	rdfs:domain :Sign ;
+	rdfs:comment "The relationship between a sign and its concrete realization"@en .
+# 
+# http://isagog.com/ontologies/top.owl#space-location
+
+:space-location a owl:ObjectProperty ;
+	rdfs:subPropertyOf :spatially-related ;
+	rdfs:range :SpaceRegion .
+# 
+# http://isagog.com/ontologies/top.owl#spatial-whole
+
+:spatial-whole a owl:ObjectProperty ;
+	rdfs:subPropertyOf :concrete-whole .
+# 
+# http://isagog.com/ontologies/top.owl#spatially-related
+
+:spatially-related a owl:ObjectProperty ;
+	rdfs:subPropertyOf :related ;
+	rdfs:comment "Spatial proximity"@en .
+# 
+# http://isagog.com/ontologies/top.owl#specialization
+
+:specialization a owl:ObjectProperty ;
+	rdfs:subPropertyOf :logically-related ;
+	rdfs:domain :Denotator ;
+	rdfs:range :Denotator ;
+	rdfs:comment "Informative specialization"@en .
+# 
+# http://isagog.com/ontologies/top.owl#state-experience
+
+:state-experience a owl:ObjectProperty ;
+	rdfs:subPropertyOf :experience ;
+	rdfs:range :State .
+# 
+# http://isagog.com/ontologies/top.owl#subregion
+
+:subregion a owl:ObjectProperty ;
+	rdfs:subPropertyOf :part ;
+	rdfs:domain :Region .
+# 
+# http://isagog.com/ontologies/top.owl#temporal-constituent
+
+:temporal-constituent a owl:ObjectProperty ;
+	rdfs:subPropertyOf :temporal-part ;
+	owl:inverseOf :temporal-ensemble ;
+	rdfs:domain :Event ;
+	rdfs:range :Event ;
+	rdfs:comment "Temporal constituency, e.g. the violin play in a quartet"@en .
+# 
+# http://isagog.com/ontologies/top.owl#temporal-ensemble
+
+:temporal-ensemble a owl:ObjectProperty ;
+	rdfs:subPropertyOf :temporal-whole ;
+	rdfs:domain :Event ;
+	rdfs:range :Event ;
+	rdfs:comment "Inverse of temporal-constituent"@en .
+# 
+# http://isagog.com/ontologies/top.owl#temporal-part
+
+:temporal-part a owl:ObjectProperty ;
+	rdfs:subPropertyOf :part ;
+	owl:inverseOf :temporal-whole ;
+	rdfs:domain :Event ;
+	rdfs:range :Event ;
+	rdfs:comment "Temporal parthood"^^xsd:string , "Temporal whole"^^xsd:string .
+# 
+# http://isagog.com/ontologies/top.owl#temporal-whole
+
+:temporal-whole a owl:ObjectProperty ;
+	rdfs:subPropertyOf :concrete-whole .
+# 
+# http://isagog.com/ontologies/top.owl#temporally-related
+
+:temporally-related a owl:ObjectProperty ;
+	rdfs:subPropertyOf :related ;
+	rdfs:comment "Temporal proximity"@en .
+# 
+# http://isagog.com/ontologies/top.owl#time-location
+
+:time-location a owl:ObjectProperty ;
+	rdfs:subPropertyOf :temporally-related ;
+	rdfs:range :TimeRegion .
+# 
+# http://isagog.com/ontologies/top.owl#time-subregion
+
+:time-subregion a owl:ObjectProperty ;
+	rdfs:subPropertyOf :subregion ;
+	rdfs:domain :TimeRegion ;
+	rdfs:range :TimeRegion .
+# 
+# http://isagog.com/ontologies/top.owl#type
+
+:type a owl:ObjectProperty ;
+	rdfs:subPropertyOf :denoter ;
+	rdfs:range :Denotator ;
+	rdfs:comment "Typological characterization"@en .
+# 
+# http://isagog.com/ontologies/top.owl#whole
+
+:whole a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :Entity ;
+	rdfs:comment "Inverse of part"@en .
+# 
+# http://www.w3.org/2002/07/owl#topObjectProperty
+
+owl:topObjectProperty a owl:ObjectProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Data properties
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/top.owl#data-value
+
+:data-value a owl:DatatypeProperty .
+# 
+# http://isagog.com/ontologies/top.owl#final-time
+
+:final-time a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :time-instant .
+# 
+# http://isagog.com/ontologies/top.owl#identifier
+
+:identifier a owl:DatatypeProperty .
+# 
+# http://isagog.com/ontologies/top.owl#initial-time
+
+:initial-time a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :time-instant .
+# 
+# http://isagog.com/ontologies/top.owl#keyword
+
+:keyword a owl:DatatypeProperty .
+# 
+# http://isagog.com/ontologies/top.owl#property
+
+:property a owl:DatatypeProperty .
+# 
+# http://isagog.com/ontologies/top.owl#realization
+
+:realization a owl:DatatypeProperty ;
+	rdfs:domain :Sign .
+# 
+# http://isagog.com/ontologies/top.owl#time-instant
+
+:time-instant a owl:DatatypeProperty .
+# 
+# http://isagog.com/ontologies/top.owl#time-span
+
+:time-span a owl:DatatypeProperty .
+# 
+# http://isagog.com/ontologies/top.owl#uri
+
+:uri a owl:DatatypeProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/top.owl#AbstractCollection
+
+:AbstractCollection a owl:Class ;
+	rdfs:subClassOf :AbstractEntity , _:genid1 .
+
+_:genid1 owl:intersectionOf _:genid4 .
+
+_:genid4 a rdf:List ;
+	rdf:first :Collection ;
+	rdf:rest _:genid2 .
+
+_:genid2 a rdf:List ;
+	rdf:first _:genid3 .
+
+_:genid3 a owl:Restriction ;
+	owl:onProperty :element ;
+	owl:allValuesFrom :AbstractEntity .
+
+_:genid2 rdf:rest rdf:nil .
+
+_:genid1 a owl:Class .
+
+:AbstractCollection rdfs:comment "Collezioni di entità non tangibili"@it , "Non tangible collection"@en .
+# 
+# http://isagog.com/ontologies/top.owl#AbstractEntity
+
+:AbstractEntity a owl:Class ;
+	rdfs:subClassOf :Continuant ;
+	owl:disjointWith :PhysicalEntity ;
+	rdfs:comment "Continuant entities not located in space (non tangible), e.g. a law, a meaning"@en , "Continuanti non collocati nello spazio (non tangibili), es. una legge, un significato"@it ;
+	rdfs:seeAlso "BFO immaterial entity" , "DOLCE abstract" .
+# 
+# http://isagog.com/ontologies/top.owl#AbstractQuality
+
+:AbstractQuality a owl:Class ;
+	rdfs:subClassOf :AbstractEntity , :Quality ;
+	rdfs:comment "Qualities not located in space"@en .
+# 
+# http://isagog.com/ontologies/top.owl#AbstractRegion
+
+:AbstractRegion a owl:Class ;
+	rdfs:subClassOf :AbstractEntity , :Region ;
+	owl:disjointWith :PhysicalRegion ;
+	rdfs:comment "Value fields, e.g. numbers, quality values"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Action
+
+:Action a owl:Class ;
+	owl:equivalentClass _:genid5 .
+
+_:genid5 a owl:Restriction ;
+	owl:onProperty :agent ;
+	owl:someValuesFrom :Agent .
+
+:Action rdfs:subClassOf :Event ;
+	rdfs:comment "An event initiated by some agent for some purpose"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Agent
+
+:Agent a owl:Class ;
+	rdfs:subClassOf :Object ;
+	rdfs:comment "A physical entity capable of initiating actions"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Artifact
+
+:Artifact a owl:Class ;
+	rdfs:subClassOf :Object ;
+	owl:disjointWith :Organism ;
+	rdfs:comment "Objects created by agents"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Change
+
+:Change a owl:Class ;
+	rdfs:subClassOf :Event , _:genid6 .
+
+_:genid6 owl:intersectionOf _:genid9 .
+
+_:genid9 a rdf:List ;
+	rdf:first _:genid10 .
+
+_:genid10 a owl:Restriction ;
+	owl:onProperty :begin ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :Occurrent .
+
+_:genid9 rdf:rest _:genid7 .
+
+_:genid7 a rdf:List ;
+	rdf:first _:genid8 .
+
+_:genid8 a owl:Restriction ;
+	owl:onProperty :end ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :Occurrent .
+
+_:genid7 rdf:rest rdf:nil .
+
+_:genid6 a owl:Class .
+
+:Change rdfs:comment "Event with two distinct ordered parts (before and after), e.g. a stop"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Collection
+
+:Collection a owl:Class ;
+	owl:equivalentClass _:genid11 .
+
+_:genid11 a owl:Restriction ;
+	owl:onProperty :element ;
+	owl:someValuesFrom :Entity .
+
+:Collection rdfs:subClassOf :Entity ;
+	rdfs:comment "Collective (i.e. with elements) continuants. Collections are intensional, i.e. their identity does not necessarily depend on their members)"@en , "Entità collettive (i.e. con elementi)"@it .
+# 
+# http://isagog.com/ontologies/top.owl#Continuant
+
+:Continuant a owl:Class ;
+	owl:equivalentClass _:genid12 .
+
+_:genid12 a owl:Class ;
+	owl:unionOf _:genid14 .
+
+_:genid14 a rdf:List ;
+	rdf:first :AbstractEntity ;
+	rdf:rest _:genid13 .
+
+_:genid13 a rdf:List ;
+	rdf:first :PhysicalEntity ;
+	rdf:rest rdf:nil .
+
+:Continuant rdfs:subClassOf :Entity ;
+	owl:disjointWith :Occurrent ;
+	rdfs:comment "Entities fully present at every instant of their existence, e.g. a bottle, a cat, a law."@en , "Entità interamente presenti ad ogni istante della loro esistenza, es. una bottiglia, un gatto, una legge"@it ;
+	rdfs:seeAlso "BFO continuant" , "DOLCE endurant" .
+# 
+# http://isagog.com/ontologies/top.owl#Course
+
+:Course a owl:Class ;
+	owl:equivalentClass _:genid15 .
+
+_:genid15 a owl:Restriction ;
+	owl:onProperty :phase ;
+	owl:someValuesFrom :Event .
+
+:Course rdfs:subClassOf :Event ;
+	rdfs:comment "An event with identified phases (states)"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Denotator
+
+:Denotator a owl:Class ;
+	rdfs:subClassOf :Information , _:genid16 .
+
+_:genid16 a owl:Restriction ;
+	owl:onProperty :denoted ;
+	owl:someValuesFrom :Entity .
+
+:Denotator rdfs:comment "Social object which identifies some entity in any possible world (state of affair)."@en ;
+	rdfs:seeAlso "DOLCE (ExtendedDnS) social-object" , "SKOS Concept" .
+# 
+# http://isagog.com/ontologies/top.owl#Entity
+
+:Entity a owl:Class ;
+	owl:equivalentClass _:genid17 .
+
+_:genid17 a owl:Class ;
+	owl:unionOf _:genid19 .
+
+_:genid19 a rdf:List ;
+	rdf:first :Continuant ;
+	rdf:rest _:genid18 .
+
+_:genid18 a rdf:List ;
+	rdf:first :Occurrent ;
+	rdf:rest rdf:nil .
+
+:Entity rdfs:comment "Any identifiable thing"@en ;
+	rdfs:seeAlso "DOLCE particular" .
+# 
+# http://isagog.com/ontologies/top.owl#Event
+
+:Event a owl:Class ;
+	rdfs:subClassOf :Occurrent ;
+	rdfs:comment "Occurrent whose phases have distinguished properties, e.g. a tennis match"@en ;
+	rdfs:seeAlso "DOLCE perdurant" .
+# 
+# http://isagog.com/ontologies/top.owl#Feature
+
+:Feature a owl:Class ;
+	rdfs:subClassOf :PhysicalQuality , _:genid20 .
+
+_:genid20 a owl:Restriction ;
+	owl:onProperty :qualified ;
+	owl:allValuesFrom :PhysicalEntity .
+
+:Feature rdfs:comment "Dependent physical entity, e.g. a distinguished part"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Function
+
+:Function a owl:Class ;
+	rdfs:subClassOf :AbstractQuality , _:genid21 .
+
+_:genid21 a owl:Restriction ;
+	owl:onProperty :qualified ;
+	owl:allValuesFrom :PhysicalEntity .
+
+:Function rdfs:comment "For physical entities, the quality of playing a specific role in actions"@it .
+# 
+# http://isagog.com/ontologies/top.owl#Human
+
+:Human a owl:Class ;
+	rdfs:subClassOf :Agent , :Organism ;
+	rdfs:comment "Agentive organism capable of speaking articulated languages"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Information
+
+:Information a owl:Class ;
+	rdfs:subClassOf :AbstractEntity ;
+	rdfs:comment "Abstract entity produced by human communication activities, thus dependent on mental states, social relations, linguistic interactions (aka 'social object')"@en .
+# 
+# http://isagog.com/ontologies/top.owl#InorganicSubstance
+
+:InorganicSubstance a owl:Class ;
+	rdfs:subClassOf :Substance ;
+	rdfs:seeAlso "Non organic substances" .
+# 
+# http://isagog.com/ontologies/top.owl#Measure
+
+:Measure a owl:Class ;
+	rdfs:subClassOf :Information ;
+	rdfs:comment "Observed value at a given scale"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Number
+
+:Number a owl:Class ;
+	rdfs:subClassOf :Denotator .
+# 
+# http://isagog.com/ontologies/top.owl#NumericField
+
+:NumericField a owl:Class ;
+	rdfs:subClassOf :AbstractRegion ;
+	rdfs:comment "Numeric region"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Object
+
+:Object a owl:Class ;
+	rdfs:subClassOf :PhysicalEntity , _:genid22 .
+
+_:genid22 a owl:Restriction ;
+	owl:onProperty :constituent ;
+	owl:someValuesFrom :Substance .
+
+:Object owl:disjointWith :Substance ;
+	rdfs:comment "Independent, countable kind of continuant (sortal)"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Occurrent
+
+:Occurrent a owl:Class ;
+	owl:equivalentClass _:genid23 .
+
+_:genid23 a owl:Class ;
+	owl:unionOf _:genid25 .
+
+_:genid25 a rdf:List ;
+	rdf:first :Event ;
+	rdf:rest _:genid24 .
+
+_:genid24 a rdf:List ;
+	rdf:first :State ;
+	rdf:rest rdf:nil .
+
+:Occurrent rdfs:subClassOf :Entity , _:genid26 .
+
+_:genid26 a owl:Restriction ;
+	owl:onProperty :time-location ;
+	owl:someValuesFrom :TimeRegion .
+
+:Occurrent rdfs:comment "Entities not fully present at any instant of their existence, i.e. events or states, e.g. a tennins match, a sit-in"@en ;
+	rdfs:seeAlso "DOLCE perdurant" .
+# 
+# http://isagog.com/ontologies/top.owl#OrganicSubstance
+
+:OrganicSubstance a owl:Class ;
+	rdfs:subClassOf :Substance ;
+	rdfs:seeAlso "Carbon-based substances which compose organisms"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Organism
+
+:Organism a owl:Class ;
+	rdfs:subClassOf :Object , _:genid27 .
+
+_:genid27 a owl:Restriction ;
+	owl:onProperty :constituent ;
+	owl:someValuesFrom :OrganicSubstance .
+
+:Organism rdfs:comment "Biological sortal entity"@en .
+# 
+# http://isagog.com/ontologies/top.owl#PhysicalCollection
+
+:PhysicalCollection a owl:Class ;
+	rdfs:subClassOf :PhysicalEntity , _:genid28 .
+
+_:genid28 owl:intersectionOf _:genid31 .
+
+_:genid31 a rdf:List ;
+	rdf:first :Collection ;
+	rdf:rest _:genid29 .
+
+_:genid29 a rdf:List ;
+	rdf:first _:genid30 .
+
+_:genid30 a owl:Restriction ;
+	owl:onProperty :element ;
+	owl:allValuesFrom :PhysicalEntity .
+
+_:genid29 rdf:rest rdf:nil .
+
+_:genid28 a owl:Class .
+
+:PhysicalCollection rdfs:comment "Collezione tangibile"@it , "Tangible collection"@en .
+# 
+# http://isagog.com/ontologies/top.owl#PhysicalEntity
+
+:PhysicalEntity a owl:Class ;
+	rdfs:subClassOf :Continuant , _:genid32 .
+
+_:genid32 a owl:Restriction ;
+	owl:onProperty :space-location ;
+	owl:someValuesFrom :SpaceRegion .
+
+:PhysicalEntity rdfs:comment "BFO material entity" , "Continuanti collocati nello spazio (tangibili)"@it , "Continuants located in space (tangible)"@en ;
+	rdfs:seeAlso "DOLCE physical-endurant" .
+# 
+# http://isagog.com/ontologies/top.owl#PhysicalQuality
+
+:PhysicalQuality a owl:Class ;
+	rdfs:subClassOf :PhysicalEntity , :Quality ;
+	rdfs:comment "Dependent continuants located in space, such as features or colors"@en .
+# 
+# http://isagog.com/ontologies/top.owl#PhysicalRegion
+
+:PhysicalRegion a owl:Class ;
+	rdfs:subClassOf :PhysicalEntity , :Region .
+# 
+# http://isagog.com/ontologies/top.owl#Property
+
+:Property a owl:Class ;
+	rdfs:subClassOf :AbstractQuality ;
+	rdfs:comment "Non tangible direct qualities such as colors, smells, etc"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Quality
+
+:Quality a owl:Class ;
+	rdfs:subClassOf :Continuant , _:genid33 .
+
+_:genid33 a owl:Restriction ;
+	owl:onProperty :qualified ;
+	owl:someValuesFrom :Entity .
+
+:Quality rdfs:comment "Existentially dependent continuants, such as features, shapes, colors"@en ;
+	rdfs:seeAlso "BFO quality" , "DOLCE quality" .
+# 
+# http://isagog.com/ontologies/top.owl#QualityRegion
+
+:QualityRegion a owl:Class ;
+	rdfs:subClassOf :AbstractRegion ;
+	rdfs:comment "Values of qualities, e.g. colors, sizes"@en .
+# 
+# http://isagog.com/ontologies/top.owl#Region
+
+:Region a owl:Class ;
+	rdfs:subClassOf :Continuant .
+# 
+# http://isagog.com/ontologies/top.owl#Sign
+
+:Sign a owl:Class ;
+	rdfs:subClassOf :Information , _:genid34 .
+
+_:genid34 a owl:Restriction ;
+	owl:onProperty :signifier ;
+	owl:someValuesFrom :PhysicalEntity .
+
+:Sign rdfs:comment "A denotation which is manifested by an informative object (signifier), and denotes some entity (signified)"@en .
+# 
+# http://isagog.com/ontologies/top.owl#SpaceRegion
+
+:SpaceRegion a owl:Class ;
+	rdfs:subClassOf :PhysicalRegion ;
+	rdfs:comment "Space portions"@en .
+# 
+# http://isagog.com/ontologies/top.owl#State
+
+:State a owl:Class ;
+	rdfs:subClassOf :Occurrent ;
+	rdfs:comment "Occurrent whose phases are not distinguishable, e.g. a sit"@en ;
+	rdfs:seeAlso "DOLCE stative" .
+# 
+# http://isagog.com/ontologies/top.owl#Substance
+
+:Substance a owl:Class ;
+	rdfs:subClassOf :PhysicalEntity ;
+	rdfs:comment "Non dependent, non sortal continuant (matter)"@en .
+# 
+# http://isagog.com/ontologies/top.owl#TimeRegion
+
+:TimeRegion a owl:Class ;
+	rdfs:subClassOf :PhysicalRegion ;
+	rdfs:comment "Time spans"@en .
+# 
+# http://www.w3.org/2002/07/owl#Thing
+
+owl:Thing a owl:Class .
+# 
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
