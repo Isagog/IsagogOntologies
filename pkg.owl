@@ -1,0 +1,265 @@
+@prefix : <http://isagog.com/ontologies/pkg.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ckg: <http://isagog.com/ontologies/ckg.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://isagog.com/ontologies/pkg.owl> .
+
+<http://isagog.com/ontologies/pkg.owl> rdf:type owl:Ontology ;
+                                        owl:versionIRI <http://isagog.com/ontologies/pkg.owl/1.0.0> ;
+                                        owl:imports <http://isagog.com/ontologies/ckg.owl/1.0.0> ;
+                                        dc:creator "Guido Vetere" ;
+                                        dcterms:license "CC-BY Isagog Srl" ;
+                                        rdfs:comment "A conceptual model for Personal Knowledge Graphs" ,
+                                                     "This conceptual model adopts a 'deflationary' approach: the set of entities required to account for elements in the domain of discourse is minimal. For instance, a relationship (the connection of two persons) can also be an event, insofar the representation of its temporal properties is required. This way, there is no need of having an instance for the reified relation (continuant) and another one for its temporal aspects (occurrent). This implies that there's no disjointess at the level of basic categories, e.g. between continuants and occurrents. The resulting conceptualization trades metaphysics for natural language (lexical semantics), thus improving usability at the cost of weakening formal conceptual reasoning [Vetere, Guido. (2019). Formal Ontology to the Proof of Facts. 10.3233/978-1-61499-955-3-152. ]" ;
+                                        rdfs:label "Personal Knowledge Graph Ontology" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://isagog.com/ontologies/ckg.owl#permission
+ckg:permission rdf:type owl:AnnotationProperty .
+
+
+###  http://isagog.com/ontologies/ckg.owl#provenance
+ckg:provenance rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/creator
+dc:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#minQualifiedCardinality
+owl:minQualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#qualifiedCardinality
+owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://isagog.com/ontologies/pkg.owl#hasElement
+:hasElement rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/pkg.owl#repliedBy
+:repliedBy rdf:type owl:ObjectProperty ;
+           owl:inverseOf :replyTo ;
+           rdfs:domain :DialogElement ;
+           rdfs:range :DialogElement ;
+           rdfs:comment "Dialog elements relply the one another" .
+
+
+###  http://isagog.com/ontologies/pkg.owl#replyTo
+:replyTo rdf:type owl:ObjectProperty ;
+         rdfs:domain :DialogElement ;
+         rdfs:range :DialogElement .
+
+
+###  http://isagog.com/ontologies/pkg.owl#sender
+:sender rdf:type owl:ObjectProperty ;
+        rdfs:domain :Email ;
+        rdfs:range ckg:Agent ;
+        rdfs:comment "Emails have senders (any agent)" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/ckg.owl#identifier
+ckg:identifier rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/pkg.owl#familyName
+:familyName rdf:type owl:DatatypeProperty ;
+            rdfs:domain ckg:Person ;
+            rdfs:range rdfs:Literal .
+
+
+###  http://isagog.com/ontologies/pkg.owl#firstName
+:firstName rdf:type owl:DatatypeProperty ;
+           rdfs:domain ckg:Person ;
+           rdfs:range rdfs:Literal .
+
+
+###  http://isagog.com/ontologies/pkg.owl#mailAddress
+:mailAddress rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf ckg:identifier ;
+             rdfs:range xsd:string .
+
+
+###  http://isagog.com/ontologies/pkg.owl#receiverAddress
+:receiverAddress rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :mailAddress .
+
+
+###  http://isagog.com/ontologies/pkg.owl#senderAddress
+:senderAddress rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :mailAddress .
+
+
+###  http://isagog.com/ontologies/pkg.owl#snippet
+:snippet rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :text ;
+         rdfs:domain ckg:Information ;
+         rdfs:range xsd:string ;
+         rdfs:comment "Brief summary" .
+
+
+###  http://isagog.com/ontologies/pkg.owl#subject
+:subject rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :title ;
+         rdfs:domain :Email .
+
+
+###  http://isagog.com/ontologies/pkg.owl#text
+:text rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/pkg.owl#title
+:title rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+
+
+###  http://isagog.com/ontologies/pkg.owl#Acquaintance
+:Acquaintance rdf:type owl:Class ;
+              rdfs:subClassOf :PersonalRelationship ;
+              rdfs:label "Personal relationship where participants are acquainted each others"@en .
+
+
+###  http://isagog.com/ontologies/pkg.owl#Conversation
+:Conversation rdf:type owl:Class ;
+              rdfs:subClassOf ckg:TextualDocument ,
+                              :Interaction ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty ckg:hasElement ;
+                                owl:someValuesFrom :DialogElement
+                              ] .
+
+
+###  http://isagog.com/ontologies/pkg.owl#DialogElement
+:DialogElement rdf:type owl:Class ;
+               rdfs:subClassOf ckg:Text ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :repliedBy ;
+                                 owl:someValuesFrom :DialogElement
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :replyTo ;
+                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:onClass :DialogElement
+                               ] ;
+               rdfs:comment "A conversational element" .
+
+
+###  http://isagog.com/ontologies/pkg.owl#Email
+:Email rdf:type owl:Class ;
+       rdfs:subClassOf ckg:TextualDocument ,
+                       :DialogElement ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasElement ;
+                         owl:allValuesFrom ckg:Sentence
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :repliedBy ;
+                         owl:allValuesFrom :Email
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :replyTo ;
+                         owl:allValuesFrom :Email
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :sender ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass ckg:Person
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :subject ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:string
+                       ] ;
+       rdfs:seeAlso "https://tools.ietf.org/html/rfc3864" .
+
+
+
+###  http://isagog.com/ontologies/pkg.owl#Interaction
+:Interaction rdf:type owl:Class ;
+             rdfs:subClassOf ckg:Occurrent ,
+                             :PersonalRelationship ;
+             rdfs:comment "Human interaction" .
+
+
+###  http://isagog.com/ontologies/pkg.owl#Meeting
+:Meeting rdf:type owl:Class ;
+         rdfs:subClassOf ckg:Activity ,
+                         :Interaction .
+
+
+###  http://isagog.com/ontologies/pkg.owl#Message
+:Message rdf:type owl:Class ;
+         rdfs:subClassOf ckg:TextualElement ,
+                         :DialogElement ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty ckg:elementOf ;
+                           owl:allValuesFrom :Conversation
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :replyTo ;
+                           owl:allValuesFrom :Message
+                         ] .
+
+
+###  http://isagog.com/ontologies/pkg.owl#PersonalRelationship
+:PersonalRelationship rdf:type owl:Class ;
+                      rdfs:subClassOf ckg:Relationship ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty ckg:participant ;
+                                        owl:someValuesFrom ckg:Person
+                                      ] ;
+                      rdfs:comment "Relationships whose members are persons (e.g. club membership). This type of relationship does not imply personal acquaintance." .
+
+
+
+
+
+
+###  http://isagog.com/ontologies/pkg.owl#WebPage
+:WebPage rdf:type owl:Class ;
+         rdfs:subClassOf ckg:TextualDocument .
+
+
+###  http://isagog.com/ontologies/pkg.owl#WebSite
+:WebSite rdf:type owl:Class ;
+         rdfs:subClassOf ckg:InformationSource ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty ckg:identifier ;
+                           owl:allValuesFrom xsd:anyURI
+                         ] .
+
+
+[ owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger
+] .
+
+[ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+ ] .
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
