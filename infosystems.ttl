@@ -1,0 +1,345 @@
+@prefix : <http://isagog.com/ontologies/infosystems#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://isagog.com/ontologies/infosystems> .
+
+<http://isagog.com/ontologies/infosystems> rdf:type owl:Ontology ;
+                                            owl:versionIRI <http://isagog.com/ontologies/infosystems/1.1.5> ;
+                                            owl:imports <http://isagog.com/ontologies/descriptions/1.2> ;
+                                            <http://purl.org/dc/elements/1.1/creator> "Guido Vetere" ;
+                                            <http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by/4.0/
+Isagog S.r.l.""" ;
+                                            rdfs:label "Isagog Information Systems Ontology" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://isagog.com/ontologies/infosystems#attribute-type
+:attribute-type rdf:type owl:AnnotationProperty ;
+                rdfs:range :AttributeType .
+
+
+###  http://www.w3.org/2002/07/owl#maxQualifiedCardinality
+owl:maxQualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://isagog.com/ontologies/descriptions#binding
+<http://isagog.com/ontologies/descriptions#binding> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/descriptions#frame
+<http://isagog.com/ontologies/descriptions#frame> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/descriptions#slot
+<http://isagog.com/ontologies/descriptions#slot> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/infosystems#access
+:access rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf <http://isagog.com/ontologies/top#informative-part> ;
+        rdfs:domain :QuerySlot ;
+        rdfs:range :AccessRole .
+
+
+###  http://isagog.com/ontologies/infosystems#bind-attribute
+:bind-attribute rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <http://isagog.com/ontologies/descriptions#binding> ;
+                rdfs:domain :QuerySlot ;
+                owl:propertyDisjointWith :bind-property .
+
+
+###  http://isagog.com/ontologies/infosystems#bind-concept
+:bind-concept rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://isagog.com/ontologies/descriptions#binding> ;
+              rdfs:domain :QuerySlot .
+
+
+###  http://isagog.com/ontologies/infosystems#bind-property
+:bind-property rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf <http://isagog.com/ontologies/descriptions#binding> ;
+               rdfs:domain :QuerySlot .
+
+
+###  http://isagog.com/ontologies/top#denoted
+<http://isagog.com/ontologies/top#denoted> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#informative-part
+<http://isagog.com/ontologies/top#informative-part> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/descriptions#slot-id
+<http://isagog.com/ontologies/descriptions#slot-id> rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/descriptions#slot-reference
+<http://isagog.com/ontologies/descriptions#slot-reference> rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/infosystems#distinguished
+:distinguished rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf <http://isagog.com/ontologies/top#property> ;
+               rdfs:domain :QuerySlot ;
+               rdfs:range xsd:boolean .
+
+
+###  http://isagog.com/ontologies/infosystems#informative
+:informative rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf <http://isagog.com/ontologies/top#property> ;
+             rdfs:domain :QuerySlot .
+
+
+###  http://isagog.com/ontologies/infosystems#object-topic
+:object-topic rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf <http://isagog.com/ontologies/descriptions#slot-reference> .
+
+
+###  http://isagog.com/ontologies/infosystems#required
+:required rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/top#property> ;
+          rdfs:domain :QuerySlot ;
+          rdfs:range xsd:boolean .
+
+
+###  http://isagog.com/ontologies/infosystems#subject-topic
+:subject-topic rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf <http://isagog.com/ontologies/descriptions#slot-reference> .
+
+
+###  http://isagog.com/ontologies/infosystems#topic-id
+:topic-id rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/descriptions#slot-id> ;
+          rdfs:domain <http://isagog.com/ontologies/descriptions#Topic> .
+
+
+###  http://isagog.com/ontologies/top#property
+<http://isagog.com/ontologies/top#property> rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://isagog.com/ontologies/descriptions#Feature
+<http://isagog.com/ontologies/descriptions#Feature> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/descriptions#Frame
+<http://isagog.com/ontologies/descriptions#Frame> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/descriptions#Role
+<http://isagog.com/ontologies/descriptions#Role> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/descriptions#Slot
+<http://isagog.com/ontologies/descriptions#Slot> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/descriptions#Topic
+<http://isagog.com/ontologies/descriptions#Topic> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/infosystems#AccessRole
+:AccessRole rdf:type owl:Class ;
+            rdfs:subClassOf <http://isagog.com/ontologies/top#Denotator> .
+
+
+###  http://isagog.com/ontologies/infosystems#Application
+:Application rdf:type owl:Class ;
+             rdfs:subClassOf :Software ;
+             rdfs:comment "A software for individual devices" .
+
+
+###  http://isagog.com/ontologies/infosystems#AttributeType
+:AttributeType rdf:type owl:Class ;
+               rdfs:subClassOf <http://isagog.com/ontologies/top#Denotator> .
+
+
+###  http://isagog.com/ontologies/infosystems#Equals
+:Equals rdf:type owl:Class ;
+        rdfs:subClassOf <http://isagog.com/ontologies/descriptions#Feature> .
+
+
+###  http://isagog.com/ontologies/infosystems#Greater
+:Greater rdf:type owl:Class ;
+         rdfs:subClassOf <http://isagog.com/ontologies/descriptions#Feature> .
+
+
+###  http://isagog.com/ontologies/infosystems#Lesser
+:Lesser rdf:type owl:Class ;
+        rdfs:subClassOf <http://isagog.com/ontologies/descriptions#Feature> .
+
+
+###  http://isagog.com/ontologies/infosystems#Like
+:Like rdf:type owl:Class ;
+      rdfs:subClassOf <http://isagog.com/ontologies/descriptions#Feature> .
+
+
+###  http://isagog.com/ontologies/infosystems#QueryFrame
+:QueryFrame rdf:type owl:Class ;
+            rdfs:subClassOf <http://isagog.com/ontologies/descriptions#Frame> ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://isagog.com/ontologies/descriptions#slot> ;
+                              owl:allValuesFrom :QuerySlot
+                            ] ;
+            rdfs:comment "A Frame representing a knowledge query" .
+
+
+###  http://isagog.com/ontologies/infosystems#QuerySlot
+:QuerySlot rdf:type owl:Class ;
+           owl:equivalentClass [ rdf:type owl:Class ;
+                                 owl:unionOf ( <http://isagog.com/ontologies/descriptions#Feature>
+                                               <http://isagog.com/ontologies/descriptions#Role>
+                                               <http://isagog.com/ontologies/descriptions#Topic>
+                                             )
+                               ] ;
+           rdfs:subClassOf <http://isagog.com/ontologies/descriptions#Slot> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty <http://isagog.com/ontologies/descriptions#frame> ;
+                             owl:allValuesFrom :QueryFrame
+                           ] .
+
+
+###  http://isagog.com/ontologies/infosystems#QueryType
+:QueryType rdf:type owl:Class ;
+           rdfs:subClassOf <http://isagog.com/ontologies/top#Denotator> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty <http://isagog.com/ontologies/top#denoted> ;
+                             owl:allValuesFrom :QueryFrame
+                           ] .
+
+
+###  http://isagog.com/ontologies/infosystems#Software
+:Software rdf:type owl:Class ;
+          rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+          rdfs:comment "Executable computer program along with its specification, documentation, etc" .
+
+
+###  http://isagog.com/ontologies/infosystems#SystemFailure
+:SystemFailure rdf:type owl:Class ;
+               rdfs:subClassOf <http://isagog.com/ontologies/top#Change> .
+
+
+###  http://isagog.com/ontologies/infosystems#SystemStatus
+:SystemStatus rdf:type owl:Class ;
+              rdfs:subClassOf <http://isagog.com/ontologies/top#State> .
+
+
+###  http://isagog.com/ontologies/infosystems#Value
+:Value rdf:type owl:Class ;
+       rdfs:subClassOf <http://isagog.com/ontologies/descriptions#Feature> .
+
+
+###  http://isagog.com/ontologies/top#Change
+<http://isagog.com/ontologies/top#Change> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Denotator
+<http://isagog.com/ontologies/top#Denotator> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Information
+<http://isagog.com/ontologies/top#Information> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#State
+<http://isagog.com/ontologies/top#State> rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://isagog.com/ontologies/infosystems#ANYONE
+:ANYONE rdf:type owl:NamedIndividual ,
+                 :AccessRole .
+
+
+###  http://isagog.com/ontologies/infosystems#AUTHORIZED
+:AUTHORIZED rdf:type owl:NamedIndividual ,
+                     :AccessRole .
+
+
+###  http://isagog.com/ontologies/infosystems#AVERAGE
+:AVERAGE rdf:type owl:NamedIndividual ,
+                  :QueryType .
+
+
+###  http://isagog.com/ontologies/infosystems#COUNT
+:COUNT rdf:type owl:NamedIndividual ,
+                :QueryType .
+
+
+###  http://isagog.com/ontologies/infosystems#DATE
+:DATE rdf:type owl:NamedIndividual .
+
+
+###  http://isagog.com/ontologies/infosystems#MAXIMUM
+:MAXIMUM rdf:type owl:NamedIndividual ,
+                  :QueryType .
+
+
+###  http://isagog.com/ontologies/infosystems#MINIMUM
+:MINIMUM rdf:type owl:NamedIndividual ,
+                  :QueryType .
+
+
+###  http://isagog.com/ontologies/infosystems#MONEY
+:MONEY rdf:type owl:NamedIndividual ,
+                :AttributeType .
+
+
+###  http://isagog.com/ontologies/infosystems#NUMBER
+:NUMBER rdf:type owl:NamedIndividual ,
+                 :AttributeType .
+
+
+###  http://isagog.com/ontologies/infosystems#STRING
+:STRING rdf:type owl:NamedIndividual ,
+                 :AttributeType .
+
+
+###  http://isagog.com/ontologies/infosystems#TEXT
+:TEXT rdf:type owl:NamedIndividual ,
+               :AttributeType .
+
+
+###  http://isagog.com/ontologies/infosystems#VALUES
+:VALUES rdf:type owl:NamedIndividual ,
+                 :QueryType .
+
+
+[ owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+[ owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+ ] .
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+   owl:members ( :Equals
+                 :Greater
+                 :Lesser
+                 :Like
+               )
+ ] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

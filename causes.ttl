@@ -1,0 +1,532 @@
+@prefix : <http://isagog.com/ontologies/causes#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix descr: <http://isagog.com/ontologies/descriptionsl#> .
+@base <http://isagog.com/ontologies/causes> .
+
+<http://isagog.com/ontologies/causes> rdf:type owl:Ontology ;
+                                       owl:versionIRI <http://isagog.com/ontologies/causes/1.0.0> ;
+                                       owl:imports <http://isagog.com/ontologies/descriptions/1.2> ,
+                                                   <http://isagog.com/ontologies/events/1.2> ,
+                                                   <http://isagog.com/ontologies/infosystems/1.1.5> ;
+                                       <http://isagog.com/ontologies/top#authors> "Guido Vetere" ;
+                                       <http://isagog.com/ontologies/top#copyright> """https://creativecommons.org/licenses/by-sa/4.0/
+by isagog.com""" ;
+                                       <http://purl.org/dc/elements/1.1/creator> "Guido Vetere" ;
+                                       rdfs:label "Isagog Causal Ontology" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://isagog.com/ontologies/top#authors
+<http://isagog.com/ontologies/top#authors> rdf:type owl:AnnotationProperty .
+
+
+###  http://isagog.com/ontologies/top#copyright
+<http://isagog.com/ontologies/top#copyright> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#hasValue
+owl:hasValue rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#minQualifiedCardinality
+owl:minQualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://isagog.com/ontologies/causes#certain-cause
+:certain-cause rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf <http://isagog.com/ontologies/events#cause> ;
+               owl:inverseOf :certain-effect .
+
+
+###  http://isagog.com/ontologies/causes#certain-effect
+:certain-effect rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <http://isagog.com/ontologies/events#effect> .
+
+
+###  http://isagog.com/ontologies/causes#certain-observed
+:certain-observed rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :observed ;
+                  owl:inverseOf :certain-observed-by .
+
+
+###  http://isagog.com/ontologies/causes#certain-observed-by
+:certain-observed-by rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf :observed-by .
+
+
+###  http://isagog.com/ontologies/causes#context
+:context rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf <http://isagog.com/ontologies/events#concomitant> ;
+         rdf:type owl:SymmetricProperty ,
+                  owl:TransitiveProperty ;
+         rdfs:domain <http://isagog.com/ontologies/top#Occurrent> ;
+         rdfs:range <http://isagog.com/ontologies/top#Occurrent> .
+
+
+###  http://isagog.com/ontologies/causes#fix
+:fix rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf <http://isagog.com/ontologies/events#previous> ;
+     owl:inverseOf :fixed-by ;
+     rdfs:domain :Procedure ;
+     rdfs:range :Situation .
+
+
+###  http://isagog.com/ontologies/causes#fixed-by
+:fixed-by rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/events#next> ;
+          rdfs:domain :Situation ;
+          rdfs:range :Procedure .
+
+
+###  http://isagog.com/ontologies/causes#instruction
+:instruction rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf <http://isagog.com/ontologies/top#informative-part> ;
+             rdfs:domain :Procedure .
+
+
+###  http://isagog.com/ontologies/causes#involved
+:involved rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/top#bearer> ;
+          rdfs:domain :Observation ;
+          rdfs:range <http://isagog.com/ontologies/top#PhysicalEntity> .
+
+
+###  http://isagog.com/ontologies/causes#likely-cause
+:likely-cause rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://isagog.com/ontologies/events#cause> ;
+              owl:inverseOf :likely-effect .
+
+
+###  http://isagog.com/ontologies/causes#likely-effect
+:likely-effect rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf <http://isagog.com/ontologies/events#effect> .
+
+
+###  http://isagog.com/ontologies/causes#likely-observed
+:likely-observed rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :observed ;
+                 owl:inverseOf :likely-observed-by .
+
+
+###  http://isagog.com/ontologies/causes#likely-observed-by
+:likely-observed-by rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :observed-by .
+
+
+###  http://isagog.com/ontologies/causes#observed
+:observed rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/top#dependee> ;
+          owl:inverseOf :observed-by ;
+          rdfs:domain :Observation .
+
+
+###  http://isagog.com/ontologies/causes#observed-by
+:observed-by rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf <http://isagog.com/ontologies/top#dependent> ;
+             rdfs:range :Observation .
+
+
+###  http://isagog.com/ontologies/causes#origin
+:origin rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf <http://isagog.com/ontologies/top#bearer> ;
+        rdfs:domain :Situation ;
+        rdfs:range <http://isagog.com/ontologies/top#PhysicalEntity> .
+
+
+###  http://isagog.com/ontologies/causes#possible-cause
+:possible-cause rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <http://isagog.com/ontologies/events#cause> ;
+                owl:inverseOf :possible-effect .
+
+
+###  http://isagog.com/ontologies/causes#possible-effect
+:possible-effect rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf <http://isagog.com/ontologies/events#effect> .
+
+
+###  http://isagog.com/ontologies/causes#possible-observed
+:possible-observed rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :observed ;
+                   owl:inverseOf :possible-observed-by .
+
+
+###  http://isagog.com/ontologies/causes#possible-observed-by
+:possible-observed-by rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :observed-by .
+
+
+###  http://isagog.com/ontologies/causes#report
+:report rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf <http://isagog.com/ontologies/top#informative-part> ;
+        rdfs:domain :Observation .
+
+
+###  http://isagog.com/ontologies/descriptions#slot
+<http://isagog.com/ontologies/descriptions#slot> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/events#cause
+<http://isagog.com/ontologies/events#cause> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/events#concomitant
+<http://isagog.com/ontologies/events#concomitant> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/events#effect
+<http://isagog.com/ontologies/events#effect> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/events#next
+<http://isagog.com/ontologies/events#next> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/events#previous
+<http://isagog.com/ontologies/events#previous> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/infosystems.owl#bind-concept
+<http://isagog.com/ontologies/infosystems.owl#bind-concept> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/infosystems.owl#bind-property
+<http://isagog.com/ontologies/infosystems.owl#bind-property> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#bearer
+<http://isagog.com/ontologies/top#bearer> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#dependee
+<http://isagog.com/ontologies/top#dependee> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#dependent
+<http://isagog.com/ontologies/top#dependent> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#informative-part
+<http://isagog.com/ontologies/top#informative-part> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/causes#confidence
+:confidence rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf <http://isagog.com/ontologies/top#data-value> ;
+            rdfs:domain :Observation ;
+            rdfs:range xsd:double .
+
+
+###  http://isagog.com/ontologies/causes#evidence
+:evidence rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/top#data-value> ;
+          rdfs:domain :Situation ;
+          rdfs:range xsd:double .
+
+
+###  http://isagog.com/ontologies/causes#support
+:support rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf <http://isagog.com/ontologies/top#data-value> ;
+         rdfs:domain :Observation ;
+         rdfs:range xsd:double .
+
+
+###  http://isagog.com/ontologies/descriptions#object-topic
+<http://isagog.com/ontologies/descriptions#object-topic> rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/descriptions#subject-topic
+<http://isagog.com/ontologies/descriptions#subject-topic> rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/infosystems.owl#subject-topic
+<http://isagog.com/ontologies/infosystems.owl#subject-topic> rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/infosystems.owl#topic-id
+<http://isagog.com/ontologies/infosystems.owl#topic-id> rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/top#data-value
+<http://isagog.com/ontologies/top#data-value> rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://isagog.com/ontologies/causes#AutomatedTest
+:AutomatedTest rdf:type owl:Class ;
+               rdfs:subClassOf :Observation .
+
+
+###  http://isagog.com/ontologies/causes#ConfidenceMeasure
+:ConfidenceMeasure rdf:type owl:Class ;
+                   rdfs:subClassOf <http://isagog.com/ontologies/top#Measure> ;
+                   rdfs:comment "Confidence measure (how much confident is the observer)"@en .
+
+
+###  http://isagog.com/ontologies/causes#EvidenceMeasure
+:EvidenceMeasure rdf:type owl:Class ;
+                 rdfs:subClassOf <http://isagog.com/ontologies/top#Measure> ;
+                 rdfs:comment "Evidence measure (how much evidence has been gathered about the observed situation)"@en .
+
+
+###  http://isagog.com/ontologies/causes#HumanObservation
+:HumanObservation rdf:type owl:Class ;
+                  rdfs:subClassOf :Observation .
+
+
+###  http://isagog.com/ontologies/causes#Observation
+:Observation rdf:type owl:Class ;
+             rdfs:subClassOf <http://isagog.com/ontologies/top#Action> ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :observed ;
+                               owl:someValuesFrom :Situation
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :report ;
+                               owl:someValuesFrom <http://isagog.com/ontologies/top#Information>
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :evidence ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onDataRange xsd:double
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :support ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onDataRange xsd:double
+                             ] ;
+             owl:disjointWith :Situation .
+
+
+###  http://isagog.com/ontologies/causes#ObservationFrame
+:ObservationFrame rdf:type owl:Class ;
+                  rdfs:subClassOf <http://isagog.com/ontologies/descriptions#Frame> ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty <http://isagog.com/ontologies/descriptions#slot> ;
+                                    owl:someValuesFrom [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#bind-concept> ;
+                                                                                owl:hasValue :PhysicalEntity
+                                                                              ]
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#topic-id> ;
+                                                                                owl:hasValue "entity"
+                                                                              ]
+                                                                            ) ;
+                                                         rdf:type owl:Class
+                                                       ]
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty <http://isagog.com/ontologies/descriptions#slot> ;
+                                    owl:someValuesFrom [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#bind-property> ;
+                                                                                owl:hasValue :context
+                                                                              ]
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#subject-topic> ;
+                                                                                owl:hasValue "obsv"
+                                                                              ]
+                                                                            ) ;
+                                                         rdf:type owl:Class
+                                                       ]
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty <http://isagog.com/ontologies/descriptions#slot> ;
+                                    owl:someValuesFrom [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/infosystems.owl#bind-property> ;
+                                                                                owl:hasValue :involved
+                                                                              ]
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/descriptions#object-topic> ;
+                                                                                owl:hasValue "entity"
+                                                                              ]
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://isagog.com/ontologies/descriptions#subject-topic> ;
+                                                                                owl:hasValue "obsv"
+                                                                              ]
+                                                                            ) ;
+                                                         rdf:type owl:Class
+                                                       ]
+                                  ] ;
+                  rdfs:comment "A statement which refers to an observation" .
+
+
+###  http://isagog.com/ontologies/causes#Procedure
+:Procedure rdf:type owl:Class ;
+           rdfs:subClassOf <http://isagog.com/ontologies/top#Course> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :instruction ;
+                             owl:someValuesFrom <http://isagog.com/ontologies/top#Information>
+                           ] .
+
+
+###  http://isagog.com/ontologies/causes#Situation
+:Situation rdf:type owl:Class ;
+           rdfs:subClassOf <http://isagog.com/ontologies/top#Occurrent> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :context ;
+                             owl:someValuesFrom :Situation
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :fixed-by ;
+                             owl:someValuesFrom :Procedure
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :observed-by ;
+                             owl:someValuesFrom :Observation
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty <http://isagog.com/ontologies/events#cause> ;
+                             owl:someValuesFrom <http://isagog.com/ontologies/top#Occurrent>
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty <http://isagog.com/ontologies/top#bearer> ;
+                             owl:someValuesFrom <http://isagog.com/ontologies/top#PhysicalEntity>
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :evidence ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:double
+                           ] .
+
+
+###  http://isagog.com/ontologies/descriptions#Classifier
+<http://isagog.com/ontologies/descriptions#Classifier> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/descriptions#Frame
+<http://isagog.com/ontologies/descriptions#Frame> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/descriptions#ProcedureDescription
+<http://isagog.com/ontologies/descriptions#ProcedureDescription> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/descriptions#Relationship
+<http://isagog.com/ontologies/descriptions#Relationship> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Action
+<http://isagog.com/ontologies/top#Action> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Continuant
+<http://isagog.com/ontologies/top#Continuant> rdf:type owl:Class ;
+                                              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <http://isagog.com/ontologies/top#data-value> ;
+                                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                owl:onDataRange xsd:double
+                                                              ] .
+
+
+###  http://isagog.com/ontologies/top#Course
+<http://isagog.com/ontologies/top#Course> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Information
+<http://isagog.com/ontologies/top#Information> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Measure
+<http://isagog.com/ontologies/top#Measure> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Occurrent
+<http://isagog.com/ontologies/top#Occurrent> rdf:type owl:Class ;
+                                             rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                               owl:onProperty <http://isagog.com/ontologies/top#data-value> ;
+                                                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                               owl:onDataRange xsd:double
+                                                             ] .
+
+
+###  http://isagog.com/ontologies/top#PhysicalEntity
+<http://isagog.com/ontologies/top#PhysicalEntity> rdf:type owl:Class .
+
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://isagog.com/ontologies/causes#Observation
+:Observation rdf:type owl:NamedIndividual ,
+                      <http://isagog.com/ontologies/descriptions#Classifier> .
+
+
+###  http://isagog.com/ontologies/causes#PhysicalEntity
+:PhysicalEntity rdf:type owl:NamedIndividual ,
+                         <http://isagog.com/ontologies/descriptions#Classifier> .
+
+
+###  http://isagog.com/ontologies/causes#Procedure
+:Procedure rdf:type owl:NamedIndividual ,
+                    <http://isagog.com/ontologies/descriptions#Classifier> .
+
+
+###  http://isagog.com/ontologies/causes#Situation
+:Situation rdf:type owl:NamedIndividual ,
+                    <http://isagog.com/ontologies/descriptions#Classifier> .
+
+
+###  http://isagog.com/ontologies/causes#context
+:context rdf:type owl:NamedIndividual ,
+                  <http://isagog.com/ontologies/descriptions#Relationship> .
+
+
+###  http://isagog.com/ontologies/causes#fixed-by
+:fixed-by rdf:type owl:NamedIndividual ,
+                   <http://isagog.com/ontologies/descriptions#Relationship> .
+
+
+###  http://isagog.com/ontologies/causes#involved
+:involved rdf:type owl:NamedIndividual ,
+                   <http://isagog.com/ontologies/descriptions#Relationship> .
+
+
+###  http://isagog.com/ontologies/causes#origin
+:origin rdf:type owl:NamedIndividual ,
+                 <http://isagog.com/ontologies/descriptions#Relationship> .
+
+
+[ owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+[ owl:hasValue "obsv"
+ ] .
+
+#################################################################
+#    Annotations
+#################################################################
+
+:Observation rdfs:comment "The act of observing some state of affairs"@en .
+
+
+:Procedure rdfs:comment "A course of actions"@en .
+
+
+:Situation rdfs:comment "Observable event with causal relations and fixing procedure"@en .
+
+
+:involved rdfs:comment "Relation to the physical entity involved in the observation"@en .
+
+
+:origin rdfs:comment "Relation to the physical entity where the situation origins"@en .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

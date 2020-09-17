@@ -1,0 +1,662 @@
+@prefix : <http://isagog.com/ontologies/descriptions#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix top: <http://isagog.com/ontologies/top#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix events: <http://isagog.com/ontologies/events#> .
+@base <http://isagog.com/ontologies/descriptions> .
+
+<http://isagog.com/ontologies/descriptions> rdf:type owl:Ontology ;
+                                             owl:versionIRI <http://isagog.com/ontologies/descriptions/1.2> ;
+                                             owl:imports <http://isagog.com/ontologies/top/1.2> ;
+                                             top:status "UNDER DEVELOPMENT" ;
+                                             dc:creator "Guido Vetere" ;
+                                             <http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by-sa/4.0/
+by isagog.com""" ;
+                                             rdfs:comment "An ontology of descriptions" ;
+                                             rdfs:label "Isagog Description Ontology" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://isagog.com/ontologies/descriptions#concept-mapping
+:concept-mapping rdf:type owl:AnnotationProperty ;
+                 rdfs:comment "Mapping to a Concept" ;
+                 rdfs:subPropertyOf top:ontological-annotation ;
+                 rdfs:range xsd:anyURI ;
+                 rdfs:domain top:Classifier .
+
+
+###  http://isagog.com/ontologies/descriptions#role-mapping
+:role-mapping rdf:type owl:AnnotationProperty ;
+              rdfs:comment "Mapping to a Property" ;
+              rdfs:subPropertyOf top:ontological-annotation ;
+              rdfs:range xsd:anyURI ;
+              rdfs:domain :Relationship .
+
+
+###  http://isagog.com/ontologies/top.owl#authors
+top:authors rdf:type owl:AnnotationProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#copyright
+top:copyright rdf:type owl:AnnotationProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#ontological-annotation
+top:ontological-annotation rdf:type owl:AnnotationProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#status
+top:status rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/creator
+dc:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#comment
+rdfs:comment rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#label
+rdfs:label rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#seeAlso
+rdfs:seeAlso rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#versionInfo
+owl:versionInfo rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral
+rdf:PlainLiteral rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#Literal
+rdfs:Literal rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#anyURI
+xsd:anyURI rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://isagog.com/ontologies/descriptions#bind-attribute
+:bind-attribute rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :binding .
+
+
+###  http://isagog.com/ontologies/descriptions#bind-concept
+:bind-concept rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :binding .
+
+
+###  http://isagog.com/ontologies/descriptions#bind-property
+:bind-property rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :binding .
+
+
+###  http://isagog.com/ontologies/descriptions#binding
+:binding rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf top:informative-part ;
+         rdfs:domain top:Denotator ;
+         rdfs:range top:Denotator ;
+         rdfs:comment "Relates two denotators denoting the same entity" .
+
+
+###  http://isagog.com/ontologies/descriptions#constraint
+:constraint rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf top:informative-part .
+
+
+###  http://isagog.com/ontologies/descriptions#domain
+:domain rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :instance .
+
+
+###  http://isagog.com/ontologies/descriptions#domain-topic
+:domain-topic rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :constraint ;
+              rdfs:domain :Slot ;
+              rdfs:range :Topic .
+
+
+###  http://isagog.com/ontologies/descriptions#first-step
+:first-step rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf top:informative-part ;
+            rdfs:domain :ProcedureDescription ;
+            rdfs:range [ rdf:type owl:Class ;
+                         owl:unionOf ( :Alternative
+                                       :Directive
+                                     )
+                       ] .
+
+
+###  http://isagog.com/ontologies/descriptions#frame
+:frame rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf top:informative-whole ;
+       owl:inverseOf :slot .
+
+
+###  http://isagog.com/ontologies/descriptions#goal
+:goal rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf top:informative-part ;
+      rdfs:domain :ProcedureDescription ;
+      rdfs:range :StateDescription .
+
+
+###  http://isagog.com/ontologies/descriptions#instance
+:instance rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf top:denoted ;
+          rdfs:domain :Classifier .
+
+
+###  http://isagog.com/ontologies/descriptions#next-info
+:next-info rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf top:logically-related ;
+           owl:inverseOf :previous-info ;
+           rdfs:domain top:Sign ;
+           rdfs:range top:Sign .
+
+
+###  http://isagog.com/ontologies/descriptions#option
+:option rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf top:logically-related ;
+        rdfs:domain :Alternative ;
+        rdfs:range :Directive .
+
+
+###  http://isagog.com/ontologies/descriptions#option-1
+:option-1 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :option .
+
+
+###  http://isagog.com/ontologies/descriptions#option-2
+:option-2 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :option .
+
+
+###  http://isagog.com/ontologies/descriptions#option-3
+:option-3 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :option .
+
+
+###  http://isagog.com/ontologies/descriptions#previous-info
+:previous-info rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf top:logically-related ;
+               rdfs:domain top:Sign ;
+               rdfs:range top:Sign .
+
+
+###  http://isagog.com/ontologies/descriptions#range
+:range rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :instance .
+
+
+###  http://isagog.com/ontologies/descriptions#range-topic
+:range-topic rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :constraint ;
+             rdfs:domain :Slot ;
+             rdfs:range :Topic .
+
+
+###  http://isagog.com/ontologies/descriptions#referent
+:referent rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf top:denoted ;
+          owl:inverseOf :referring ;
+          rdfs:domain top:Sign .
+
+
+###  http://isagog.com/ontologies/descriptions#referring
+:referring rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf top:denoter ;
+           rdfs:range top:Sign .
+
+
+###  http://isagog.com/ontologies/descriptions#requisite
+:requisite rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf top:informative-part ;
+           rdfs:comment "Informative objects that are needed in order to interpret the domain's one" .
+
+
+###  http://isagog.com/ontologies/descriptions#slot
+:slot rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf top:element ,
+                         top:informative-part ;
+      rdfs:domain :Frame ;
+      rdfs:range :Slot ;
+      rdfs:comment "Informative part of a frame" .
+
+
+###  http://isagog.com/ontologies/organization.owl#filler
+<http://isagog.com/ontologies/organization.owl#filler> rdf:type owl:ObjectProperty ;
+                                                       rdfs:subPropertyOf top:informative-part .
+
+
+###  http://isagog.com/ontologies/top.owl#denoted
+top:denoted rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#denoter
+top:denoter rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#element
+top:element rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#generalization
+top:generalization rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#informative-part
+top:informative-part rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#informative-whole
+top:informative-whole rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#logically-related
+top:logically-related rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#sign
+top:sign rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#signified
+top:signified rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/descriptions#class-id
+:class-id rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf top:identifier .
+
+
+###  http://isagog.com/ontologies/descriptions#data-property-id
+:data-property-id rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf top:identifier .
+
+
+###  http://isagog.com/ontologies/descriptions#headline
+:headline rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Description .
+
+
+###  http://isagog.com/ontologies/descriptions#instance-value
+:instance-value rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Topic .
+
+
+###  http://isagog.com/ontologies/descriptions#link
+:link rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf top:uri .
+
+
+###  http://isagog.com/ontologies/descriptions#object-property-id
+:object-property-id rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf top:identifier .
+
+
+###  http://isagog.com/ontologies/descriptions#object-topic
+:object-topic rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :slot-reference .
+
+
+###  http://isagog.com/ontologies/descriptions#slot-id
+:slot-id rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf top:identifier ;
+         rdfs:domain :Slot .
+
+
+###  http://isagog.com/ontologies/descriptions#slot-reference
+:slot-reference rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf top:identifier .
+
+
+###  http://isagog.com/ontologies/descriptions#subject-topic
+:subject-topic rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :slot-reference .
+
+
+###  http://isagog.com/ontologies/descriptions#topic-id
+:topic-id rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf :slot-id .
+
+
+###  http://isagog.com/ontologies/top.owl#data-value
+top:data-value rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#final-time
+top:final-time rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#identifier
+top:identifier rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#initial-time
+top:initial-time rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/top.owl#uri
+top:uri rdf:type owl:DatatypeProperty .
+
+
+###  http://www.w3.org/2002/07/owl#topDataProperty
+owl:topDataProperty rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://isagog.com/ontologies/descriptions#Alternative
+:Alternative rdf:type owl:Class ;
+             rdfs:subClassOf :Description ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :option ;
+                               owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                               owl:onClass :Directive
+                             ] ;
+             rdfs:comment "Description of possible choices" .
+
+
+###  http://isagog.com/ontologies/descriptions#Attribute
+:Attribute rdf:type owl:Class ;
+           rdfs:subClassOf top:Denotator ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :domain ;
+                             owl:someValuesFrom :Classifier
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty top:data-value ;
+                             owl:minCardinality "1"^^xsd:nonNegativeInteger
+                           ] ;
+           rdfs:comment "Denotation of scalar attrtibutes. Instances of this class may correspond to owl:DataProperties, via punning" .
+
+
+###  http://isagog.com/ontologies/descriptions#Classifier
+:Classifier rdf:type owl:Class ;
+            rdfs:subClassOf top:Denotator ;
+            rdfs:comment "Denotation of entities. This class reifies Entity, i.e. is a class of instances representing classes in the Entity hierarchy."@en .
+
+
+###  http://isagog.com/ontologies/descriptions#Description
+:Description rdf:type owl:Class ;
+             rdfs:subClassOf top:Information ;
+             rdfs:comment "Description of s state of affairs"@en .
+
+
+###  http://isagog.com/ontologies/descriptions#Directive
+:Directive rdf:type owl:Class ;
+           rdfs:subClassOf :Description ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :referent ;
+                             owl:allValuesFrom top:Action
+                           ] ;
+           rdfs:comment "Description of the execution of an action" .
+
+
+###  http://isagog.com/ontologies/descriptions#Feature
+:Feature rdf:type owl:Class ;
+         rdfs:subClassOf :Slot ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :binding ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass :Attribute
+                         ] ;
+         rdfs:comment "A slot bound to an Attribute" .
+
+
+###  http://isagog.com/ontologies/descriptions#Frame
+:Frame rdf:type owl:Class ;
+       rdfs:subClassOf top:Denotator ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :slot ;
+                         owl:someValuesFrom :Slot
+                       ] ;
+       rdfs:comment "Denotation of collections of interrelated entities.In general, a frame depicts a typical situation. Specifically, here is an ontology pattern, i.e. a 'view' over an ontology, along with a 'higher-order' characterization. A frame type is a set of slots which accommodate distinguished entities (topic slots), roles (relation slots), and values (property slot). A frame instance is a network of related entities which features the pattern the frame depicts."@en .
+
+
+###  http://isagog.com/ontologies/descriptions#HowManyQuestion
+:HowManyQuestion rdf:type owl:Class ;
+                 rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/descriptions#HowMuchQuestion
+:HowMuchQuestion rdf:type owl:Class ;
+                 rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/descriptions#HowQuestion
+:HowQuestion rdf:type owl:Class ;
+             rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/descriptions#ProcedureDescription
+:ProcedureDescription rdf:type owl:Class ;
+                      rdfs:subClassOf :Description ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :referent ;
+                                        owl:allValuesFrom top:Course
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :goal ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onClass :StateDescription
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :first-step ;
+                                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onClass [ rdf:type owl:Class ;
+                                                      owl:unionOf ( :Alternative
+                                                                    :Directive
+                                                                  )
+                                                    ]
+                                      ] ;
+                      rdfs:comment "Description of a course of actions and choices, e.g. a decison tree" .
+
+
+###  http://isagog.com/ontologies/descriptions#Question
+:Question rdf:type owl:Class ;
+          rdfs:subClassOf top:Information ;
+          rdfs:comment "Request of information about some entity"@en .
+
+
+###  http://isagog.com/ontologies/descriptions#Relationship
+:Relationship rdf:type owl:Class ;
+              rdfs:subClassOf top:Denotator ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :domain ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onClass :Classifier
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :range ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onClass :Classifier
+                              ] ;
+              rdfs:comment "Denotation of pair of entities, insofar as they are bound each other by some conceptual link. This class reifies ObjectProperty, i.e. is the class of binary relationships which may correspond to owl ObjectProperties via 'punning'"@en .
+
+
+###  http://isagog.com/ontologies/descriptions#Role
+:Role rdf:type owl:Class ;
+      rdfs:subClassOf :Slot ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :binding ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Relationship
+                      ] ;
+      rdfs:comment "A slot bound to a Relationship" .
+
+
+###  http://isagog.com/ontologies/descriptions#Slot
+:Slot rdf:type owl:Class ;
+      rdfs:subClassOf top:Denotator ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :binding ;
+                        owl:someValuesFrom top:Denotator
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :frame ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Frame
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :slot-id ;
+                        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                      ] ;
+      rdfs:comment "Denotation of reified relationships as part of some Frame" .
+
+
+###  http://isagog.com/ontologies/descriptions#StateDescription
+:StateDescription rdf:type owl:Class ;
+                  rdfs:subClassOf :Description ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :referent ;
+                                    owl:allValuesFrom top:Occurrent
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty top:initial-time ;
+                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty top:final-time ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                  ] ;
+                  rdfs:comment "Description of a stative occurrent (state of affairs)" .
+
+
+###  http://isagog.com/ontologies/descriptions#Topic
+:Topic rdf:type owl:Class ;
+       rdfs:subClassOf :Slot ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :binding ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass :Classifier
+                       ] ;
+       rdfs:comment "A slot bound to a Classifier" .
+
+
+###  http://isagog.com/ontologies/descriptions#WhatQuestion
+:WhatQuestion rdf:type owl:Class ;
+              rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/descriptions#WhenQuestion
+:WhenQuestion rdf:type owl:Class ;
+              rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/descriptions#WhereQuestion
+:WhereQuestion rdf:type owl:Class ;
+               rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/descriptions#WhichQuestion
+:WhichQuestion rdf:type owl:Class ;
+               rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/descriptions#WhoQuestion
+:WhoQuestion rdf:type owl:Class ;
+             rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/descriptions#WhoseQuestion
+:WhoseQuestion rdf:type owl:Class ;
+               rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/descriptions#WhyQuestion
+:WhyQuestion rdf:type owl:Class ;
+             rdfs:subClassOf :Question .
+
+
+###  http://isagog.com/ontologies/top.owl#AbstractEntity
+top:AbstractEntity rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#Action
+top:Action rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#Course
+top:Course rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#Denotator
+top:Denotator rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#Event
+top:Event rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#Information
+top:Information rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#Occurrent
+top:Occurrent rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#PhysicalEntity
+top:PhysicalEntity rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#Quality
+top:Quality rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#Sign
+top:Sign rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top.owl#State
+top:State rdf:type owl:Class .
+
+
+###  http://www.w3.org/2002/07/owl#Thing
+owl:Thing rdf:type owl:Class .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Feature
+                :Role
+                :Topic
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

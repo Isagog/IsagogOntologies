@@ -1,0 +1,194 @@
+@prefix : <http://isagog.com/ontologies/documents#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix top: <http://isagog.com/ontologies/top#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://isagog.com/ontologies/documents> .
+
+<http://isagog.com/ontologies/documents> rdf:type owl:Ontology ;
+                                          owl:versionIRI <http://isagog.com/ontologies/documents/1.1.5> ;
+                                          owl:imports <http://isagog.com/ontologies/descriptions/1.2> ;
+                                          dc:creator "Guido Vetere" ;
+                                          <http://purl.org/dc/terms/license> """https://creativecommons.org/licenses/by/4.0/
+Isagog. S.r.l.""" ;
+                                          rdfs:label "Isagog Document Ontology" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+dc:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#comment
+rdfs:comment rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#label
+rdfs:label rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#versionInfo
+owl:versionInfo rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral
+rdf:PlainLiteral rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://isagog.com/ontologies/documents#author
+:author rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf <http://isagog.com/ontologies/top#creator> ;
+        rdfs:range <http://isagog.com/ontologies/top#Human> .
+
+
+###  http://isagog.com/ontologies/documents#collection-part
+:collection-part rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf <http://isagog.com/ontologies/top#informative-part> .
+
+
+###  http://isagog.com/ontologies/documents#document-link
+:document-link rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :reference ;
+               rdfs:domain :Document ;
+               rdfs:range :Document .
+
+
+###  http://isagog.com/ontologies/documents#document-section
+:document-section rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf <http://isagog.com/ontologies/top#informative-part> ;
+                  owl:inverseOf :main-document ;
+                  rdfs:domain :Document ;
+                  rdfs:range :DocumentSection .
+
+
+###  http://isagog.com/ontologies/documents#main-document
+:main-document rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf <http://isagog.com/ontologies/top#informative-whole> ;
+               rdfs:domain :DocumentSection ;
+               rdfs:range :Document .
+
+
+###  http://isagog.com/ontologies/documents#reference
+:reference rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf <http://isagog.com/ontologies/top#logically-related> ;
+           owl:inverseOf :referenced-by ;
+           rdfs:domain :Document .
+
+
+###  http://isagog.com/ontologies/documents#referenced-by
+:referenced-by rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf <http://isagog.com/ontologies/top#logically-related> ;
+               rdfs:range :Document .
+
+
+###  http://isagog.com/ontologies/top#creator
+<http://isagog.com/ontologies/top#creator> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#denoted
+<http://isagog.com/ontologies/top#denoted> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#dependee
+<http://isagog.com/ontologies/top#dependee> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#informative-part
+<http://isagog.com/ontologies/top#informative-part> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#informative-whole
+<http://isagog.com/ontologies/top#informative-whole> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#logically-related
+<http://isagog.com/ontologies/top#logically-related> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/documents#date-issued
+:date-issued rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf <http://isagog.com/ontologies/top#time-instant> ;
+             rdfs:domain :Document .
+
+
+###  http://isagog.com/ontologies/top#time-instant
+<http://isagog.com/ontologies/top#time-instant> rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://isagog.com/ontologies/documents#Document
+:Document rdf:type owl:Class ;
+          rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :document-section ;
+                            owl:someValuesFrom :DocumentSection
+                          ] ;
+          rdfs:comment "Logical informative entity whose content is expressed in natural language, which can be encoded in any kind of material support" .
+
+
+###  http://isagog.com/ontologies/documents#DocumentClassifier
+:DocumentClassifier rdf:type owl:Class ;
+                    rdfs:subClassOf <http://isagog.com/ontologies/top#Denotator> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty <http://isagog.com/ontologies/top#denoted> ;
+                                      owl:allValuesFrom :Document
+                                    ] .
+
+
+###  http://isagog.com/ontologies/documents#DocumentCollection
+:DocumentCollection rdf:type owl:Class ;
+                    rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :collection-part ;
+                                      owl:allValuesFrom :Document
+                                    ] .
+
+
+###  http://isagog.com/ontologies/documents#DocumentSection
+:DocumentSection rdf:type owl:Class ;
+                 rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :main-document ;
+                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :Document
+                                 ] ;
+                 rdfs:comment "Informative dependent part of a document" .
+
+
+###  http://isagog.com/ontologies/top#Denotator
+<http://isagog.com/ontologies/top#Denotator> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Human
+<http://isagog.com/ontologies/top#Human> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Information
+<http://isagog.com/ontologies/top#Information> rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
