@@ -14,7 +14,7 @@
                                     dc:creator "Guido Vetere" ;
                                     dcterms:license "CC-BY Isagog Srl" ;
                                     rdfs:comment "A conceptual model for Custom Knowledge Graphs" ,
-                                                 "This conceptual model adopts a 'deflationary' approach: the set of entities required to account for elements in the domain of discourse is minimal. For instance, a relationship (the connection of two persons) can also be an event, insofar the representation of its temporal properties is required. This way, there is no need of having an instance for the reified relation (continuant) and another one for its temporal aspects (occurrent). This implies that there's no disjointess at the level of basic categories, e.g. between continuants and occurrents. The resulting conceptualization trades metaphysics for natural language (lexical semantics), thus improving usability at the cost of weakening formal conceptual reasoning [Vetere, Guido. (2019). Formal Ontology to the Proof of Facts. 10.3233/978-1-61499-955-3-152. ]" ;
+                                                 "This ontology adopts a 'deflationary' approach: the set of entities required to account for elements in the domain of discourse is minimal. For instance, a relationship (the connection of two persons) can also be an event, insofar the representation of its temporal properties is concerned. This way, there is no need of having an instance for the reified relation (continuant) and another one for its temporal aspects (occurrent). This implies that there's no disjointess at the level of basic categories, e.g. between continuants and occurrents. The resulting conceptualization trades metaphysics for natural language, by providing a smooth accommodation for regular polysemy. This improves the usability at the cost of weakening the ontological import of the conceptualization." ;
                                     rdfs:label "Custom Knowledge Graph Ontology" .
 
 #################################################################
@@ -194,7 +194,7 @@ dcterms:license rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/ckg#text
 :text rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Information ;
+      rdfs:domain :Text ;
       rdfs:range xsd:string .
 
 
@@ -373,11 +373,7 @@ dcterms:license rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/ckg#Text
 :Text rdf:type owl:Class ;
-      rdfs:subClassOf :Information ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :text ;
-                        owl:someValuesFrom xsd:string
-                      ] ;
+      rdfs:subClassOf :Information ;
       rdfs:comment "Textual informative entity" .
 
 

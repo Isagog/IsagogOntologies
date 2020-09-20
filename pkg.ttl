@@ -15,8 +15,7 @@
                                     owl:imports <http://isagog.com/ontologies/ckg/1.0.0> ;
                                     dc:creator "Guido Vetere" ;
                                     dcterms:license "CC-BY Isagog Srl" ;
-                                    rdfs:comment "A conceptual model for Personal Knowledge Graphs" ,
-                                                 "This conceptual model adopts a 'deflationary' approach: the set of entities required to account for elements in the domain of discourse is minimal. For instance, a relationship (the connection of two persons) can also be an event, insofar the representation of its temporal properties is required. This way, there is no need of having an instance for the reified relation (continuant) and another one for its temporal aspects (occurrent). This implies that there's no disjointess at the level of basic categories, e.g. between continuants and occurrents. The resulting conceptualization trades metaphysics for natural language (lexical semantics), thus improving usability at the cost of weakening formal conceptual reasoning [Vetere, Guido. (2019). Formal Ontology to the Proof of Facts. 10.3233/978-1-61499-955-3-152. ]" ;
+                                    rdfs:comment "A conceptual model for Personal Knowledge Graphs" ;
                                     rdfs:label "Personal Knowledge Graph Ontology" .
 
 #################################################################
@@ -197,7 +196,7 @@ ckg:TextualElement rdf:type owl:Class .
 ###  http://isagog.com/ontologies/pkg#Acquaintance
 :Acquaintance rdf:type owl:Class ;
               rdfs:subClassOf :PersonalRelationship ;
-              rdfs:label "Personal relationship where participants are acquainted each others"@en .
+              rdfs:comment "Personal relationship where participants are acquainted each others"@en .
 
 
 ###  http://isagog.com/ontologies/pkg#Conversation
