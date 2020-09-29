@@ -7,402 +7,599 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@base <http://isagog.com/ontologies/ckg> .
 
-<http://isagog.com/ontologies/ckg> rdf:type owl:Ontology ;
-                                    owl:versionIRI <http://isagog.com/ontologies/ckg/1.0.0> ;
-                                    dc:creator "Guido Vetere" ;
-                                    dcterms:license "CC-BY Isagog Srl" ;
-                                    rdfs:comment "A conceptual model for Custom Knowledge Graphs" ,
-                                                 "This ontology adopts a 'deflationary' approach: the set of entities required to account for elements in the domain of discourse is minimal. For instance, a relationship (the connection of two persons) can also be an event, insofar the representation of its temporal properties is concerned. This way, there is no need of having an instance for the reified relation (continuant) and another one for its temporal aspects (occurrent). This implies that there's no disjointess at the level of basic categories, e.g. between continuants and occurrents. The resulting conceptualization trades metaphysics for natural language, by providing a smooth accommodation for regular polysemy. This improves the usability at the cost of weakening the ontological import of the conceptualization." ;
-                                    rdfs:label "Custom Knowledge Graph Ontology" .
-
-#################################################################
-#    Annotation properties
-#################################################################
-
-###  http://isagog.com/ontologies/ckg#permission
-:permission rdf:type owl:AnnotationProperty ;
-            rdfs:comment "Access control token" ;
-            rdfs:range xsd:NMTOKEN .
-
-
-###  http://isagog.com/ontologies/ckg#provenance
-:provenance rdf:type owl:AnnotationProperty ;
-            rdfs:comment "Provenance (URI)" ;
-            rdfs:range xsd:anyURI .
-
-
-###  http://purl.org/dc/elements/1.1/creator
-dc:creator rdf:type owl:AnnotationProperty .
-
-
-###  http://purl.org/dc/terms/license
-dcterms:license rdf:type owl:AnnotationProperty .
-
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  http://isagog.com/ontologies/ckg#elementOf
-:elementOf rdf:type owl:ObjectProperty ;
-           owl:inverseOf :hasElement ;
-           rdfs:domain :Entity ;
-           rdfs:range :Relationship .
-
-
-###  http://isagog.com/ontologies/ckg#hasElement
-:hasElement rdf:type owl:ObjectProperty ;
-            rdfs:domain :Relationship ;
-            rdfs:range :Entity ;
-            rdfs:comment "Relationships have entities as elements" .
-
-
-###  http://isagog.com/ontologies/ckg#hasSource
-:hasSource rdf:type owl:ObjectProperty ;
-           rdfs:domain :Information ;
-           rdfs:range :InformationSource ;
-           rdfs:comment "Information comes to some source" .
-
-
-###  http://isagog.com/ontologies/ckg#involvedIn
-:involvedIn rdf:type owl:ObjectProperty ;
-            owl:inverseOf :involves ;
-            rdfs:domain :Continuant ;
-            rdfs:range :Occurrent ;
-            rdfs:comment "Continuants (objects) involved in occurrents (events)" .
-
-
-###  http://isagog.com/ontologies/ckg#involves
-:involves rdf:type owl:ObjectProperty ;
-          rdfs:domain :Continuant ;
-          rdfs:range :Occurrent .
-
-
-###  http://isagog.com/ontologies/ckg#member
-:member rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :participant ;
-        rdfs:domain :Organization ;
-        rdfs:range :Person .
-
-
-###  http://isagog.com/ontologies/ckg#memberOf
-:memberOf rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :elementOf .
-
-
-###  http://isagog.com/ontologies/ckg#participant
-:participant rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf :hasElement ;
-             rdfs:domain :Relationship ;
-             rdfs:range :Person .
-
-
-###  http://isagog.com/ontologies/ckg#references
-:references rdf:type owl:ObjectProperty ;
-            rdfs:domain :Information ;
-            rdfs:range [ rdf:type owl:Class ;
-                         owl:unionOf ( :Entity
-                                       :Relationship
-                                     )
-                       ] ;
-            rdfs:comment "Information entities refer to other entities or relationships" .
-
-
-#################################################################
-#    Data properties
-#################################################################
-
-###  http://isagog.com/ontologies/ckg#URI
-:URI rdf:type owl:DatatypeProperty ;
-     rdfs:subPropertyOf :identifier ;
-     rdfs:range xsd:anyURI .
-
-
-###  http://isagog.com/ontologies/ckg#eventDuration
-:eventDuration rdf:type owl:DatatypeProperty ;
-               rdfs:subPropertyOf :timeSpan .
-
-
-###  http://isagog.com/ontologies/ckg#eventOccurrence
-:eventOccurrence rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf :timeInstant .
-
-
-###  http://isagog.com/ontologies/ckg#familyName
-:familyName rdf:type owl:DatatypeProperty ;
-            rdfs:domain :Person ;
-            rdfs:range rdfs:Literal .
-
-
-###  http://isagog.com/ontologies/ckg#firstName
-:firstName rdf:type owl:DatatypeProperty ;
-           rdfs:domain :Person ;
-           rdfs:range rdfs:Literal .
-
-
-###  http://isagog.com/ontologies/ckg#identifier
-:identifier rdf:type owl:DatatypeProperty ;
-            rdfs:comment "A concrete value which serves as unique identifier in some naming domain, e.g. mail address" .
-
-
-###  http://isagog.com/ontologies/ckg#length
-:length rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf :textIndex .
-
-
-###  http://isagog.com/ontologies/ckg#mailAddress
-:mailAddress rdf:type owl:DatatypeProperty ;
-             rdfs:subPropertyOf :identifier ;
-             rdfs:range xsd:string .
-
-
-###  http://isagog.com/ontologies/ckg#mention
-:mention rdf:type owl:DatatypeProperty ;
-         rdfs:domain :Information ;
-         rdfs:range xsd:string .
-
-
-###  http://isagog.com/ontologies/ckg#offset
-:offset rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf :textIndex .
-
-
-###  http://isagog.com/ontologies/ckg#receiverAddress
-:receiverAddress rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf :mailAddress .
-
-
-###  http://isagog.com/ontologies/ckg#senderAddress
-:senderAddress rdf:type owl:DatatypeProperty ;
-               rdfs:subPropertyOf :mailAddress .
-
-
-###  http://isagog.com/ontologies/ckg#snippet
-:snippet rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf :text ;
-         rdfs:domain :Information ;
-         rdfs:range xsd:string ;
-         rdfs:comment "Brief summary" .
-
-
-###  http://isagog.com/ontologies/ckg#subject
-:subject rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf :title .
-
-
-###  http://isagog.com/ontologies/ckg#text
-:text rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Text ;
-      rdfs:range xsd:string .
-
-
-###  http://isagog.com/ontologies/ckg#textIndex
-:textIndex rdf:type owl:DatatypeProperty ;
-           rdfs:domain :TextualElement ;
-           rdfs:range xsd:unsignedLong ;
-           rdfs:comment "The index of a character in a text" .
-
-
-###  http://isagog.com/ontologies/ckg#timeInstant
-:timeInstant rdf:type owl:DatatypeProperty ;
-             rdfs:domain :Occurrent ;
-             rdfs:range xsd:dateTime .
-
-
-###  http://isagog.com/ontologies/ckg#timeSpan
-:timeSpan rdf:type owl:DatatypeProperty ;
-          rdfs:domain :Occurrent ;
-          rdfs:range xsd:long .
-
-
-###  http://isagog.com/ontologies/ckg#title
-:title rdf:type owl:DatatypeProperty ;
-       rdfs:domain :TextualDocument ;
-       rdfs:range xsd:string .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://isagog.com/ontologies/ckg#Activity
-:Activity rdf:type owl:Class ;
-          rdfs:subClassOf :Occurrent .
-
-
-###  http://isagog.com/ontologies/ckg#Agent
-:Agent rdf:type owl:Class ;
-       rdfs:subClassOf :Continuant ;
-       rdfs:comment "Entity capable of purposely initiating actions" .
-
-
-###  http://isagog.com/ontologies/ckg#Artefact
-:Artefact rdf:type owl:Class ;
-          rdfs:subClassOf :Continuant .
-
-
-###  http://isagog.com/ontologies/ckg#Audio
-:Audio rdf:type owl:Class ;
-       rdfs:subClassOf :Information .
-
-
-###  http://isagog.com/ontologies/ckg#Automata
-:Automata rdf:type owl:Class ;
-          rdfs:subClassOf :Agent ,
-                          :Artefact ;
-          rdfs:comment "Autonomous artefacts"@en .
-
-
-###  http://isagog.com/ontologies/ckg#Continuant
-:Continuant rdf:type owl:Class ;
-            rdfs:subClassOf :Entity ;
-            rdfs:comment "Any concrete or abstract non-temporal object" .
-
-
-###  http://isagog.com/ontologies/ckg#Dataset
-:Dataset rdf:type owl:Class ;
-         rdfs:subClassOf :InformationSource .
-
-
-###  http://isagog.com/ontologies/ckg#Entity
-:Entity rdf:type owl:Class ;
-        rdfs:comment "Any singular thing which is cognitively and socially recognizable" ;
-        rdfs:seeAlso <http://www.w3.org/2004/02/skos/core#Concept> .
-
-
-###  http://isagog.com/ontologies/ckg#Image
-:Image rdf:type owl:Class ;
-       rdfs:subClassOf :Information ;
-       rdfs:comment "Graphic information entity"@en .
-
-
-###  http://isagog.com/ontologies/ckg#Information
-:Information rdf:type owl:Class ;
-             rdfs:subClassOf :Continuant ;
-             rdfs:comment "Entity which conveys meanings by means of some concrete manifestation (text, audio, etc)" .
-
-
-###  http://isagog.com/ontologies/ckg#InformationSource
-:InformationSource rdf:type owl:Class ;
-                   rdfs:subClassOf :Continuant ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty :identifier ;
-                                     owl:cardinality "1"^^xsd:nonNegativeInteger
-                                   ] ;
-                   rdfs:comment "Information source" .
-
-
-###  http://isagog.com/ontologies/ckg#NamedEntity
-:NamedEntity rdf:type owl:Class ;
-             rdfs:subClassOf :Token ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :mention ;
-                               owl:someValuesFrom xsd:string
-                             ] .
-
-
-###  http://isagog.com/ontologies/ckg#Object
-:Object rdf:type owl:Class ;
-        rdfs:subClassOf :Continuant .
-
-
-###  http://isagog.com/ontologies/ckg#Occurrent
-:Occurrent rdf:type owl:Class ;
-           rdfs:subClassOf :Entity ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :eventOccurrence ;
-                             owl:cardinality "1"^^xsd:nonNegativeInteger
-                           ] ;
-           rdfs:comment "Anything happening (event)" .
-
-
-###  http://isagog.com/ontologies/ckg#Organization
-:Organization rdf:type owl:Class ;
-              rdfs:subClassOf :Agent ,
-                              :Relationship ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :member ;
-                                owl:someValuesFrom :Agent
-                              ] ;
-              rdfs:comment "Agentive human collective" .
-
-
-###  http://isagog.com/ontologies/ckg#Person
-:Person rdf:type owl:Class ;
-        rdfs:subClassOf :Agent ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :familyName ;
-                          owl:someValuesFrom rdfs:Literal
-                        ] ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :firstName ;
-                          owl:someValuesFrom rdfs:Literal
-                        ] ;
-        rdfs:comment "Human being"@en .
-
-
-###  http://isagog.com/ontologies/ckg#Place
-:Place rdf:type owl:Class ;
-       rdfs:subClassOf :Continuant .
-
-
-###  http://isagog.com/ontologies/ckg#Relationship
-:Relationship rdf:type owl:Class ;
-              rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                owl:onProperty :hasElement ;
-                                owl:someValuesFrom :Entity
-                              ] ;
-              rdfs:comment "Any collective thing which is cognitively and socially recognizable" ;
-              rdfs:seeAlso <http://www.w3.org/2004/02/skos/core#Collection> .
-
-
-###  http://isagog.com/ontologies/ckg#Sentence
-:Sentence rdf:type owl:Class ;
-          rdfs:subClassOf :TextualElement ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :length ;
-                            owl:cardinality "1"^^xsd:nonNegativeInteger
-                          ] ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :offset ;
-                            owl:cardinality "1"^^xsd:nonNegativeInteger
-                          ] .
-
-
-###  http://isagog.com/ontologies/ckg#Text
-:Text rdf:type owl:Class ;
-      rdfs:subClassOf :Information ;
-      rdfs:comment "Textual informative entity" .
-
-
-###  http://isagog.com/ontologies/ckg#TextualDocument
-:TextualDocument rdf:type owl:Class ;
-                 rdfs:subClassOf :Text ,
-                                 [ rdf:type owl:Restriction ;
-                                   owl:onProperty :hasElement ;
-                                   owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                   owl:onClass :TextualElement
-                                 ] .
-
-
-###  http://isagog.com/ontologies/ckg#TextualElement
-:TextualElement rdf:type owl:Class ;
-                rdfs:subClassOf :Text ,
-                                [ rdf:type owl:Restriction ;
-                                  owl:onProperty :elementOf ;
-                                  owl:someValuesFrom :TextualDocument
-                                ] .
-
-
-###  http://isagog.com/ontologies/ckg#Token
-:Token rdf:type owl:Class ;
-       rdfs:subClassOf :Text ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :elementOf ;
-                         owl:someValuesFrom :TextualElement
-                       ] .
-
-
-###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+<http://isagog.com/ontologies/ckg> a owl:Ontology ;
+	owl:versionIRI <http://isagog.com/ontologies/ckg/1.0.0> ;
+	dc:creator "Guido Vetere" ;
+	dcterms:license "CC-BY Isagog Srl" ;
+	rdfs:comment "A conceptual model for Custom Knowledge Graphs" , "This ontology adopts a 'deflationary' approach: the set of entities required to account for elements in the domain of discourse is minimal. For instance, a relationship (the connection of two persons) can also be an event, insofar the representation of its temporal properties is concerned. This way, there is no need of having an instance for the reified relation (continuant) and another one for its temporal aspects (occurrent). This implies that there's no disjointess at the level of basic categories, e.g. between continuants and occurrents. The resulting conceptualization trades metaphysics for natural language, by providing a smooth accommodation for regular polysemy. This improves the usability at the cost of weakening the ontological import of the conceptualization." ;
+	rdfs:label "Custom Knowledge Graph Ontology" .
+# 
+# 
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/ckg#permission
+
+:permission a owl:AnnotationProperty ;
+	rdfs:comment "Access control token" ;
+	rdfs:range xsd:NMTOKEN .
+# 
+# http://isagog.com/ontologies/ckg#provenance
+
+:provenance a owl:AnnotationProperty ;
+	rdfs:comment "Provenance (URI)" ;
+	rdfs:range xsd:anyURI .
+# 
+# http://purl.org/dc/elements/1.1/creator
+
+dc:creator a owl:AnnotationProperty .
+# 
+# http://purl.org/dc/terms/license
+
+dcterms:license a owl:AnnotationProperty .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/ckg#elementOf
+
+:elementOf a owl:ObjectProperty ;
+	owl:inverseOf :hasElement ;
+	rdfs:domain :Entity ;
+	rdfs:range :Relationship .
+# 
+# http://isagog.com/ontologies/ckg#hasElement
+
+:hasElement a owl:ObjectProperty ;
+	rdfs:domain :Relationship ;
+	rdfs:range :Entity ;
+	rdfs:comment "Relationships have entities as elements" .
+# 
+# http://isagog.com/ontologies/ckg#hasSource
+
+:hasSource a owl:ObjectProperty ;
+	rdfs:domain :Information ;
+	rdfs:range :InformationSource ;
+	rdfs:comment "Information comes to some source" .
+# 
+# http://isagog.com/ontologies/ckg#involvedIn
+
+:involvedIn a owl:ObjectProperty ;
+	owl:inverseOf :involves ;
+	rdfs:domain :Continuant ;
+	rdfs:range :Occurrent ;
+	rdfs:comment "Continuants (objects) involved in occurrents (events)" .
+# 
+# http://isagog.com/ontologies/ckg#involves
+
+:involves a owl:ObjectProperty ;
+	rdfs:domain :Continuant ;
+	rdfs:range :Occurrent .
+# 
+# http://isagog.com/ontologies/ckg#locatedIn
+
+:locatedIn a owl:ObjectProperty ;
+	rdfs:domain _:genid1 .
+
+_:genid1 a owl:Class ;
+	owl:complementOf :Abstraction .
+
+:locatedIn rdfs:range :Place .
+# 
+# http://isagog.com/ontologies/ckg#member
+
+:member a owl:ObjectProperty ;
+	rdfs:subPropertyOf :participant ;
+	rdfs:domain :Organization ;
+	rdfs:range :Person .
+# 
+# http://isagog.com/ontologies/ckg#memberOf
+
+:memberOf a owl:ObjectProperty ;
+	rdfs:subPropertyOf :elementOf .
+# 
+# http://isagog.com/ontologies/ckg#occurrentIn
+
+:occurrentIn a owl:ObjectProperty ;
+	rdfs:domain :Occurrent ;
+	rdfs:range :Period .
+# 
+# http://isagog.com/ontologies/ckg#participant
+
+:participant a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasElement ;
+	rdfs:domain :Relationship ;
+	rdfs:range :Person .
+# 
+# http://isagog.com/ontologies/ckg#references
+
+:references a owl:ObjectProperty ;
+	rdfs:domain :Information ;
+	rdfs:range _:genid2 .
+
+_:genid2 a owl:Class ;
+	owl:unionOf _:genid4 .
+
+_:genid4 a rdf:List ;
+	rdf:first :Entity ;
+	rdf:rest _:genid3 .
+
+_:genid3 a rdf:List ;
+	rdf:first :Relationship ;
+	rdf:rest rdf:nil .
+
+:references rdfs:comment "Information entities refer to other entities or relationships" .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Data properties
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/ckg#URI
+
+:URI a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :identifier ;
+	rdfs:range xsd:anyURI .
+# 
+# http://isagog.com/ontologies/ckg#currency
+
+:currency a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :numeral ;
+	rdfs:domain :MoneyReference ;
+	rdfs:range xsd:string .
+# 
+# http://isagog.com/ontologies/ckg#familyName
+
+:familyName a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :name ;
+	rdfs:domain :Person ;
+	rdfs:range rdfs:Literal .
+# 
+# http://isagog.com/ontologies/ckg#firstName
+
+:firstName a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :name ;
+	rdfs:domain :Person ;
+	rdfs:range rdfs:Literal .
+# 
+# http://isagog.com/ontologies/ckg#identifier
+
+:identifier a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :string ;
+	rdfs:comment "A concrete value which serves as unique identifier in some naming domain, e.g. mail address" .
+# 
+# http://isagog.com/ontologies/ckg#length
+
+:length a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :textIndex .
+# 
+# http://isagog.com/ontologies/ckg#mailAddress
+
+:mailAddress a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :identifier ;
+	rdfs:range xsd:string .
+# 
+# http://isagog.com/ontologies/ckg#name
+
+:name a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :string .
+# 
+# http://isagog.com/ontologies/ckg#numeral
+
+:numeral a owl:DatatypeProperty .
+# 
+# http://isagog.com/ontologies/ckg#offset
+
+:offset a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :textIndex .
+# 
+# http://isagog.com/ontologies/ckg#receiverAddress
+
+:receiverAddress a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :mailAddress .
+# 
+# http://isagog.com/ontologies/ckg#senderAddress
+
+:senderAddress a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :mailAddress .
+# 
+# http://isagog.com/ontologies/ckg#snippet
+
+:snippet a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :text ;
+	rdfs:domain :Information ;
+	rdfs:range xsd:string ;
+	rdfs:comment "Brief summary" .
+# 
+# http://isagog.com/ontologies/ckg#string
+
+:string a owl:DatatypeProperty .
+# 
+# http://isagog.com/ontologies/ckg#subject
+
+:subject a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :title .
+# 
+# http://isagog.com/ontologies/ckg#text
+
+:text a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :string ;
+	rdfs:domain :Text ;
+	rdfs:range xsd:string .
+# 
+# http://isagog.com/ontologies/ckg#textIndex
+
+:textIndex a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :numeral ;
+	rdfs:domain :TextualElement ;
+	rdfs:range xsd:integer ;
+	rdfs:comment "The index of a character in a text" .
+# 
+# http://isagog.com/ontologies/ckg#time
+
+:time a owl:DatatypeProperty .
+# 
+# http://isagog.com/ontologies/ckg#timeInstant
+
+:timeInstant a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :time ;
+	rdfs:domain _:genid5 .
+
+_:genid5 a owl:Class ;
+	owl:unionOf _:genid7 .
+
+_:genid7 a rdf:List ;
+	rdf:first :Occurrent ;
+	rdf:rest _:genid6 .
+
+_:genid6 a rdf:List ;
+	rdf:first :Period ;
+	rdf:rest rdf:nil .
+
+:timeInstant rdfs:range xsd:dateTime .
+# 
+# http://isagog.com/ontologies/ckg#timeSpan
+
+:timeSpan a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :time ;
+	rdfs:domain _:genid8 .
+
+_:genid8 a owl:Class ;
+	owl:unionOf _:genid10 .
+
+_:genid10 a rdf:List ;
+	rdf:first :Occurrent ;
+	rdf:rest _:genid9 .
+
+_:genid9 a rdf:List ;
+	rdf:first :Period ;
+	rdf:rest rdf:nil .
+
+:timeSpan rdfs:range xsd:long .
+# 
+# http://isagog.com/ontologies/ckg#title
+
+:title a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :string ;
+	rdfs:domain :TextualDocument ;
+	rdfs:range xsd:string .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/ckg#Abstraction
+
+:Abstraction a owl:Class ;
+	rdfs:subClassOf :Continuant ;
+	rdfs:comment "Entities that cannot be located in space" .
+# 
+# http://isagog.com/ontologies/ckg#Activity
+
+:Activity a owl:Class ;
+	rdfs:subClassOf :Event .
+# 
+# http://isagog.com/ontologies/ckg#Agent
+
+:Agent a owl:Class ;
+	rdfs:subClassOf :Continuant ;
+	rdfs:comment "Entity capable of purposely initiating actions" .
+# 
+# http://isagog.com/ontologies/ckg#Artefact
+
+:Artefact a owl:Class ;
+	rdfs:subClassOf :Continuant ;
+	rdfs:comment "Entity created in a production process" .
+# 
+# http://isagog.com/ontologies/ckg#Audio
+
+:Audio a owl:Class ;
+	rdfs:subClassOf :Information .
+# 
+# http://isagog.com/ontologies/ckg#Automata
+
+:Automata a owl:Class ;
+	rdfs:subClassOf :Agent , :Artefact ;
+	rdfs:comment "Autonomous artefacts"@en .
+# 
+# http://isagog.com/ontologies/ckg#Classifier
+
+:Classifier a owl:Class ;
+	rdfs:subClassOf :Abstraction .
+# 
+# http://isagog.com/ontologies/ckg#ConceptReference
+
+:ConceptReference a owl:Class ;
+	rdfs:subClassOf :Classifier , :Token .
+# 
+# http://isagog.com/ontologies/ckg#Continuant
+
+:Continuant a owl:Class ;
+	rdfs:subClassOf :Entity ;
+	rdfs:comment "Any concrete or abstract non-temporal object" .
+# 
+# http://isagog.com/ontologies/ckg#Dataset
+
+:Dataset a owl:Class ;
+	rdfs:subClassOf :InformationSource .
+# 
+# http://isagog.com/ontologies/ckg#Entity
+
+:Entity a owl:Class ;
+	rdfs:comment "Any singular thing which is cognitively and socially recognizable" ;
+	rdfs:seeAlso <http://www.w3.org/2004/02/skos/core#Concept> .
+# 
+# http://isagog.com/ontologies/ckg#Event
+
+:Event a owl:Class ;
+	rdfs:subClassOf :Occurrent .
+# 
+# http://isagog.com/ontologies/ckg#Image
+
+:Image a owl:Class ;
+	rdfs:subClassOf :Information ;
+	rdfs:comment "Graphic information entity"@en .
+# 
+# http://isagog.com/ontologies/ckg#Information
+
+:Information a owl:Class ;
+	rdfs:subClassOf :Abstraction ;
+	rdfs:comment "Entity which conveys meanings by means of some concrete manifestation (text, audio, etc)" .
+# 
+# http://isagog.com/ontologies/ckg#InformationSource
+
+:InformationSource a owl:Class ;
+	rdfs:subClassOf :Continuant , _:genid11 .
+
+_:genid11 a owl:Restriction ;
+	owl:onProperty :identifier ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+:InformationSource rdfs:comment "Entities that provide information" .
+# 
+# http://isagog.com/ontologies/ckg#MoneyReference
+
+:MoneyReference a owl:Class ;
+	rdfs:subClassOf :Number , :Token .
+# 
+# http://isagog.com/ontologies/ckg#Name
+
+:Name a owl:Class ;
+	rdfs:subClassOf :Abstraction , _:genid12 .
+
+_:genid12 a owl:Restriction ;
+	owl:onProperty :string ;
+	owl:someValuesFrom xsd:string .
+# 
+# http://isagog.com/ontologies/ckg#NameReference
+
+:NameReference a owl:Class ;
+	rdfs:subClassOf :Name , :Token , _:genid13 .
+
+_:genid13 a owl:Restriction ;
+	owl:onProperty :string ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onDataRange xsd:string .
+# 
+# http://isagog.com/ontologies/ckg#Number
+
+:Number a owl:Class ;
+	rdfs:subClassOf :Abstraction , _:genid14 .
+
+_:genid14 a owl:Restriction ;
+	owl:onProperty :numeral ;
+	owl:someValuesFrom xsd:string .
+# 
+# http://isagog.com/ontologies/ckg#Object
+
+:Object a owl:Class ;
+	rdfs:subClassOf :Continuant ;
+	rdfs:comment "Entities that can move in space without losing their identity" .
+# 
+# http://isagog.com/ontologies/ckg#Occurrent
+
+:Occurrent a owl:Class ;
+	rdfs:subClassOf :Entity , _:genid15 .
+
+_:genid15 a owl:Restriction ;
+	owl:onProperty :occurrentIn ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :Period .
+
+:Occurrent rdfs:comment "Anything happening in time" .
+# 
+# http://isagog.com/ontologies/ckg#Organization
+
+:Organization a owl:Class ;
+	rdfs:subClassOf :Agent , :Relationship , _:genid16 .
+
+_:genid16 a owl:Restriction ;
+	owl:onProperty :member ;
+	owl:someValuesFrom :Agent .
+
+:Organization rdfs:comment "Agentive human collective" .
+# 
+# http://isagog.com/ontologies/ckg#OrganizationReference
+
+:OrganizationReference a owl:Class ;
+	rdfs:subClassOf :Name , :Token .
+# 
+# http://isagog.com/ontologies/ckg#Period
+
+:Period a owl:Class ;
+	rdfs:subClassOf :Abstraction , _:genid17 .
+
+_:genid17 a owl:Restriction ;
+	owl:onProperty :timeInstant ;
+	owl:someValuesFrom xsd:dateTime .
+
+:Period rdfs:comment "Identified temporal region" .
+# 
+# http://isagog.com/ontologies/ckg#Person
+
+:Person a owl:Class ;
+	rdfs:subClassOf :Agent , _:genid18 .
+
+_:genid18 a owl:Restriction ;
+	owl:onProperty :familyName ;
+	owl:someValuesFrom rdfs:Literal .
+
+:Person rdfs:subClassOf _:genid19 .
+
+_:genid19 a owl:Restriction ;
+	owl:onProperty :firstName ;
+	owl:someValuesFrom rdfs:Literal .
+
+:Person rdfs:comment "Human being"@en .
+# 
+# http://isagog.com/ontologies/ckg#PersonReference
+
+:PersonReference a owl:Class ;
+	rdfs:subClassOf :Name , :Token .
+# 
+# http://isagog.com/ontologies/ckg#Place
+
+:Place a owl:Class ;
+	rdfs:subClassOf :Continuant ;
+	rdfs:comment "Identified spatial region" .
+# 
+# http://isagog.com/ontologies/ckg#Relationship
+
+:Relationship a owl:Class ;
+	rdfs:subClassOf _:genid20 .
+
+_:genid20 a owl:Restriction ;
+	owl:onProperty :hasElement ;
+	owl:someValuesFrom :Entity .
+
+:Relationship rdfs:comment "Any collective thing which is cognitively and socially recognizable" ;
+	rdfs:seeAlso <http://www.w3.org/2004/02/skos/core#Collection> .
+# 
+# http://isagog.com/ontologies/ckg#Sentence
+
+:Sentence a owl:Class ;
+	rdfs:subClassOf :TextualElement ;
+	rdfs:comment "Syntactically complete textual element" .
+# 
+# http://isagog.com/ontologies/ckg#State
+
+:State a owl:Class ;
+	rdfs:subClassOf :Occurrent .
+# 
+# http://isagog.com/ontologies/ckg#Text
+
+:Text a owl:Class ;
+	rdfs:subClassOf :Information , _:genid21 .
+
+_:genid21 a owl:Restriction ;
+	owl:onProperty :string ;
+	owl:someValuesFrom xsd:string .
+
+:Text rdfs:comment "Textual informative entity" .
+# 
+# http://isagog.com/ontologies/ckg#TextualDocument
+
+:TextualDocument a owl:Class ;
+	rdfs:subClassOf :Text , _:genid22 .
+
+_:genid22 a owl:Restriction ;
+	owl:onProperty :hasElement ;
+	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :TextualElement .
+
+:TextualDocument rdfs:comment "Complex text" .
+# 
+# http://isagog.com/ontologies/ckg#TextualElement
+
+:TextualElement a owl:Class ;
+	rdfs:subClassOf :Text , _:genid23 .
+
+_:genid23 a owl:Restriction ;
+	owl:onProperty :elementOf ;
+	owl:someValuesFrom :TextualDocument .
+
+:TextualElement rdfs:subClassOf _:genid24 .
+
+_:genid24 a owl:Restriction ;
+	owl:onProperty :length ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onDataRange xsd:integer .
+
+:TextualElement rdfs:subClassOf _:genid25 .
+
+_:genid25 a owl:Restriction ;
+	owl:onProperty :offset ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onDataRange xsd:integer .
+
+:TextualElement rdfs:comment "Elemental text" .
+# 
+# http://isagog.com/ontologies/ckg#TimeReference
+
+:TimeReference a owl:Class ;
+	rdfs:subClassOf :Period , :Token .
+# 
+# http://isagog.com/ontologies/ckg#Token
+
+:Token a owl:Class ;
+	rdfs:subClassOf :TextualElement , _:genid26 .
+
+_:genid26 a owl:Restriction ;
+	owl:onProperty :elementOf ;
+	owl:someValuesFrom :TextualElement .
+
+:Token rdfs:subClassOf _:genid27 .
+
+_:genid27 a owl:Restriction ;
+	owl:onProperty :length ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onDataRange xsd:integer .
+
+:Token rdfs:subClassOf _:genid28 .
+
+_:genid28 a owl:Restriction ;
+	owl:onProperty :offset ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onDataRange xsd:integer .
+# 
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

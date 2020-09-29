@@ -95,18 +95,6 @@ ckg:participant rdf:type owl:ObjectProperty .
 ckg:identifier rdf:type owl:DatatypeProperty .
 
 
-###  http://isagog.com/ontologies/pkg#familyName
-:familyName rdf:type owl:DatatypeProperty ;
-            rdfs:domain ckg:Person ;
-            rdfs:range rdfs:Literal .
-
-
-###  http://isagog.com/ontologies/pkg#firstName
-:firstName rdf:type owl:DatatypeProperty ;
-           rdfs:domain ckg:Person ;
-           rdfs:range rdfs:Literal .
-
-
 ###  http://isagog.com/ontologies/pkg#mailAddress
 :mailAddress rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf ckg:identifier ;
@@ -121,28 +109,6 @@ ckg:identifier rdf:type owl:DatatypeProperty .
 ###  http://isagog.com/ontologies/pkg#senderAddress
 :senderAddress rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf :mailAddress .
-
-
-###  http://isagog.com/ontologies/pkg#snippet
-:snippet rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf :text ;
-         rdfs:domain ckg:Information ;
-         rdfs:range xsd:string ;
-         rdfs:comment "Brief summary" .
-
-
-###  http://isagog.com/ontologies/pkg#subject
-:subject rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf :title ;
-         rdfs:domain :Email .
-
-
-###  http://isagog.com/ontologies/pkg#text
-:text rdf:type owl:DatatypeProperty .
-
-
-###  http://isagog.com/ontologies/pkg#title
-:title rdf:type owl:DatatypeProperty .
 
 
 #################################################################
@@ -243,12 +209,7 @@ ckg:TextualElement rdf:type owl:Class .
                        [ rdf:type owl:Restriction ;
                          owl:onProperty :sender ;
                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                         owl:onClass ckg:Person
-                       ] ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :subject ;
-                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                         owl:onDataRange xsd:string
+                         owl:onClass ckg:Agent
                        ] ;
        rdfs:seeAlso "https://tools.ietf.org/html/rfc3864" .
 
