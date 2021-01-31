@@ -1,0 +1,158 @@
+@prefix : <http://isagog.com/ontologies/social#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://isagog.com/ontologies/social> .
+
+<http://isagog.com/ontologies/social> rdf:type owl:Ontology ;
+                                       owl:versionIRI <http://isagog.com/ontologies/social/1.0.0> ;
+                                       owl:imports <http://isagog.com/ontologies/pkg/1.0.0> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://isagog.com/ontologies/social#hasMood
+:hasMood rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf <http://isagog.com/ontologies/ckg#hasQuality> ;
+         rdfs:domain :SocialInteraction ;
+         rdfs:range :Mood .
+
+
+###  http://isagog.com/ontologies/social#link
+:link rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf <http://isagog.com/ontologies/ckg#references> ;
+      rdfs:domain :Post ;
+      rdfs:range :Link .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://isagog.com/ontologies/social#Comment
+:Comment rdf:type owl:Class ;
+         rdfs:subClassOf <http://isagog.com/ontologies/ckg#TextualElement> ,
+                         <http://isagog.com/ontologies/pkg#DialogElement> ,
+                         <http://isagog.com/ontologies/pkg#Message> ,
+                         :SocialInteraction ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <http://isagog.com/ontologies/pkg#replyTo> ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass :SocialInteraction
+                         ] .
+
+
+###  http://isagog.com/ontologies/social#Link
+:Link rdf:type owl:Class ;
+      rdfs:subClassOf <http://isagog.com/ontologies/ckg#Denotation> .
+
+
+###  http://isagog.com/ontologies/social#Mood
+:Mood rdf:type owl:Class ;
+      rdfs:subClassOf <http://isagog.com/ontologies/ckg#Quality> .
+
+
+###  http://isagog.com/ontologies/social#Negative
+:Negative rdf:type owl:Class ;
+          rdfs:subClassOf :Mood .
+
+
+###  http://isagog.com/ontologies/social#Neutral
+:Neutral rdf:type owl:Class ;
+         rdfs:subClassOf :Mood .
+
+
+###  http://isagog.com/ontologies/social#Positive
+:Positive rdf:type owl:Class ;
+          rdfs:subClassOf :Mood .
+
+
+###  http://isagog.com/ontologies/social#Post
+:Post rdf:type owl:Class ;
+      rdfs:subClassOf <http://isagog.com/ontologies/ckg#TextualElement> ,
+                      :SocialInteraction .
+
+
+###  http://isagog.com/ontologies/social#Reaction
+:Reaction rdf:type owl:Class ;
+          rdfs:subClassOf :SocialInteraction .
+
+
+###  http://isagog.com/ontologies/social#SocialContact
+:SocialContact rdf:type owl:Class ;
+               rdfs:subClassOf <http://isagog.com/ontologies/ckg#Person> ,
+                               <http://isagog.com/ontologies/pkg#Acquaintance> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://isagog.com/ontologies/ckg#participant> ;
+                                 owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                 owl:onClass <http://isagog.com/ontologies/ckg#Person>
+                               ] .
+
+
+###  http://isagog.com/ontologies/social#SocialInteraction
+:SocialInteraction rdf:type owl:Class ;
+                   rdfs:subClassOf <http://isagog.com/ontologies/ckg#Activity> ,
+                                   <http://isagog.com/ontologies/pkg#Interaction> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty :hasMood ;
+                                     owl:someValuesFrom :Mood
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://isagog.com/ontologies/ckg#participant> ;
+                                     owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                     owl:onClass :SocialContact
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://isagog.com/ontologies/ckg#hasSource> ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onClass :SocialNetwork
+                                   ] .
+
+
+###  http://isagog.com/ontologies/social#SocialNetwork
+:SocialNetwork rdf:type owl:Class ;
+               rdfs:subClassOf <http://isagog.com/ontologies/ckg#InformationSource> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://isagog.com/ontologies/ckg#hasElement> ;
+                                 owl:someValuesFrom :SocialInteraction
+                               ] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://isagog.com/ontologies/social#DISLIKE
+:DISLIKE rdf:type owl:NamedIndividual ,
+                  :Negative .
+
+
+###  http://isagog.com/ontologies/social#HEART
+:HEART rdf:type owl:NamedIndividual ,
+                :Positive .
+
+
+###  http://isagog.com/ontologies/social#HUG
+:HUG rdf:type owl:NamedIndividual ,
+              :Positive .
+
+
+###  http://isagog.com/ontologies/social#LIKE
+:LIKE rdf:type owl:NamedIndividual ,
+               :Positive .
+
+
+###  http://isagog.com/ontologies/social#RAGE
+:RAGE rdf:type owl:NamedIndividual ,
+               :Mood .
+
+
+###  http://isagog.com/ontologies/social#SOB
+:SOB rdf:type owl:NamedIndividual ,
+              :Mood .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
