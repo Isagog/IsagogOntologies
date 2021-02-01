@@ -8,7 +8,43 @@
 
 <http://isagog.com/ontologies/social> rdf:type owl:Ontology ;
                                        owl:versionIRI <http://isagog.com/ontologies/social/1.0.0> ;
-                                       owl:imports <http://isagog.com/ontologies/pkg/1.0.0> .
+                                       owl:imports <http://isagog.com/ontologies/top/1.0.0> ;
+                                       <http://purl.org/dc/elements/1.1/creator> "Guido Vetere" ;
+                                       <http://purl.org/dc/terms/license> "CC-BY-SA, Isagog Srl" ;
+                                       rdfs:comment "A conceptual model for Professional Knowledge Graphs" ;
+                                       rdfs:label "Professional Knowledge Graph Ontology" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://isagog.com/ontologies/top#permission
+<http://isagog.com/ontologies/top#permission> rdf:type owl:AnnotationProperty .
+
+
+###  http://isagog.com/ontologies/top#provenance
+<http://isagog.com/ontologies/top#provenance> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/creator
+<http://purl.org/dc/elements/1.1/creator> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#cardinality
+owl:cardinality rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#minQualifiedCardinality
+owl:minQualifiedCardinality rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#qualifiedCardinality
+owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
+
 
 #################################################################
 #    Object Properties
@@ -16,16 +52,73 @@
 
 ###  http://isagog.com/ontologies/social#hasMood
 :hasMood rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf <http://isagog.com/ontologies/ckg#hasQuality> ;
+         rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasQuality> ;
          rdfs:domain :SocialInteraction ;
-         rdfs:range :Mood .
+         rdfs:range :Sentiment .
 
 
 ###  http://isagog.com/ontologies/social#link
 :link rdf:type owl:ObjectProperty ;
-      rdfs:subPropertyOf <http://isagog.com/ontologies/ckg#references> ;
+      rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
       rdfs:domain :Post ;
       rdfs:range :Link .
+
+
+###  http://isagog.com/ontologies/social#repliedBy
+:repliedBy rdf:type owl:ObjectProperty ;
+           owl:inverseOf :replyTo ;
+           rdfs:domain :DialogElement ;
+           rdfs:range :DialogElement ;
+           rdfs:comment "Dialog elements relply the one another" .
+
+
+###  http://isagog.com/ontologies/social#replyTo
+:replyTo rdf:type owl:ObjectProperty ;
+         rdfs:domain :DialogElement ;
+         rdfs:range :DialogElement .
+
+
+###  http://isagog.com/ontologies/social#sender
+:sender rdf:type owl:ObjectProperty ;
+        rdfs:domain :Email ;
+        rdfs:range <http://isagog.com/ontologies/top#Agent> ;
+        rdfs:comment "Emails have senders (any agent)" .
+
+
+###  http://isagog.com/ontologies/top#elementOf
+<http://isagog.com/ontologies/top#elementOf> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#hasElement
+<http://isagog.com/ontologies/top#hasElement> rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#participant
+<http://isagog.com/ontologies/top#participant> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/social#mailAddress
+:mailAddress rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf <http://isagog.com/ontologies/top#identifier> ;
+             rdfs:range xsd:string .
+
+
+###  http://isagog.com/ontologies/social#receiverAddress
+:receiverAddress rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :mailAddress .
+
+
+###  http://isagog.com/ontologies/social#senderAddress
+:senderAddress rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :mailAddress .
+
+
+###  http://isagog.com/ontologies/top#identifier
+<http://isagog.com/ontologies/top#identifier> rdf:type owl:DatatypeProperty .
 
 
 #################################################################
@@ -34,46 +127,131 @@
 
 ###  http://isagog.com/ontologies/social#Comment
 :Comment rdf:type owl:Class ;
-         rdfs:subClassOf <http://isagog.com/ontologies/ckg#TextualElement> ,
-                         <http://isagog.com/ontologies/pkg#DialogElement> ,
-                         <http://isagog.com/ontologies/pkg#Message> ,
+         rdfs:subClassOf :DialogElement ,
+                         :Message ,
                          :SocialInteraction ,
+                         <http://isagog.com/ontologies/top#TextualElement> ,
                          [ rdf:type owl:Restriction ;
-                           owl:onProperty <http://isagog.com/ontologies/pkg#replyTo> ;
+                           owl:onProperty :replyTo ;
                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                            owl:onClass :SocialInteraction
                          ] .
 
 
+###  http://isagog.com/ontologies/social#Contact
+:Contact rdf:type owl:Class ;
+         rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <http://isagog.com/ontologies/top#references> ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass <http://isagog.com/ontologies/top#Person>
+                         ] ;
+         rdfs:comment "Registered personal acquaintance" .
+
+
+###  http://isagog.com/ontologies/social#Conversation
+:Conversation rdf:type owl:Class ;
+              rdfs:subClassOf :Interaction ,
+                              <http://isagog.com/ontologies/top#TextualDocument> ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty <http://isagog.com/ontologies/top#hasElement> ;
+                                owl:someValuesFrom :DialogElement
+                              ] .
+
+
+###  http://isagog.com/ontologies/social#DialogElement
+:DialogElement rdf:type owl:Class ;
+               rdfs:subClassOf <http://isagog.com/ontologies/top#Document> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :repliedBy ;
+                                 owl:someValuesFrom :DialogElement
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :replyTo ;
+                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:onClass :DialogElement
+                               ] ;
+               rdfs:comment "A conversational element" .
+
+
+###  http://isagog.com/ontologies/social#Email
+:Email rdf:type owl:Class ;
+       rdfs:subClassOf :DialogElement ,
+                       <http://isagog.com/ontologies/top#TextualDocument> ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :repliedBy ;
+                         owl:allValuesFrom :Email
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :replyTo ;
+                         owl:allValuesFrom :Email
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :sender ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass <http://isagog.com/ontologies/top#Agent>
+                       ] ;
+       rdfs:seeAlso "https://tools.ietf.org/html/rfc3864" .
+
+
+###  http://isagog.com/ontologies/social#Interaction
+:Interaction rdf:type owl:Class ;
+             rdfs:subClassOf <http://isagog.com/ontologies/top#Activity> ;
+             rdfs:comment "Human interaction" .
+
+
 ###  http://isagog.com/ontologies/social#Link
 :Link rdf:type owl:Class ;
-      rdfs:subClassOf <http://isagog.com/ontologies/ckg#Denotation> .
+      rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> .
 
 
-###  http://isagog.com/ontologies/social#Mood
-:Mood rdf:type owl:Class ;
-      rdfs:subClassOf <http://isagog.com/ontologies/ckg#Quality> .
+###  http://isagog.com/ontologies/social#Meeting
+:Meeting rdf:type owl:Class ;
+         rdfs:subClassOf :Interaction .
+
+
+###  http://isagog.com/ontologies/social#Message
+:Message rdf:type owl:Class ;
+         rdfs:subClassOf :DialogElement ,
+                         <http://isagog.com/ontologies/top#TextualElement> ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :replyTo ;
+                           owl:allValuesFrom :Message
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <http://isagog.com/ontologies/top#elementOf> ;
+                           owl:allValuesFrom :Conversation
+                         ] .
 
 
 ###  http://isagog.com/ontologies/social#Negative
 :Negative rdf:type owl:Class ;
-          rdfs:subClassOf :Mood .
+          rdfs:subClassOf :Sentiment .
 
 
 ###  http://isagog.com/ontologies/social#Neutral
 :Neutral rdf:type owl:Class ;
-         rdfs:subClassOf :Mood .
+         rdfs:subClassOf :Sentiment .
+
+
+###  http://isagog.com/ontologies/social#PhysicalMeeting
+:PhysicalMeeting rdf:type owl:Class ;
+                 rdfs:subClassOf :Meeting ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://isagog.com/ontologies/top#locatedIn> ;
+                                   owl:someValuesFrom <http://isagog.com/ontologies/top#Place>
+                                 ] .
 
 
 ###  http://isagog.com/ontologies/social#Positive
 :Positive rdf:type owl:Class ;
-          rdfs:subClassOf :Mood .
+          rdfs:subClassOf :Sentiment .
 
 
 ###  http://isagog.com/ontologies/social#Post
 :Post rdf:type owl:Class ;
-      rdfs:subClassOf <http://isagog.com/ontologies/ckg#TextualElement> ,
-                      :SocialInteraction .
+      rdfs:subClassOf :SocialInteraction ,
+                      <http://isagog.com/ontologies/top#TextualElement> .
 
 
 ###  http://isagog.com/ontologies/social#Reaction
@@ -81,44 +259,87 @@
           rdfs:subClassOf :SocialInteraction .
 
 
-###  http://isagog.com/ontologies/social#SocialContact
-:SocialContact rdf:type owl:Class ;
-               rdfs:subClassOf <http://isagog.com/ontologies/ckg#Person> ,
-                               <http://isagog.com/ontologies/pkg#Acquaintance> ,
-                               [ rdf:type owl:Restriction ;
-                                 owl:onProperty <http://isagog.com/ontologies/ckg#participant> ;
-                                 owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
-                                 owl:onClass <http://isagog.com/ontologies/ckg#Person>
-                               ] .
+###  http://isagog.com/ontologies/social#Sentiment
+:Sentiment rdf:type owl:Class ;
+           rdfs:subClassOf <http://isagog.com/ontologies/top#Quality> .
 
 
 ###  http://isagog.com/ontologies/social#SocialInteraction
 :SocialInteraction rdf:type owl:Class ;
-                   rdfs:subClassOf <http://isagog.com/ontologies/ckg#Activity> ,
-                                   <http://isagog.com/ontologies/pkg#Interaction> ,
+                   rdfs:subClassOf :Interaction ,
                                    [ rdf:type owl:Restriction ;
                                      owl:onProperty :hasMood ;
-                                     owl:someValuesFrom :Mood
+                                     owl:someValuesFrom :Sentiment
                                    ] ,
                                    [ rdf:type owl:Restriction ;
-                                     owl:onProperty <http://isagog.com/ontologies/ckg#participant> ;
+                                     owl:onProperty <http://isagog.com/ontologies/top#participant> ;
                                      owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
-                                     owl:onClass :SocialContact
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty <http://isagog.com/ontologies/ckg#hasSource> ;
-                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                     owl:onClass :SocialNetwork
+                                     owl:onClass :Contact
                                    ] .
 
 
 ###  http://isagog.com/ontologies/social#SocialNetwork
 :SocialNetwork rdf:type owl:Class ;
-               rdfs:subClassOf <http://isagog.com/ontologies/ckg#InformationSource> ,
+               rdfs:subClassOf <http://isagog.com/ontologies/top#InformationSource> ,
                                [ rdf:type owl:Restriction ;
-                                 owl:onProperty <http://isagog.com/ontologies/ckg#hasElement> ;
+                                 owl:onProperty <http://isagog.com/ontologies/top#hasElement> ;
                                  owl:someValuesFrom :SocialInteraction
                                ] .
+
+
+###  http://isagog.com/ontologies/social#Teleconference
+:Teleconference rdf:type owl:Class ;
+                rdfs:subClassOf :VirtualMeeting .
+
+
+###  http://isagog.com/ontologies/social#Videoconference
+:Videoconference rdf:type owl:Class ;
+                 rdfs:subClassOf :VirtualMeeting .
+
+
+###  http://isagog.com/ontologies/social#VirtualMeeting
+:VirtualMeeting rdf:type owl:Class ;
+                rdfs:subClassOf :Meeting .
+
+
+###  http://isagog.com/ontologies/top#Activity
+<http://isagog.com/ontologies/top#Activity> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Agent
+<http://isagog.com/ontologies/top#Agent> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Collection
+<http://isagog.com/ontologies/top#Collection> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Document
+<http://isagog.com/ontologies/top#Document> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Information
+<http://isagog.com/ontologies/top#Information> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#InformationSource
+<http://isagog.com/ontologies/top#InformationSource> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Occurrent
+<http://isagog.com/ontologies/top#Occurrent> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#Person
+<http://isagog.com/ontologies/top#Person> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#TextualDocument
+<http://isagog.com/ontologies/top#TextualDocument> rdf:type owl:Class .
+
+
+###  http://isagog.com/ontologies/top#TextualElement
+<http://isagog.com/ontologies/top#TextualElement> rdf:type owl:Class .
 
 
 #################################################################
@@ -147,12 +368,18 @@
 
 ###  http://isagog.com/ontologies/social#RAGE
 :RAGE rdf:type owl:NamedIndividual ,
-               :Mood .
+               :Sentiment .
 
 
 ###  http://isagog.com/ontologies/social#SOB
 :SOB rdf:type owl:NamedIndividual ,
-              :Mood .
+              :Sentiment .
 
+
+[ owl:cardinality "1"^^xsd:nonNegativeInteger
+] .
+
+[ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+ ] .
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
