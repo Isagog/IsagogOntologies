@@ -10,119 +10,127 @@
                                           owl:imports <http://isagog.com/ontologies/top/1.0.0> .
 
 #################################################################
+#    Annotation properties
+#################################################################
+
+###  http://isagog.com/ontologies/knowledge#attributeType
+:attributeType rdf:type owl:AnnotationProperty ;
+               rdfs:domain :AttributiveSlot .
+
+
+###  http://isagog.com/ontologies/knowledge#isInformative
+:isInformative rdf:type owl:AnnotationProperty ;
+               rdfs:domain :Slot .
+
+
+###  http://isagog.com/ontologies/knowledge#isMandatory
+:isMandatory rdf:type owl:AnnotationProperty ;
+             rdfs:domain :Slot .
+
+
+#################################################################
 #    Object Properties
 #################################################################
 
 ###  http://isagog.com/ontologies/knowledge#objectBinding
-<http://isagog.com/ontologies/knowledge#objectBinding> rdfs:domain <http://isagog.com/ontologies/knowledge#RelationalSlot> ;
-                                                 rdfs:range <http://isagog.com/ontologies/knowledge#ConceptualSlot> .
+:objectBinding rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :slotBinding ;
+               rdfs:domain :RelationalSlot ;
+               rdfs:range :ConceptualSlot .
 
 
 ###  http://isagog.com/ontologies/knowledge#slotBinding
-<http://isagog.com/ontologies/knowledge#slotBinding> rdfs:domain <http://isagog.com/ontologies/knowledge#Slot> ;
-                                               rdfs:range <http://isagog.com/ontologies/knowledge#Slot> .
+:slotBinding rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
+             rdfs:domain :Slot ;
+             rdfs:range :Slot .
 
 
 ###  http://isagog.com/ontologies/knowledge#subjectBinding
-<http://isagog.com/ontologies/knowledge#subjectBinding> rdfs:domain [ rdf:type owl:Class ;
-                                                                owl:unionOf ( <http://isagog.com/ontologies/knowledge#AttributiveSlot>
-                                                                              <http://isagog.com/ontologies/knowledge#RelationalSlot>
-                                                                            )
-                                                              ] ;
-                                                  rdfs:range <http://isagog.com/ontologies/knowledge#Slot> .
-												  
-# 
-# http://isagog.com/ontologies/top#predicate
-
-:predicate a owl:DatatypeProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#identifier> ;
-	rdfs:domain <http://isagog.com/ontologies/top#Denotation> ;
-	rdfs:comment "Reference to a conceptual element, e.g. any owl:Class or owl.ObjectProperty instance." .											  
+:subjectBinding rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :slotBinding ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( :AttributiveSlot
+                                            :RelationalSlot
+                                          )
+                            ] ;
+                rdfs:range :Slot .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
-###  http://isagog.com/ontologies/knowledge#attributeType
-<http://isagog.com/ontologies/knowledge#attributeType> rdfs:domain <http://isagog.com/ontologies/knowledge#AttributiveSlot> .
-
-
-###  http://isagog.com/ontologies/knowledge#isInformative
-<http://isagog.com/ontologies/knowledge#isInformative> rdfs:domain <http://isagog.com/ontologies/knowledge#Slot> .
-
-
-###  http://isagog.com/ontologies/knowledge#isMandatory
-<http://isagog.com/ontologies/knowledge#isMandatory> rdfs:domain <http://isagog.com/ontologies/knowledge#Slot> .
+###  http://isagog.com/ontologies/knowledge#predicate
+:predicate rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf <http://isagog.com/ontologies/top#identifier> ;
+           rdfs:domain <http://isagog.com/ontologies/top#Denotation> ;
+           rdfs:comment "Reference to a conceptual element, e.g. any owl:Class or owl.ObjectProperty instance." .
 
 
 #################################################################
 #    Classes
 #################################################################
 
-
-
 ###  http://isagog.com/ontologies/knowledge#AttributiveSlot
-<http://isagog.com/ontologies/knowledge#AttributiveSlot> rdf:type owl:Class ;
-                                                   rdfs:subClassOf <http://isagog.com/ontologies/knowledge#Slot> ,
-                                                                   [ rdf:type owl:Restriction ;
-                                                                     owl:onProperty <http://isagog.com/ontologies/knowledge#subjectBinding> ;
-                                                                     owl:someValuesFrom <http://isagog.com/ontologies/knowledge#ConceptualSlot>
-                                                                   ] .
+:AttributiveSlot rdf:type owl:Class ;
+                 rdfs:subClassOf :Slot ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :subjectBinding ;
+                                   owl:someValuesFrom :ConceptualSlot
+                                 ] .
 
 
 ###  http://isagog.com/ontologies/knowledge#Classifier
-<http://isagog.com/ontologies/knowledge#Classifier> rdf:type owl:Class ;
-                                              rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ;
-                                              rdfs:comment "Denomination of classes" .
+:Classifier rdf:type owl:Class ;
+            rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ;
+            rdfs:comment "Denomination of classes" .
 
 
 ###  http://isagog.com/ontologies/knowledge#ConceptualSlot
-<http://isagog.com/ontologies/knowledge#ConceptualSlot> rdf:type owl:Class ;
-                                                  rdfs:subClassOf <http://isagog.com/ontologies/knowledge#Slot> .
+:ConceptualSlot rdf:type owl:Class ;
+                rdfs:subClassOf :Slot .
 
 
 ###  http://isagog.com/ontologies/knowledge#Frame
-<http://isagog.com/ontologies/knowledge#Frame> rdf:type owl:Class ;
-                                         rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ,
-                                                         [ rdf:type owl:Restriction ;
-                                                           owl:onProperty <http://isagog.com/ontologies/top#hasElement> ;
-                                                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                           owl:onClass <http://isagog.com/ontologies/knowledge#Slot>
-                                                         ] ;
-                                         rdfs:comment "Conceptual pattern, e.g. a situation or a query" .
-
-
+:Frame rdf:type owl:Class ;
+       rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty <http://isagog.com/ontologies/top#hasElement> ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass :Slot
+                       ] ;
+       rdfs:comment "Conceptual pattern, e.g. a situation or a query" .
 
 
 ###  http://isagog.com/ontologies/knowledge#RelationalSlot
-<http://isagog.com/ontologies/knowledge#RelationalSlot> rdf:type owl:Class ;
-                                                  rdfs:subClassOf <http://isagog.com/ontologies/knowledge#Slot> ,
-                                                                  [ rdf:type owl:Restriction ;
-                                                                    owl:onProperty <http://isagog.com/ontologies/knowledge#objectBinding> ;
-                                                                    owl:someValuesFrom <http://isagog.com/ontologies/knowledge#ConceptualSlot>
-                                                                  ] ,
-                                                                  [ rdf:type owl:Restriction ;
-                                                                    owl:onProperty <http://isagog.com/ontologies/knowledge#subjectBinding> ;
-                                                                    owl:someValuesFrom <http://isagog.com/ontologies/knowledge#ConceptualSlot>
-                                                                  ] .
+:RelationalSlot rdf:type owl:Class ;
+                rdfs:subClassOf :Slot ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :objectBinding ;
+                                  owl:someValuesFrom :ConceptualSlot
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :subjectBinding ;
+                                  owl:someValuesFrom :ConceptualSlot
+                                ] .
 
 
 ###  http://isagog.com/ontologies/knowledge#Slot
-<http://isagog.com/ontologies/knowledge#Slot> rdf:type owl:Class ;
-                                        rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ,
-                                                        [ rdf:type owl:Restriction ;
-                                                          owl:onProperty <http://isagog.com/ontologies/knowledge#predicate> ;
-                                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                          owl:onDataRange xsd:anyURI
-                                                        ] ;
-                                        rdfs:comment "Element of a conceptual pattern (frame)" .
+:Slot rdf:type owl:Class ;
+      rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :predicate ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:anyURI
+                      ] ;
+      rdfs:comment "Element of a conceptual pattern (frame)" .
 
 [ rdf:type owl:Axiom ;
-   owl:annotatedSource <http://isagog.com/ontologies/knowledge#Slot> ;
+   owl:annotatedSource :Slot ;
    owl:annotatedProperty rdfs:subClassOf ;
    owl:annotatedTarget [ rdf:type owl:Restriction ;
-                         owl:onProperty <http://isagog.com/ontologies/knowledge#predicate> ;
+                         owl:onProperty :predicate ;
                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                          owl:onDataRange xsd:anyURI
                        ] ;
