@@ -4,94 +4,102 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://isagog.com/ontologies/info> .
 
-<http://isagog.com/ontologies/info> rdf:type owl:Ontology ;
-                                     owl:imports <http://isagog.com/ontologies/language> .
+<http://isagog.com/ontologies/info> a owl:Ontology ;
+	owl:imports <http://isagog.com/ontologies/language> .
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/info#about
 
-#################################################################
-#    Object Properties
-#################################################################
+:about a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
+	rdfs:domain <http://isagog.com/ontologies/language#Sentence> ;
+	rdfs:comment "Aboutness relationship" .
+# 
+# http://isagog.com/ontologies/info#source
 
-###  http://isagog.com/ontologies/info#about
-:about rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
-       rdfs:domain <http://isagog.com/ontologies/language#Sentence> ;
-       rdfs:range :Reference .
+:source a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://isagog.com/ontologies/top#dependsOn> ;
+	owl:inverseOf :sourceOf ;
+	rdfs:domain <http://isagog.com/ontologies/top#Information> ;
+	rdfs:range :InformationSource .
+# 
+# http://isagog.com/ontologies/info#sourceOf
 
+:sourceOf a owl:ObjectProperty ;
+	rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasDependent> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://isagog.com/ontologies/info#Article
 
-###  http://isagog.com/ontologies/info#source
-:source rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf <http://isagog.com/ontologies/top#dependsOn> ;
-        owl:inverseOf :sourceOf ;
-        rdfs:domain <http://isagog.com/ontologies/top#Information> ;
-        rdfs:range :InformationSource .
+:Article a owl:Class ;
+	rdfs:subClassOf :InformationSource .
+# 
+# http://isagog.com/ontologies/info#Blog
 
+:Blog a owl:Class ;
+	rdfs:subClassOf :InformationSource .
+# 
+# http://isagog.com/ontologies/info#InformationSource
 
-###  http://isagog.com/ontologies/info#sourceOf
-:sourceOf rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasDependent> .
+:InformationSource a owl:Class ;
+	rdfs:subClassOf <http://isagog.com/ontologies/top#Entity> .
+# 
+# http://isagog.com/ontologies/info#Reference
 
+:Reference a owl:Class ;
+	rdfs:subClassOf <http://isagog.com/ontologies/top#Text> .
+# 
+# http://isagog.com/ontologies/info#WebPage
 
-#################################################################
-#    Classes
-#################################################################
+:WebPage a owl:Class ;
+	rdfs:subClassOf :InformationSource .
+# 
+# http://isagog.com/ontologies/language#ConceptReference
 
-###  http://isagog.com/ontologies/info#Article
-:Article rdf:type owl:Class ;
-         rdfs:subClassOf :InformationSource .
-
-
-###  http://isagog.com/ontologies/info#Blog
-:Blog rdf:type owl:Class ;
-      rdfs:subClassOf :InformationSource .
-
-
-###  http://isagog.com/ontologies/info#InformationSource
-:InformationSource rdf:type owl:Class ;
-                   rdfs:subClassOf <http://isagog.com/ontologies/top#Entity> .
-
-
-###  http://isagog.com/ontologies/info#Reference
-:Reference rdf:type owl:Class ;
-           rdfs:subClassOf <http://isagog.com/ontologies/top#Text> .
-
-
-###  http://isagog.com/ontologies/info#WebPage
-:WebPage rdf:type owl:Class ;
-         rdfs:subClassOf :InformationSource .
-
-
-###  http://isagog.com/ontologies/language#ConceptReference
 <http://isagog.com/ontologies/language#ConceptReference> rdfs:subClassOf :Reference .
+# 
+# http://isagog.com/ontologies/language#MoneyReference
 
-
-###  http://isagog.com/ontologies/language#MoneyReference
 <http://isagog.com/ontologies/language#MoneyReference> rdfs:subClassOf :Reference .
+# 
+# http://isagog.com/ontologies/language#NameReference
 
-
-###  http://isagog.com/ontologies/language#NameReference
 <http://isagog.com/ontologies/language#NameReference> rdfs:subClassOf :Reference .
+# 
+# http://isagog.com/ontologies/language#OrganizationReference
 
-
-###  http://isagog.com/ontologies/language#OrganizationReference
 <http://isagog.com/ontologies/language#OrganizationReference> rdfs:subClassOf :Reference .
+# 
+# http://isagog.com/ontologies/language#PersonReference
 
-
-###  http://isagog.com/ontologies/language#PersonReference
 <http://isagog.com/ontologies/language#PersonReference> rdfs:subClassOf :Reference .
+# 
+# http://isagog.com/ontologies/language#TimeReference
 
-
-###  http://isagog.com/ontologies/language#TimeReference
 <http://isagog.com/ontologies/language#TimeReference> rdfs:subClassOf :Reference .
+# 
+# http://isagog.com/ontologies/top#Organization
 
-
-###  http://isagog.com/ontologies/top#Organization
 <http://isagog.com/ontologies/top#Organization> rdfs:subClassOf :InformationSource .
+# 
+# http://isagog.com/ontologies/top#Person
 
-
-###  http://isagog.com/ontologies/top#Person
 <http://isagog.com/ontologies/top#Person> rdfs:subClassOf :InformationSource .
-
-
-###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+# 
+# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

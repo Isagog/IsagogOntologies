@@ -25,7 +25,7 @@
 
 ###  http://isagog.com/ontologies/dialectics#conveys
 :conveys rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasDependent> .
+         rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasQuality> .
 
 
 ###  http://isagog.com/ontologies/dialectics#nonCompatibleWith
@@ -36,32 +36,17 @@
 
 ###  http://isagog.com/ontologies/dialectics#object
 :object rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf <http://isagog.com/ontologies/top#dependsOn> ;
+        rdfs:subPropertyOf <http://isagog.com/ontologies/top#qualityOf> ;
         rdfs:domain :Attitude ;
         rdfs:range :Statement .
-
-
-###  http://isagog.com/ontologies/dialectics#polarity
-:polarity rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasQuality> ;
-          rdfs:domain :Attitude ;
-          rdfs:range :Polarity .
 
 
 ###  http://isagog.com/ontologies/dialectics#relatesTo
 :relatesTo rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
-           rdfs:domain :Factoid ;
-           rdfs:range :Factoid ;
+           rdfs:domain :Proposition ;
+           rdfs:range :Proposition ;
            rdfs:comment "Relatedness among factual statements (factoids)" .
-
-
-###  http://isagog.com/ontologies/dialectics#subject
-:subject rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf <http://isagog.com/ontologies/top#dependsOn> ;
-         owl:inverseOf :subjectOf ;
-         rdfs:domain :Attitude ;
-         rdfs:range info:InformationSource .
 
 
 ###  http://isagog.com/ontologies/dialectics#subjectOf
@@ -75,19 +60,19 @@
 
 ###  http://isagog.com/ontologies/dialectics#confidence
 :confidence rdf:type owl:DatatypeProperty ;
-            rdfs:domain :Viewpoint ;
+            rdfs:domain :Trust ;
             rdfs:range xsd:double .
 
 
 ###  http://isagog.com/ontologies/dialectics#evidence
 :evidence rdf:type owl:DatatypeProperty ;
-          rdfs:domain :Factoid ;
+          rdfs:domain :Proposition ;
           rdfs:range xsd:double .
 
 
 ###  http://isagog.com/ontologies/dialectics#strenght
 :strenght rdf:type owl:DatatypeProperty ;
-          rdfs:domain :Judgement ;
+          rdfs:domain :Support ;
           rdfs:range xsd:double .
 
 
@@ -97,12 +82,15 @@
 
 ###  http://isagog.com/ontologies/dialectics#Acceptance
 :Acceptance rdf:type owl:Class ;
-            rdfs:subClassOf :Support ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :polarity ;
-                              owl:hasValue :POSITIVE
-                            ] ;
+            rdfs:subClassOf :Positive ,
+                            :Support ;
             rdfs:comment "Positive support" .
+
+
+###  http://isagog.com/ontologies/dialectics#Appreciation
+:Appreciation rdf:type owl:Class ;
+              rdfs:subClassOf :Positive ,
+                              :Valuation .
 
 
 ###  http://isagog.com/ontologies/dialectics#Argument
@@ -111,6 +99,10 @@
                           [ rdf:type owl:Restriction ;
                             owl:onProperty :conveys ;
                             owl:someValuesFrom :Support
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty info:about ;
+                            owl:allValuesFrom :Judgement
                           ] ;
           rdfs:comment "Opinion about some other opinion" .
 
@@ -119,46 +111,35 @@
 :Attitude rdf:type owl:Class ;
           rdfs:subClassOf <http://isagog.com/ontologies/top#Quality> ,
                           [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://isagog.com/ontologies/top#qualityOf> ;
+                            owl:allValuesFrom :Judgement
+                          ] ,
+                          [ rdf:type owl:Restriction ;
                             owl:onProperty :object ;
-                            owl:someValuesFrom :Statement
-                          ] ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :subject ;
-                            owl:someValuesFrom info:InformationSource
-                          ] ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :polarity ;
-                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onClass :Polarity
+                            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Statement
                           ] ;
           rdfs:comment "Subjective frame of mind about a Statement, e.g. propositional attitudes such as beliefs" .
 
 
 ###  http://isagog.com/ontologies/dialectics#Belief
 :Belief rdf:type owl:Class ;
-        rdfs:subClassOf :Trust ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :polarity ;
-                          owl:hasValue :POSITIVE
-                        ] ;
+        rdfs:subClassOf :Positive ,
+                        :Trust ;
         rdfs:comment "Positive trust" .
+
+
+###  http://isagog.com/ontologies/dialectics#Complain
+:Complain rdf:type owl:Class ;
+          rdfs:subClassOf :Negative ,
+                          :Valuation .
 
 
 ###  http://isagog.com/ontologies/dialectics#Disbelief
 :Disbelief rdf:type owl:Class ;
-           rdfs:subClassOf :Trust ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :polarity ;
-                             owl:hasValue :NEGATIVE
-                           ] ;
+           rdfs:subClassOf :Negative ,
+                           :Trust ;
            rdfs:comment "Negative trust" .
-
-
-###  http://isagog.com/ontologies/dialectics#Factoid
-:Factoid rdf:type owl:Class ;
-         rdfs:subClassOf :Statement ;
-         owl:disjointWith :Judgement ;
-         rdfs:comment "Statement conveying a propositional content that could be empirically verified (truth-bearer), e.g. chronicle" .
 
 
 ###  http://isagog.com/ontologies/dialectics#Judgement
@@ -167,29 +148,60 @@
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :conveys ;
                              owl:someValuesFrom :Attitude
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty info:about ;
+                             owl:allValuesFrom :Statement
                            ] ;
-           rdfs:comment "Subjective statement about something." .
+           owl:disjointWith :Proposition ;
+           rdfs:comment "Statement wich conveys a subjective attitude" .
+
+
+###  http://isagog.com/ontologies/dialectics#Negative
+:Negative rdf:type owl:Class ;
+          rdfs:subClassOf :Polarity .
+
+
+###  http://isagog.com/ontologies/dialectics#Neutral
+:Neutral rdf:type owl:Class ;
+         rdfs:subClassOf :Polarity .
 
 
 ###  http://isagog.com/ontologies/dialectics#Polarity
 :Polarity rdf:type owl:Class ;
-          rdfs:subClassOf <http://isagog.com/ontologies/top#Quality> ;
+          rdfs:subClassOf <http://isagog.com/ontologies/top#Quality> ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://isagog.com/ontologies/top#qualityOf> ;
+                            owl:allValuesFrom :Judgement
+                          ] ;
           rdfs:comment "Attitude quality, which can be one of NEGATIVE, POSITIVE or NEUTRAL" .
+
+
+###  http://isagog.com/ontologies/dialectics#Positive
+:Positive rdf:type owl:Class ;
+          rdfs:subClassOf :Polarity .
+
+
+###  http://isagog.com/ontologies/dialectics#Proposition
+:Proposition rdf:type owl:Class ;
+             rdfs:subClassOf :Statement ;
+             rdfs:comment "Statement about state-of-affairs that could be empirically verified (truth-bearer)" .
 
 
 ###  http://isagog.com/ontologies/dialectics#Rebuttal
 :Rebuttal rdf:type owl:Class ;
-          rdfs:subClassOf :Support ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :polarity ;
-                            owl:hasValue :NEGATIVE
-                          ] ;
+          rdfs:subClassOf :Negative ,
+                          :Support ;
           rdfs:comment "Negative support" .
 
 
 ###  http://isagog.com/ontologies/dialectics#Statement
 :Statement rdf:type owl:Class ;
-           rdfs:subClassOf <http://isagog.com/ontologies/language#Sentence> ;
+           rdfs:subClassOf <http://isagog.com/ontologies/language#Sentence> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty info:source ;
+                             owl:someValuesFrom info:InformationSource
+                           ] ;
            rdfs:comment "Informative object originated by an information source" .
 
 
@@ -197,20 +209,36 @@
 :Support rdf:type owl:Class ;
          rdfs:subClassOf :Attitude ,
                          [ rdf:type owl:Restriction ;
-                           owl:onProperty :object ;
+                           owl:onProperty <http://isagog.com/ontologies/top#qualityOf> ;
                            owl:allValuesFrom :Judgement
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :strenght ;
+                           owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange owl:rational
                          ] ;
-         rdfs:comment "Attitude towards Judgements" .
+         rdfs:comment "Agreement towards judgements (rethorical axis)" .
 
 
 ###  http://isagog.com/ontologies/dialectics#Trust
 :Trust rdf:type owl:Class ;
        rdfs:subClassOf :Attitude ,
                        [ rdf:type owl:Restriction ;
-                         owl:onProperty :object ;
-                         owl:allValuesFrom :Factoid
+                         owl:onProperty <http://isagog.com/ontologies/top#qualityOf> ;
+                         owl:allValuesFrom :Viewpoint
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :confidence ;
+                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange owl:rational
                        ] ;
-       rdfs:comment "Attitute towards Factoids" .
+       rdfs:comment "Truth judgements (epistemic axis)" .
+
+
+###  http://isagog.com/ontologies/dialectics#Valuation
+:Valuation rdf:type owl:Class ;
+           rdfs:subClassOf :Attitude ;
+           rdfs:comment "Value judgement (axiological axis)" .
 
 
 ###  http://isagog.com/ontologies/dialectics#Viewpoint
@@ -219,6 +247,10 @@
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :conveys ;
                              owl:someValuesFrom :Trust
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty info:about ;
+                             owl:allValuesFrom :Proposition
                            ] ;
            rdfs:comment "Account of a subjective statement of someone about a factoid (propositional content)" .
 
@@ -228,18 +260,15 @@
 #################################################################
 
 ###  http://isagog.com/ontologies/dialectics#NEGATIVE
-:NEGATIVE rdf:type owl:NamedIndividual ,
-                   :Polarity .
+:NEGATIVE rdf:type owl:NamedIndividual .
 
 
 ###  http://isagog.com/ontologies/dialectics#NEUTRAL
-:NEUTRAL rdf:type owl:NamedIndividual ,
-                  :Polarity .
+:NEUTRAL rdf:type owl:NamedIndividual .
 
 
 ###  http://isagog.com/ontologies/dialectics#POSITIVE
-:POSITIVE rdf:type owl:NamedIndividual ,
-                   :Polarity .
+:POSITIVE rdf:type owl:NamedIndividual .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
