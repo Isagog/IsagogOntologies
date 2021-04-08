@@ -64,7 +64,7 @@
 ###  http://isagog.com/ontologies/knowledge#predicate
 :predicate rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf <http://isagog.com/ontologies/top#identifier> ;
-           rdfs:domain <http://isagog.com/ontologies/top#Denotation> ;
+           rdfs:domain :Classifier ;
            rdfs:comment "Reference to a conceptual element, e.g. any owl:Class or owl.ObjectProperty instance." .
 
 
@@ -83,7 +83,7 @@
 
 ###  http://isagog.com/ontologies/knowledge#Classifier
 :Classifier rdf:type owl:Class ;
-            rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ;
+            rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
             rdfs:comment "Denomination of classes" .
 
 
@@ -94,7 +94,7 @@
 
 ###  http://isagog.com/ontologies/knowledge#Frame
 :Frame rdf:type owl:Class ;
-       rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ,
+       rdfs:subClassOf :Classifier ,
                        [ rdf:type owl:Restriction ;
                          owl:onProperty <http://isagog.com/ontologies/top#hasElement> ;
                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
@@ -118,7 +118,7 @@
 
 ###  http://isagog.com/ontologies/knowledge#Slot
 :Slot rdf:type owl:Class ;
-      rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> ,
+      rdfs:subClassOf :Classifier ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :predicate ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;

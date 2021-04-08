@@ -53,12 +53,6 @@
 
 :schema a owl:AnnotationProperty .
 # 
-# http://isagog.com/ontologies/top#wordObject
-
-:wordObject a owl:AnnotationProperty ;
-	rdfs:subPropertyOf :lexicalization ;
-	rdfs:range :Word .
-# 
 # http://isagog.com/ontologies/top#wordString
 
 :wordString a owl:AnnotationProperty ;
@@ -100,20 +94,6 @@ owl:qualifiedCardinality a owl:AnnotationProperty .
 # #################################################################
 # 
 # 
-# http://isagog.com/ontologies/top#denotedBy
-
-:denotedBy a owl:ObjectProperty ;
-	rdfs:subPropertyOf :referredBy ;
-	owl:inverseOf :denotes ;
-	rdfs:range :Denotation .
-# 
-# http://isagog.com/ontologies/top#denotes
-
-:denotes a owl:ObjectProperty ;
-	rdfs:subPropertyOf :references ;
-	rdfs:domain :Denotation ;
-	rdfs:comment "Denotation inherence relation" .
-# 
 # http://isagog.com/ontologies/top#dependsOn
 
 :dependsOn a owl:ObjectProperty ;
@@ -149,36 +129,30 @@ owl:qualifiedCardinality a owl:AnnotationProperty .
 	owl:inverseOf :qualityOf ;
 	rdfs:range :Quality .
 # 
-# http://isagog.com/ontologies/top#hasSource
-
-:hasSource a owl:ObjectProperty ;
-	rdfs:domain :Information ;
-	rdfs:comment "Information comes to some source" .
-# 
 # http://isagog.com/ontologies/top#initiatedBy
 
 :initiatedBy a owl:ObjectProperty ;
-	rdfs:subPropertyOf :involvedIn ;
+	rdfs:subPropertyOf :participant ;
 	owl:inverseOf :initiator .
 # 
 # http://isagog.com/ontologies/top#initiator
 
 :initiator a owl:ObjectProperty ;
-	rdfs:subPropertyOf :involves .
+	rdfs:subPropertyOf :participedBy .
 # 
 # http://isagog.com/ontologies/top#involvedIn
 
 :involvedIn a owl:ObjectProperty ;
 	owl:inverseOf :involves ;
-	rdfs:domain :Continuant ;
-	rdfs:range :Occurrent ;
+	rdfs:domain :NonTemporalParticular ;
+	rdfs:range :TemporalParticular ;
 	rdfs:comment "Continuants (objects) involved in occurrents (events)" .
 # 
 # http://isagog.com/ontologies/top#involves
 
 :involves a owl:ObjectProperty ;
-	rdfs:domain :Occurrent ;
-	rdfs:range :Continuant .
+	rdfs:domain :TemporalParticular ;
+	rdfs:range :NonTemporalParticular .
 # 
 # http://isagog.com/ontologies/top#locatedIn
 
@@ -238,12 +212,6 @@ owl:qualifiedCardinality a owl:AnnotationProperty .
 # #################################################################
 # 
 # 
-# http://isagog.com/ontologies/top#URI
-
-:URI a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :identifier ;
-	rdfs:range xsd:anyURI .
-# 
 # http://isagog.com/ontologies/top#attributeType
 
 :attributeType a owl:DatatypeProperty ;
@@ -281,13 +249,6 @@ _:genid2 a rdf:List ;
 	rdf:first "TEXT" ;
 	rdf:rest rdf:nil .
 # 
-# http://isagog.com/ontologies/top#baseForm
-
-:baseForm a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :feature ;
-	rdfs:domain :Word ;
-	rdfs:comment "Basic lexeme's form, e.g. infinitive verb" .
-# 
 # http://isagog.com/ontologies/top#currency
 
 :currency a owl:DatatypeProperty ;
@@ -298,7 +259,7 @@ _:genid2 a rdf:List ;
 
 :duration a owl:DatatypeProperty ;
 	rdfs:subPropertyOf :time ;
-	rdfs:domain :Occurrent ;
+	rdfs:domain :TemporalParticular ;
 	rdfs:range xsd:integer ;
 	rdfs:comment "Time span in milliseconds" .
 # 
@@ -316,7 +277,7 @@ _:genid2 a rdf:List ;
 
 :instant a owl:DatatypeProperty ;
 	rdfs:subPropertyOf :time ;
-	rdfs:domain :Occurrent ;
+	rdfs:domain :TemporalParticular ;
 	rdfs:range xsd:dateTimeStamp ;
 	rdfs:comment "Time point" .
 # 
@@ -361,16 +322,9 @@ _:genid10 a rdf:List ;
 	rdf:first "it" ;
 	rdf:rest rdf:nil .
 # 
-# http://isagog.com/ontologies/top#length
-
-:length a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :textIndex .
-# 
 # http://isagog.com/ontologies/top#mailAddress
 
-:mailAddress a owl:DatatypeProperty ;
-	owl:equivalentProperty :foaf:mailbox ;
-	rdfs:subPropertyOf :identifier .
+:mailAddress a owl:DatatypeProperty .
 # 
 # http://isagog.com/ontologies/top#name
 
@@ -382,24 +336,6 @@ _:genid10 a rdf:List ;
 
 :numeral a owl:DatatypeProperty .
 # 
-# http://isagog.com/ontologies/top#offset
-
-:offset a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :textIndex .
-# 
-# http://isagog.com/ontologies/top#partOfSpeech
-
-:partOfSpeech a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :feature ;
-	rdfs:domain :Word .
-# 
-# http://isagog.com/ontologies/top#predicate
-
-:predicate a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :identifier ;
-	rdfs:domain :Denotation ;
-	rdfs:comment "Reference to a conceptual element, e.g. any owl:Class or owl.ObjectProperty instance." .
-# 
 # http://isagog.com/ontologies/top#receiverAddress
 
 :receiverAddress a owl:DatatypeProperty ;
@@ -410,62 +346,9 @@ _:genid10 a rdf:List ;
 :senderAddress a owl:DatatypeProperty ;
 	rdfs:subPropertyOf :mailAddress .
 # 
-# http://isagog.com/ontologies/top#snippet
-
-:snippet a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :text ;
-	rdfs:domain :Information ;
-	rdfs:range xsd:string ;
-	rdfs:comment "Brief summary" .
-# 
-# http://isagog.com/ontologies/top#subject
-
-:subject a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :name .
-# 
-# http://isagog.com/ontologies/top#text
-
-:text a owl:DatatypeProperty ;
-	rdfs:subPropertyOf owl:topDataProperty ;
-	rdfs:domain :Information ;
-	rdfs:range xsd:string .
-# 
-# http://isagog.com/ontologies/top#textIndex
-
-:textIndex a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :numeral ;
-	rdfs:domain :Text ;
-	rdfs:range xsd:integer ;
-	rdfs:comment "The index of a character in a text" .
-# 
 # http://isagog.com/ontologies/top#time
 
 :time a owl:DatatypeProperty .
-# 
-# http://isagog.com/ontologies/top#title
-
-:title a owl:DatatypeProperty ;
-	owl:equivalentProperty dcterms:title ;
-	rdfs:subPropertyOf :name ;
-	rdfs:domain :Document ;
-	rdfs:range xsd:string .
-# 
-# http://isagog.com/ontologies/top#foaf:mailbox
-
-:foaf:mailbox a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :identifier ;
-	rdfs:range xsd:string .
-# 
-# http://purl.org/dc/terms/title
-
-dcterms:title a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :name .
-# 
-# http://xmlns.com/foaf/0.1/name
-
-<http://xmlns.com/foaf/0.1/name> a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :name ;
-	rdfs:domain :Continuant .
 # 
 # 
 # 
@@ -476,25 +359,35 @@ dcterms:title a owl:DatatypeProperty ;
 # #################################################################
 # 
 # 
-# http://isagog.com/ontologies/top#Activity
+# http://isagog.com/ontologies/top#Action
 
-:Activity a owl:Class ;
+:Action a owl:Class ;
 	rdfs:subClassOf :Event , _:genid15 .
 
 _:genid15 a owl:Restriction ;
 	owl:onProperty :involves ;
 	owl:someValuesFrom :Agent .
 
-:Activity :DOLCE "Event  depending on agents" .
+:Action :DOLCE "Event  depending on agents" .
+# 
+# http://isagog.com/ontologies/top#Activity
+
+:Activity a owl:Class ;
+	rdfs:subClassOf :Event , _:genid16 .
+
+_:genid16 a owl:Restriction ;
+	owl:onProperty :hasElement ;
+	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :Action .
 # 
 # http://isagog.com/ontologies/top#Agent
 
 :Agent a owl:Class ;
-	owl:equivalentClass _:genid16 .
+	owl:equivalentClass _:genid17 .
 
-_:genid16 a owl:Restriction ;
+_:genid17 a owl:Restriction ;
 	owl:onProperty :initiator ;
-	owl:someValuesFrom :Occurrent .
+	owl:someValuesFrom :TemporalParticular .
 
 :Agent rdfs:subClassOf :Entity ;
 	rdfs:comment "Entity capable of purposely initiating actions" .
@@ -511,88 +404,46 @@ _:genid16 a owl:Restriction ;
 	rdfs:subClassOf :Inanimate ;
 	rdfs:comment "Entity created in a production process" .
 # 
-# http://isagog.com/ontologies/top#Audio
-
-:Audio a owl:Class ;
-	rdfs:subClassOf :Information .
-# 
 # http://isagog.com/ontologies/top#Collection
 
 :Collection a owl:Class ;
-	owl:equivalentClass _:genid17 .
-
-_:genid17 a owl:Restriction ;
-	owl:onProperty :hasElement ;
-	owl:someValuesFrom owl:Thing .
-
-:Collection rdfs:comment "Any collective thing which is cognitively and socially recognizable, whose identity does not depend on their members" ;
-	rdfs:seeAlso <http://www.w3.org/2004/02/skos/core#Collection> .
-# 
-# http://isagog.com/ontologies/top#Continuant
-
-:Continuant a owl:Class ;
-	:DOLCE "Endurant" ;
-	rdfs:comment "Any concrete or abstract non-temporal object" .
-# 
-# http://isagog.com/ontologies/top#Dataset
-
-:Dataset a owl:Class ;
-	rdfs:subClassOf :Information ;
-	rdfs:comment "Structured information source" .
-# 
-# http://isagog.com/ontologies/top#Denotation
-
-:Denotation a owl:Class ;
-	rdfs:subClassOf :Information ;
-	rdfs:comment "Interpretable description of entties or classes, e.g. 'The menthor o Alexander the Great', 'Greek philosopher'" ;
-	rdfs:seeAlso "SKOS Concept" .
-# 
-# http://isagog.com/ontologies/top#Document
-
-:Document a owl:Class ;
 	owl:equivalentClass _:genid18 .
 
 _:genid18 a owl:Restriction ;
-	owl:onProperty :hasPart ;
-	owl:someValuesFrom :Text .
+	owl:onProperty :hasElement ;
+	owl:someValuesFrom :Particular .
 
-:Document rdfs:subClassOf :Information ;
-	rdfs:comment "Composite textual source" .
+:Collection rdfs:subClassOf :NonTemporalParticular ;
+	rdfs:comment "Collective continuant" ;
+	rdfs:seeAlso <http://www.w3.org/2004/02/skos/core#Collection> .
 # 
 # http://isagog.com/ontologies/top#Entity
 
 :Entity a owl:Class ;
-	rdfs:subClassOf :Continuant ;
+	rdfs:subClassOf :NonTemporalParticular ;
 	rdfs:comment "Tangible countable independent continuant, e.g. natural objects, living beings, artifacts" .
 # 
 # http://isagog.com/ontologies/top#Event
 
 :Event a owl:Class ;
-	rdfs:subClassOf :Occurrent ;
+	rdfs:subClassOf :TemporalParticular ;
 	:DOLCE "Occurrent featuring differentiated phases (e.g. a dinner)" .
 # 
 # http://isagog.com/ontologies/top#Feature
 
 :Feature a owl:Class ;
-	rdfs:subClassOf :Continuant , _:genid19 .
+	rdfs:subClassOf :NonTemporalParticular , _:genid19 .
 
 _:genid19 a owl:Restriction ;
 	owl:onProperty :dependsOn ;
 	owl:someValuesFrom :Entity .
 
-:Feature rdfs:comment "Tangible countable dependent things, e.g. holes" .
+:Feature rdfs:comment "Tangible countable dependent continuants, e.g. holes" .
 # 
 # http://isagog.com/ontologies/top#Identifier
 
 :Identifier a owl:Class ;
-	rdfs:subClassOf :Information ;
-	rdfs:comment "Rigid designation of single entities, e.g. Aristotle, The Mount Everest" .
-# 
-# http://isagog.com/ontologies/top#Image
-
-:Image a owl:Class ;
-	rdfs:subClassOf :Information ;
-	rdfs:comment "Graphic information entity"@en .
+	rdfs:subClassOf :Information .
 # 
 # http://isagog.com/ontologies/top#Inanimate
 
@@ -603,47 +454,49 @@ _:genid19 a owl:Restriction ;
 # http://isagog.com/ontologies/top#Information
 
 :Information a owl:Class ;
-	rdfs:subClassOf :Continuant ;
-	rdfs:comment "Non tangible things which convey semantic information, typically by means of some medium (text, audio, etc)" .
+	rdfs:subClassOf :NonTemporalParticular ;
+	rdfs:comment "Non tangible continuants which convey semantic information, typically by means of some medium (text, audio, etc)" .
+# 
+# http://isagog.com/ontologies/top#NonTemporalParticular
+
+:NonTemporalParticular a owl:Class ;
+	rdfs:subClassOf :Particular ;
+	rdfs:comment "Particular not necessarily placeable in time." .
 # 
 # http://isagog.com/ontologies/top#Number
 
 :Number a owl:Class ;
-	rdfs:subClassOf :Information , _:genid20 .
-
-_:genid20 a owl:Restriction ;
-	owl:onProperty :numeral ;
-	owl:someValuesFrom xsd:string .
-# 
-# http://isagog.com/ontologies/top#Occurrent
-
-:Occurrent a owl:Class ;
-	rdfs:subClassOf _:genid21 .
-
-_:genid21 a owl:Restriction ;
-	owl:onProperty :duration ;
-	owl:cardinality "1"^^xsd:nonNegativeInteger .
-
-:Occurrent rdfs:subClassOf _:genid22 .
-
-_:genid22 a owl:Restriction ;
-	owl:onProperty :instant ;
-	owl:cardinality "1"^^xsd:nonNegativeInteger .
-
-:Occurrent :DOLCE "Perdurant" ;
-	rdfs:comment "Anything unfolding in time" .
+	rdfs:subClassOf :Information .
 # 
 # http://isagog.com/ontologies/top#Organization
 
 :Organization a owl:Class ;
-	rdfs:subClassOf :Agent , _:genid23 .
+	rdfs:subClassOf :Agent , _:genid20 .
 
-_:genid23 a owl:Restriction ;
+_:genid20 a owl:Restriction ;
 	owl:onProperty :member ;
 	owl:allValuesFrom :Person .
 
 :Organization :schema "Organization" ;
 	rdfs:comment "Agentive human collective" .
+# 
+# http://isagog.com/ontologies/top#Particular
+
+:Particular a owl:Class ;
+	owl:equivalentClass _:genid21 .
+
+_:genid21 a owl:Class ;
+	owl:unionOf _:genid23 .
+
+_:genid23 a rdf:List ;
+	rdf:first :NonTemporalParticular ;
+	rdf:rest _:genid22 .
+
+_:genid22 a rdf:List ;
+	rdf:first :TemporalParticular ;
+	rdf:rest rdf:nil .
+
+:Particular rdfs:comment "Quantifiable element" .
 # 
 # http://isagog.com/ontologies/top#Person
 
@@ -661,91 +514,57 @@ _:genid24 a owl:Restriction ;
 # http://isagog.com/ontologies/top#Place
 
 :Place a owl:Class ;
-	rdfs:subClassOf :Continuant ;
+	rdfs:subClassOf :NonTemporalParticular ;
 	rdfs:comment "Identified spatial region" .
 # 
 # http://isagog.com/ontologies/top#Quality
 
 :Quality a owl:Class ;
-	rdfs:subClassOf :Continuant , _:genid25 .
+	rdfs:subClassOf :NonTemporalParticular , _:genid25 .
 
 _:genid25 a owl:Restriction ;
 	owl:onProperty :dependsOn ;
-	owl:someValuesFrom :Continuant .
+	owl:someValuesFrom :NonTemporalParticular .
 
 :Quality rdfs:comment "Non tangible dependent continuant" .
+# 
+# http://isagog.com/ontologies/top#Relationship
+
+:Relationship a owl:Class ;
+	rdfs:subClassOf :Collection , _:genid26 .
+
+_:genid26 a owl:Restriction ;
+	owl:onProperty :hasElement ;
+	owl:cardinality "2"^^xsd:nonNegativeInteger .
 # 
 # http://isagog.com/ontologies/top#State
 
 :State a owl:Class ;
-	rdfs:subClassOf :Occurrent ;
+	rdfs:subClassOf :TemporalParticular ;
 	:DOLCE "Occurrent featuring equivalent phases (e.g. a sit)" .
 # 
 # http://isagog.com/ontologies/top#Substance
 
 :Substance a owl:Class ;
-	rdfs:subClassOf :Continuant ;
+	rdfs:subClassOf :NonTemporalParticular ;
 	rdfs:comment "Tangible non countable independent continuants, e.g. water, air" .
 # 
-# http://isagog.com/ontologies/top#Text
+# http://isagog.com/ontologies/top#TemporalParticular
 
-:Text a owl:Class ;
-	rdfs:subClassOf :Information , _:genid26 .
-
-_:genid26 a owl:Restriction ;
-	owl:onProperty :hasElement ;
-	owl:someValuesFrom :Token .
-
-:Text rdfs:subClassOf _:genid27 .
+:TemporalParticular a owl:Class ;
+	rdfs:subClassOf :Particular , _:genid27 .
 
 _:genid27 a owl:Restriction ;
-	owl:onProperty :text ;
-	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onDataRange xsd:string .
+	owl:onProperty :duration ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
 
-:Text rdfs:subClassOf _:genid29 .
+:TemporalParticular rdfs:subClassOf _:genid28 .
 
-_:genid29 a owl:Restriction ;
-	owl:onProperty :length ;
-	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onDataRange xsd:integer .
+_:genid28 a owl:Restriction ;
+	owl:onProperty :instant ;
+	owl:cardinality "1"^^xsd:nonNegativeInteger .
 
-:Text rdfs:comment "Elemental textual source" .
-
-_:genid28 a owl:Axiom ;
-	owl:annotatedSource :Text ;
-	owl:annotatedProperty rdfs:subClassOf ;
-	owl:annotatedTarget _:genid27 ;
-	rdfs:comment "Textual rendering" .
-# 
-# http://isagog.com/ontologies/top#Token
-
-:Token a owl:Class ;
-	rdfs:subClassOf :Information , _:genid30 .
-
-_:genid30 a owl:Restriction ;
-	owl:onProperty :references ;
-	owl:someValuesFrom :Word .
-
-:Token rdfs:subClassOf _:genid31 .
-
-_:genid31 a owl:Restriction ;
-	owl:onProperty :text ;
-	owl:someValuesFrom xsd:string .
-
-:Token rdfs:comment "Word occurrence in a text" .
-# 
-# http://isagog.com/ontologies/top#Word
-
-:Word a owl:Class ;
-	rdfs:subClassOf :Information , _:genid32 .
-
-_:genid32 a owl:Restriction ;
-	owl:onProperty :baseForm ;
-	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onDataRange xsd:string .
-
-:Word rdfs:comment "Abstract lexical unit (lexeme)" .
+:TemporalParticular rdfs:comment "Particular necessarily placeable in time" .
 # 
 # 
 # 
@@ -773,7 +592,7 @@ _:genid32 a owl:Restriction ;
 :VERB a owl:NamedIndividual .
 # 
 
-_:genid33 owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger .
+_:genid29 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
 
-_:genid34 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
+_:genid30 owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger .
 # Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

@@ -145,6 +145,7 @@
 ###  http://isagog.com/ontologies/dialectics#Judgement
 :Judgement rdf:type owl:Class ;
            rdfs:subClassOf :Statement ,
+                           <http://isagog.com/ontologies/top#Action> ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :conveys ;
                              owl:someValuesFrom :Attitude
@@ -202,7 +203,7 @@
                              owl:onProperty info:source ;
                              owl:someValuesFrom info:InformationSource
                            ] ;
-           rdfs:comment "Informative object originated by an information source" .
+           rdfs:comment "Sentence produced by an information source" .
 
 
 ###  http://isagog.com/ontologies/dialectics#Support

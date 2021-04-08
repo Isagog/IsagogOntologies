@@ -1,105 +1,251 @@
 @prefix : <http://isagog.com/ontologies/info#> .
+@prefix lang: <http://isagog.com/ontologies/language#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://isagog.com/ontologies/info> .
 
-<http://isagog.com/ontologies/info> a owl:Ontology ;
-	owl:imports <http://isagog.com/ontologies/language> .
-# 
-# 
-# #################################################################
-# #
-# #    Object Properties
-# #
-# #################################################################
-# 
-# 
-# http://isagog.com/ontologies/info#about
+<http://isagog.com/ontologies/info> rdf:type owl:Ontology ;
+                                     owl:imports <http://isagog.com/ontologies/language> .
 
-:about a owl:ObjectProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
-	rdfs:domain <http://isagog.com/ontologies/language#Sentence> ;
-	rdfs:comment "Aboutness relationship" .
-# 
-# http://isagog.com/ontologies/info#source
+#################################################################
+#    Object Properties
+#################################################################
 
-:source a owl:ObjectProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#dependsOn> ;
-	owl:inverseOf :sourceOf ;
-	rdfs:domain <http://isagog.com/ontologies/top#Information> ;
-	rdfs:range :InformationSource .
-# 
-# http://isagog.com/ontologies/info#sourceOf
+###  http://isagog.com/ontologies/info#about
+:about rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
+       rdfs:domain <http://isagog.com/ontologies/language#Sentence> ;
+       rdfs:comment "Aboutness relationship" .
 
-:sourceOf a owl:ObjectProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasDependent> .
-# 
-# 
-# 
-# #################################################################
-# #
-# #    Classes
-# #
-# #################################################################
-# 
-# 
-# http://isagog.com/ontologies/info#Article
 
-:Article a owl:Class ;
-	rdfs:subClassOf :InformationSource .
-# 
-# http://isagog.com/ontologies/info#Blog
+###  http://isagog.com/ontologies/info#source
+:source rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf <http://isagog.com/ontologies/top#dependsOn> ;
+        owl:inverseOf :sourceOf ;
+        rdfs:domain <http://isagog.com/ontologies/top#Information> ;
+        rdfs:range :InformationSource .
 
-:Blog a owl:Class ;
-	rdfs:subClassOf :InformationSource .
-# 
-# http://isagog.com/ontologies/info#InformationSource
 
-:InformationSource a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top#Entity> .
-# 
-# http://isagog.com/ontologies/info#Reference
+###  http://isagog.com/ontologies/info#sourceOf
+:sourceOf rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasDependent> .
 
-:Reference a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top#Text> .
-# 
-# http://isagog.com/ontologies/info#WebPage
 
-:WebPage a owl:Class ;
-	rdfs:subClassOf :InformationSource .
-# 
-# http://isagog.com/ontologies/language#ConceptReference
 
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/info#text
+:text rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :Text ;
+      rdfs:range xsd:string .
+
+
+###  http://isagog.com/ontologies/info#textIndex
+:textIndex rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf <http://isagog.com/ontologies/top#numeral> ;
+           rdfs:domain :Text ;
+           rdfs:range xsd:integer ;
+           rdfs:comment "The index of a character in a text" .
+
+
+###  http://isagog.com/ontologies/info#title
+:title rdf:type owl:DatatypeProperty ;
+       owl:equivalentProperty <http://purl.org/dc/terms/title> ;
+       rdfs:subPropertyOf <http://isagog.com/ontologies/top#name> ;
+       rdfs:domain :Document ;
+       rdfs:range xsd:string .
+
+
+###  http://isagog.com/ontologies/top#URI
+<http://isagog.com/ontologies/top#URI> rdf:type owl:DatatypeProperty ;
+                                       rdfs:subPropertyOf <http://isagog.com/ontologies/top#identifier> ;
+                                       rdfs:range xsd:anyURI .
+
+
+###  http://isagog.com/ontologies/top#length
+<http://isagog.com/ontologies/top#length> rdf:type owl:DatatypeProperty ;
+                                          rdfs:subPropertyOf <http://isagog.com/ontologies/top#textIndex> .
+
+
+###  http://isagog.com/ontologies/top#mailAddress
+<http://isagog.com/ontologies/top#mailAddress> rdf:type owl:DatatypeProperty ;
+                                               owl:equivalentProperty <http://isagog.com/ontologies/top#foaf:mailbox> ;
+                                               rdfs:subPropertyOf <http://isagog.com/ontologies/top#identifier> .
+
+
+###  http://isagog.com/ontologies/top#offset
+<http://isagog.com/ontologies/top#offset> rdf:type owl:DatatypeProperty ;
+                                          rdfs:subPropertyOf <http://isagog.com/ontologies/top#textIndex> .
+
+
+###  http://isagog.com/ontologies/top#predicate
+<http://isagog.com/ontologies/top#predicate> rdf:type owl:DatatypeProperty ;
+                                             rdfs:subPropertyOf <http://isagog.com/ontologies/top#identifier> ;
+                                             rdfs:domain lang:Denotation ;
+                                             rdfs:comment "Reference to a conceptual element, e.g. any owl:Class or owl.ObjectProperty instance." .
+
+
+###  http://isagog.com/ontologies/top#snippet
+<http://isagog.com/ontologies/top#snippet> rdf:type owl:DatatypeProperty ;
+                                           rdfs:subPropertyOf <http://isagog.com/ontologies/top#text> ;
+                                           rdfs:domain <http://isagog.com/ontologies/top#Information> ;
+                                           rdfs:range xsd:string ;
+                                           rdfs:comment "Brief summary" .
+
+
+###  http://isagog.com/ontologies/top#subject
+<http://isagog.com/ontologies/top#subject> rdf:type owl:DatatypeProperty ;
+                                           rdfs:subPropertyOf <http://isagog.com/ontologies/top#name> .
+
+
+###  http://isagog.com/ontologies/top#textIndex
+<http://isagog.com/ontologies/top#textIndex> rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/top#foaf:mailbox
+<http://isagog.com/ontologies/top#foaf:mailbox> rdf:type owl:DatatypeProperty ;
+                                                rdfs:subPropertyOf <http://isagog.com/ontologies/top#identifier> ;
+                                                rdfs:range xsd:string .
+
+
+###  http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> rdf:type owl:DatatypeProperty ;
+                                 rdfs:subPropertyOf <http://isagog.com/ontologies/top#name> .
+
+
+###  http://xmlns.com/foaf/0.1/name
+<http://xmlns.com/foaf/0.1/name> rdf:type owl:DatatypeProperty ;
+                                 rdfs:subPropertyOf <http://isagog.com/ontologies/top#name> ;
+                                 rdfs:domain <http://isagog.com/ontologies/top#NonTemporalParticular> .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://isagog.com/ontologies/info#Article
+:Article rdf:type owl:Class ;
+         rdfs:subClassOf :InformationSource .
+
+
+###  http://isagog.com/ontologies/info#Audio
+:Audio rdf:type owl:Class ;
+       rdfs:subClassOf <http://isagog.com/ontologies/top#Information> .
+
+
+###  http://isagog.com/ontologies/info#Blog
+:Blog rdf:type owl:Class ;
+      rdfs:subClassOf :InformationSource .
+
+
+###  http://isagog.com/ontologies/info#Dataset
+:Dataset rdf:type owl:Class ;
+         rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+         rdfs:comment "Structured information source" .
+
+
+
+
+###  http://isagog.com/ontologies/info#Document
+:Document rdf:type owl:Class ;
+          owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty <http://isagog.com/ontologies/top#hasPart> ;
+                                owl:someValuesFrom :Text
+                              ] ;
+          rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+          rdfs:comment "Composite textual source" .
+
+
+###  http://isagog.com/ontologies/info#Image
+:Image rdf:type owl:Class ;
+       rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+       rdfs:comment "Graphic information entity"@en .
+
+
+###  http://isagog.com/ontologies/info#InformationSource
+:InformationSource rdf:type owl:Class ;
+                   rdfs:subClassOf <http://isagog.com/ontologies/top#Entity> .
+
+
+###  http://isagog.com/ontologies/info#Reference
+:Reference rdf:type owl:Class ;
+           rdfs:subClassOf <http://isagog.com/ontologies/top#Information> .
+
+
+###  http://isagog.com/ontologies/info#Text
+:Text rdf:type owl:Class ;
+      rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty <http://isagog.com/ontologies/top#hasElement> ;
+                        owl:someValuesFrom <http://isagog.com/ontologies/language#Token>
+                      ] ;
+      rdfs:comment "Elemental textual source" .
+
+
+###  http://isagog.com/ontologies/info#WebPage
+:WebPage rdf:type owl:Class ;
+         rdfs:subClassOf :InformationSource .
+
+
+###  http://isagog.com/ontologies/language#ConceptReference
 <http://isagog.com/ontologies/language#ConceptReference> rdfs:subClassOf :Reference .
-# 
-# http://isagog.com/ontologies/language#MoneyReference
 
+
+###  http://isagog.com/ontologies/language#MoneyReference
 <http://isagog.com/ontologies/language#MoneyReference> rdfs:subClassOf :Reference .
-# 
-# http://isagog.com/ontologies/language#NameReference
 
+
+###  http://isagog.com/ontologies/language#NameReference
 <http://isagog.com/ontologies/language#NameReference> rdfs:subClassOf :Reference .
-# 
-# http://isagog.com/ontologies/language#OrganizationReference
 
+
+###  http://isagog.com/ontologies/language#OrganizationReference
 <http://isagog.com/ontologies/language#OrganizationReference> rdfs:subClassOf :Reference .
-# 
-# http://isagog.com/ontologies/language#PersonReference
 
+
+###  http://isagog.com/ontologies/language#PersonReference
 <http://isagog.com/ontologies/language#PersonReference> rdfs:subClassOf :Reference .
-# 
-# http://isagog.com/ontologies/language#TimeReference
 
+
+###  http://isagog.com/ontologies/language#TimeReference
 <http://isagog.com/ontologies/language#TimeReference> rdfs:subClassOf :Reference .
-# 
-# http://isagog.com/ontologies/top#Organization
 
+
+
+###  http://isagog.com/ontologies/top#Identifier
+<http://isagog.com/ontologies/top#Identifier> rdf:type owl:Class ;
+                                              rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+                                              rdfs:comment "Rigid designation of single entities, e.g. Aristotle, The Mount Everest" .
+
+
+###  http://isagog.com/ontologies/top#Number
+<http://isagog.com/ontologies/top#Number> rdf:type owl:Class ;
+                                          rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty <http://isagog.com/ontologies/top#numeral> ;
+                                                            owl:someValuesFrom xsd:string
+                                                          ] .
+
+
+###  http://isagog.com/ontologies/top#Organization
 <http://isagog.com/ontologies/top#Organization> rdfs:subClassOf :InformationSource .
-# 
-# http://isagog.com/ontologies/top#Person
 
+
+###  http://isagog.com/ontologies/top#Person
 <http://isagog.com/ontologies/top#Person> rdfs:subClassOf :InformationSource .
-# 
-# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+
+
+[ owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+[ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+ ] .
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
