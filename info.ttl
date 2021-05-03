@@ -1,9 +1,9 @@
 @prefix : <http://isagog.com/ontologies/info#> .
-@prefix lang: <http://isagog.com/ontologies/language#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix lang: <http://isagog.com/ontologies/language#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @base <http://isagog.com/ontologies/info> .
 
@@ -17,7 +17,7 @@
 ###  http://isagog.com/ontologies/info#about
 :about rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
-       rdfs:domain <http://isagog.com/ontologies/language#Sentence> ;
+       rdfs:domain lang:Sentence ;
        rdfs:comment "Aboutness relationship" .
 
 
@@ -25,15 +25,13 @@
 :source rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf <http://isagog.com/ontologies/top#dependsOn> ;
         owl:inverseOf :sourceOf ;
-        rdfs:domain <http://isagog.com/ontologies/top#Information> ;
+        rdfs:domain <http://isagog.com/ontologies/top#Abstraction> ;
         rdfs:range :InformationSource .
 
 
 ###  http://isagog.com/ontologies/info#sourceOf
 :sourceOf rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasDependent> .
-
-
 
 
 #################################################################
@@ -95,7 +93,7 @@
 ###  http://isagog.com/ontologies/top#snippet
 <http://isagog.com/ontologies/top#snippet> rdf:type owl:DatatypeProperty ;
                                            rdfs:subPropertyOf <http://isagog.com/ontologies/top#text> ;
-                                           rdfs:domain <http://isagog.com/ontologies/top#Information> ;
+                                           rdfs:domain <http://isagog.com/ontologies/top#Abstraction> ;
                                            rdfs:range xsd:string ;
                                            rdfs:comment "Brief summary" .
 
@@ -123,7 +121,7 @@
 ###  http://xmlns.com/foaf/0.1/name
 <http://xmlns.com/foaf/0.1/name> rdf:type owl:DatatypeProperty ;
                                  rdfs:subPropertyOf <http://isagog.com/ontologies/top#name> ;
-                                 rdfs:domain <http://isagog.com/ontologies/top#NonTemporalParticular> .
+                                 rdfs:domain <http://isagog.com/ontologies/top#Continuant> .
 
 
 #################################################################
@@ -137,7 +135,7 @@
 
 ###  http://isagog.com/ontologies/info#Audio
 :Audio rdf:type owl:Class ;
-       rdfs:subClassOf <http://isagog.com/ontologies/top#Information> .
+       rdfs:subClassOf :InformationSource .
 
 
 ###  http://isagog.com/ontologies/info#Blog
@@ -147,10 +145,8 @@
 
 ###  http://isagog.com/ontologies/info#Dataset
 :Dataset rdf:type owl:Class ;
-         rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+         rdfs:subClassOf :InformationSource ;
          rdfs:comment "Structured information source" .
-
-
 
 
 ###  http://isagog.com/ontologies/info#Document
@@ -159,32 +155,32 @@
                                 owl:onProperty <http://isagog.com/ontologies/top#hasPart> ;
                                 owl:someValuesFrom :Text
                               ] ;
-          rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+          rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ;
           rdfs:comment "Composite textual source" .
 
 
 ###  http://isagog.com/ontologies/info#Image
 :Image rdf:type owl:Class ;
-       rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+       rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ;
        rdfs:comment "Graphic information entity"@en .
 
 
 ###  http://isagog.com/ontologies/info#InformationSource
 :InformationSource rdf:type owl:Class ;
-                   rdfs:subClassOf <http://isagog.com/ontologies/top#Entity> .
+                   rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> .
 
 
 ###  http://isagog.com/ontologies/info#Reference
 :Reference rdf:type owl:Class ;
-           rdfs:subClassOf <http://isagog.com/ontologies/top#Information> .
+           rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> .
 
 
 ###  http://isagog.com/ontologies/info#Text
 :Text rdf:type owl:Class ;
-      rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ,
+      rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty <http://isagog.com/ontologies/top#hasElement> ;
-                        owl:someValuesFrom <http://isagog.com/ontologies/language#Token>
+                        owl:someValuesFrom lang:Token
                       ] ;
       rdfs:comment "Elemental textual source" .
 
@@ -195,39 +191,38 @@
 
 
 ###  http://isagog.com/ontologies/language#ConceptReference
-<http://isagog.com/ontologies/language#ConceptReference> rdfs:subClassOf :Reference .
+lang:ConceptReference rdfs:subClassOf :Reference .
 
 
 ###  http://isagog.com/ontologies/language#MoneyReference
-<http://isagog.com/ontologies/language#MoneyReference> rdfs:subClassOf :Reference .
+lang:MoneyReference rdfs:subClassOf :Reference .
 
 
 ###  http://isagog.com/ontologies/language#NameReference
-<http://isagog.com/ontologies/language#NameReference> rdfs:subClassOf :Reference .
+lang:NameReference rdfs:subClassOf :Reference .
 
 
 ###  http://isagog.com/ontologies/language#OrganizationReference
-<http://isagog.com/ontologies/language#OrganizationReference> rdfs:subClassOf :Reference .
+lang:OrganizationReference rdfs:subClassOf :Reference .
 
 
 ###  http://isagog.com/ontologies/language#PersonReference
-<http://isagog.com/ontologies/language#PersonReference> rdfs:subClassOf :Reference .
+lang:PersonReference rdfs:subClassOf :Reference .
 
 
 ###  http://isagog.com/ontologies/language#TimeReference
-<http://isagog.com/ontologies/language#TimeReference> rdfs:subClassOf :Reference .
-
+lang:TimeReference rdfs:subClassOf :Reference .
 
 
 ###  http://isagog.com/ontologies/top#Identifier
 <http://isagog.com/ontologies/top#Identifier> rdf:type owl:Class ;
-                                              rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+                                              rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ;
                                               rdfs:comment "Rigid designation of single entities, e.g. Aristotle, The Mount Everest" .
 
 
 ###  http://isagog.com/ontologies/top#Number
 <http://isagog.com/ontologies/top#Number> rdf:type owl:Class ;
-                                          rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ,
+                                          rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ,
                                                           [ rdf:type owl:Restriction ;
                                                             owl:onProperty <http://isagog.com/ontologies/top#numeral> ;
                                                             owl:someValuesFrom xsd:string

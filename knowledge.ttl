@@ -83,7 +83,7 @@
 
 ###  http://isagog.com/ontologies/knowledge#Classifier
 :Classifier rdf:type owl:Class ;
-            rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+            rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ;
             rdfs:comment "Denomination of classes" .
 
 

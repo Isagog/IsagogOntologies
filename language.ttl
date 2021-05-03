@@ -4,294 +4,275 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://isagog.com/ontologies/language> .
 
-<http://isagog.com/ontologies/language> a owl:Ontology ;
-	owl:imports <http://isagog.com/ontologies/top/1.0.0> .
-# 
-# 
-# #################################################################
-# #
-# #    Annotation properties
-# #
-# #################################################################
-# 
-# 
-# http://isagog.com/ontologies/language#lexicalization
+<http://isagog.com/ontologies/language> rdf:type owl:Ontology ;
+                                         owl:imports <http://isagog.com/ontologies/top/1.0.0> .
 
-:lexicalization a owl:AnnotationProperty .
-# 
-# http://isagog.com/ontologies/language#wordObject
+#################################################################
+#    Annotation properties
+#################################################################
 
-:wordObject a owl:AnnotationProperty ;
-	rdfs:subPropertyOf :lexicalization ;
-	rdfs:range :Word .
-# 
-# http://isagog.com/ontologies/language#wordString
-
-:wordString a owl:AnnotationProperty ;
-	rdfs:subPropertyOf :lexicalization ;
-	rdfs:range xsd:string .
-# 
-# http://isagog.com/ontologies/language#wordnetUri
-
-:wordnetUri a owl:AnnotationProperty ;
-	rdfs:subPropertyOf :lexicalization ;
-	rdfs:range xsd:anyURI .
-# 
-# http://www.w3.org/2002/07/owl#minCardinality
-
-owl:minCardinality a owl:AnnotationProperty .
-# 
-# 
-# 
-# #################################################################
-# #
-# #    Object Properties
-# #
-# #################################################################
-# 
-# 
-# http://isagog.com/ontologies/language#denotedBy
-
-:denotedBy a owl:ObjectProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#referredBy> ;
-	owl:inverseOf <http://isagog.com/ontologies/top#denotes> .
-
-<http://isagog.com/ontologies/top#denotes> a owl:ObjectProperty .
-
-:denotedBy rdfs:range :Denotation .
-# 
-# http://isagog.com/ontologies/language#denotes
-
-:denotes a owl:ObjectProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
-	rdfs:domain :Denotation ;
-	rdfs:comment "Denotation inherence relation" .
-# 
-# http://isagog.com/ontologies/top#denotes
-# 
-# 
-# 
-# #################################################################
-# #
-# #    Data properties
-# #
-# #################################################################
-# 
-# 
-# http://isagog.com/ontologies/language#baseForm
-
-:baseForm a owl:DatatypeProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#feature> ;
-	rdfs:domain :Word ;
-	rdfs:comment "Basic lexeme's form, e.g. infinitive verb" .
-# 
-# http://isagog.com/ontologies/language#currency
-
-:currency a owl:DatatypeProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#numeral> ;
-	rdfs:domain :MoneyReference ;
-	rdfs:range xsd:string .
-# 
-# http://isagog.com/ontologies/language#language
-
-:language a owl:DatatypeProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#feature> ;
-	rdfs:range _:genid1 .
-
-_:genid1 a rdfs:Datatype ;
-	owl:oneOf _:genid6 .
-
-_:genid6 a rdf:List ;
-	rdf:first "de" ;
-	rdf:rest _:genid5 .
-
-_:genid5 a rdf:List ;
-	rdf:first "en" ;
-	rdf:rest _:genid4 .
-
-_:genid4 a rdf:List ;
-	rdf:first "es" ;
-	rdf:rest _:genid3 .
-
-_:genid3 a rdf:List ;
-	rdf:first "fr" ;
-	rdf:rest _:genid2 .
-
-_:genid2 a rdf:List ;
-	rdf:first "it" ;
-	rdf:rest rdf:nil .
-# 
-# http://isagog.com/ontologies/language#length
-
-:length a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :textIndex .
-
-:textIndex a owl:DatatypeProperty .
-# 
-# http://isagog.com/ontologies/language#numeral
-
-:numeral a owl:DatatypeProperty .
-# 
-# http://isagog.com/ontologies/language#offset
-
-:offset a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :textIndex .
-# 
-# http://isagog.com/ontologies/language#partOfSpeech
-
-:partOfSpeech a owl:DatatypeProperty ;
-	rdfs:subPropertyOf <http://isagog.com/ontologies/top#feature> ;
-	rdfs:domain :Word .
-# 
-# http://isagog.com/ontologies/language#snippet
-
-:snippet a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :text .
-
-:text a owl:DatatypeProperty .
-
-:snippet rdfs:domain <http://isagog.com/ontologies/top#Information> ;
-	rdfs:range xsd:string ;
-	rdfs:comment "Brief summary" .
-# 
-# http://isagog.com/ontologies/language#text
-# 
-# http://isagog.com/ontologies/language#textIndex
-# 
-# http://isagog.com/ontologies/top#text
-
-<http://isagog.com/ontologies/top#text> a owl:DatatypeProperty .
-# 
-# 
-# 
-# #################################################################
-# #
-# #    Classes
-# #
-# #################################################################
-# 
-# 
-# http://isagog.com/ontologies/language#ConceptReference
-
-:ConceptReference a owl:Class ;
-	rdfs:subClassOf :Token .
+###  http://isagog.com/ontologies/language#lexicalization
+:lexicalization rdf:type owl:AnnotationProperty .
 
 
-###  http://isagog.com/ontologies/info#Denotation
+###  http://isagog.com/ontologies/language#wordObject
+:wordObject rdf:type owl:AnnotationProperty ;
+            rdfs:subPropertyOf :lexicalization ;
+            rdfs:range :Word .
+
+
+###  http://isagog.com/ontologies/language#wordString
+:wordString rdf:type owl:AnnotationProperty ;
+            rdfs:subPropertyOf :lexicalization ;
+            rdfs:range xsd:string .
+
+
+###  http://isagog.com/ontologies/language#wordnetUri
+:wordnetUri rdf:type owl:AnnotationProperty ;
+            rdfs:subPropertyOf :lexicalization ;
+            rdfs:range xsd:anyURI .
+
+
+###  http://www.w3.org/2002/07/owl#minCardinality
+owl:minCardinality rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://isagog.com/ontologies/language#denotedBy
+:denotedBy rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf <http://isagog.com/ontologies/top#referredBy> ;
+           owl:inverseOf <http://isagog.com/ontologies/top#denotes> ;
+           rdfs:range :Denotation .
+
+
+###  http://isagog.com/ontologies/language#denotes
+:denotes rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
+         rdfs:domain :Denotation ;
+         rdfs:comment "Denotation inherence relation" .
+
+
+###  http://isagog.com/ontologies/language#language
+:language rdf:type owl:ObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#denotes
+<http://isagog.com/ontologies/top#denotes> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/language#baseForm
+:baseForm rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/top#feature> ;
+          rdfs:domain :Word ;
+          rdfs:comment "Basic lexeme's form, e.g. infinitive verb" .
+
+
+###  http://isagog.com/ontologies/language#currency
+:currency rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/top#numeral> ;
+          rdfs:domain :MoneyReference ;
+          rdfs:range xsd:string .
+
+
+###  http://isagog.com/ontologies/language#language
+:language rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf <http://isagog.com/ontologies/top#feature> ;
+          rdfs:range [ rdf:type rdfs:Datatype ;
+                       owl:oneOf [ rdf:type rdf:List ;
+                                   rdf:first "de" ;
+                                   rdf:rest [ rdf:type rdf:List ;
+                                              rdf:first "en" ;
+                                              rdf:rest [ rdf:type rdf:List ;
+                                                         rdf:first "es" ;
+                                                         rdf:rest [ rdf:type rdf:List ;
+                                                                    rdf:first "fr" ;
+                                                                    rdf:rest [ rdf:type rdf:List ;
+                                                                               rdf:first "it" ;
+                                                                               rdf:rest rdf:nil
+                                                                             ]
+                                                                  ]
+                                                       ]
+                                            ]
+                                 ]
+                     ] .
+
+
+###  http://isagog.com/ontologies/language#length
+:length rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf :textIndex .
+
+
+###  http://isagog.com/ontologies/language#numeral
+:numeral rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/language#offset
+:offset rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf :textIndex .
+
+
+###  http://isagog.com/ontologies/language#partOfSpeech
+:partOfSpeech rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf <http://isagog.com/ontologies/top#feature> ;
+              rdfs:domain :Word .
+
+
+###  http://isagog.com/ontologies/language#snippet
+:snippet rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :text ;
+         rdfs:domain <http://isagog.com/ontologies/top#Abstraction> ;
+         rdfs:range xsd:string ;
+         rdfs:comment "Brief summary" .
+
+
+###  http://isagog.com/ontologies/language#text
+:text rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/language#textIndex
+:textIndex rdf:type owl:DatatypeProperty .
+
+
+###  http://isagog.com/ontologies/top#text
+<http://isagog.com/ontologies/top#text> rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://isagog.com/ontologies/language#ConceptReference
+:ConceptReference rdf:type owl:Class ;
+                  rdfs:subClassOf :Token .
+
+
+###  http://isagog.com/ontologies/language#Denotation
 :Denotation rdf:type owl:Class ;
-            rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
+            rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ;
             rdfs:comment "Interpretable description of entties or classes, e.g. 'The menthor o Alexander the Great', 'Greek philosopher'" ;
-            rdfs:seeAlso "SKOS Concept" .	
-	
-# 
-# http://isagog.com/ontologies/language#Dictionary
+            rdfs:seeAlso "SKOS Concept" .
 
-:Dictionary a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top#Information> , _:genid7 .
 
-_:genid7 a owl:Restriction ;
-	owl:onProperty :language .
+###  http://isagog.com/ontologies/language#Dictionary
+:Dictionary rdf:type owl:Class ;
+            rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :language ;
+                              owl:someValuesFrom :Word
+                            ] .
 
-:language a owl:ObjectProperty .
 
-_:genid7 owl:someValuesFrom :Word .
-# 
-# http://isagog.com/ontologies/language#GrammarCategory
+###  http://isagog.com/ontologies/language#GrammarCategory
+:GrammarCategory rdf:type owl:Class ;
+                 rdfs:subClassOf <http://isagog.com/ontologies/top#Quality> ;
+                 rdfs:comment "Class of grammar categories" .
 
-:GrammarCategory a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top#Quality> ;
-	rdfs:comment "Class of grammar categories" .
-# 
-# http://isagog.com/ontologies/language#MoneyReference
 
-:MoneyReference a owl:Class ;
-	rdfs:subClassOf :Token , <http://isagog.com/ontologies/top#Number> .
+###  http://isagog.com/ontologies/language#MoneyReference
+:MoneyReference rdf:type owl:Class ;
+                rdfs:subClassOf :Token ,
+                                <http://isagog.com/ontologies/top#Number> .
 
-<http://isagog.com/ontologies/top#Number> a owl:Class .
-# 
-# http://isagog.com/ontologies/language#NameReference
 
-:NameReference a owl:Class ;
-	rdfs:subClassOf :Token , <http://isagog.com/ontologies/top#Identifier> .
+###  http://isagog.com/ontologies/language#NameReference
+:NameReference rdf:type owl:Class ;
+               rdfs:subClassOf :Token ,
+                               <http://isagog.com/ontologies/top#Identifier> .
 
-<http://isagog.com/ontologies/top#Identifier> a owl:Class .
-# 
-# http://isagog.com/ontologies/language#OrganizationReference
 
-:OrganizationReference a owl:Class ;
-	rdfs:subClassOf :Token , <http://isagog.com/ontologies/top#Identifier> .
-# 
-# http://isagog.com/ontologies/language#PersonReference
+###  http://isagog.com/ontologies/language#OrganizationReference
+:OrganizationReference rdf:type owl:Class ;
+                       rdfs:subClassOf :Token ,
+                                       <http://isagog.com/ontologies/top#Identifier> .
 
-:PersonReference a owl:Class ;
-	rdfs:subClassOf :Token , <http://isagog.com/ontologies/top#Identifier> .
-# 
-# http://isagog.com/ontologies/language#Sentence
 
-:Sentence a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ;
-	rdfs:comment "Syntactically complete textual element" .
-# 
-# http://isagog.com/ontologies/language#TimeReference
+###  http://isagog.com/ontologies/language#PersonReference
+:PersonReference rdf:type owl:Class ;
+                 rdfs:subClassOf :Token ,
+                                 <http://isagog.com/ontologies/top#Identifier> .
 
-:TimeReference a owl:Class ;
-	rdfs:subClassOf :Token .
-# 
-# http://isagog.com/ontologies/language#Token
 
-:Token a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top#Information> , _:genid7 , _:genid8 .
+###  http://isagog.com/ontologies/language#Sentence
+:Sentence rdf:type owl:Class ;
+          rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ;
+          rdfs:comment "Syntactically complete textual element" .
 
-_:genid8 a owl:Restriction ;
-	owl:onProperty <http://isagog.com/ontologies/top#text> ;
-	owl:someValuesFrom xsd:string .
 
-:Token rdfs:comment "Word occurrence in a text" .
-# 
-# http://isagog.com/ontologies/language#Word
+###  http://isagog.com/ontologies/language#TimeReference
+:TimeReference rdf:type owl:Class ;
+               rdfs:subClassOf :Token .
 
-:Word a owl:Class ;
-	rdfs:subClassOf <http://isagog.com/ontologies/top#Information> , _:genid9 .
 
-_:genid9 a owl:Restriction ;
-	owl:onProperty :baseForm ;
-	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onDataRange xsd:string .
+###  http://isagog.com/ontologies/language#Token
+:Token rdf:type owl:Class ;
+       rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :language ;
+                         owl:someValuesFrom :Word
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty <http://isagog.com/ontologies/top#text> ;
+                         owl:someValuesFrom xsd:string
+                       ] ;
+       rdfs:comment "Word occurrence in a text" .
 
-:Word rdfs:comment "Abstract lexical unit (lexeme)" .
-# 
-# http://isagog.com/ontologies/top#Identifier
-# 
-# http://isagog.com/ontologies/top#Number
-# 
-# 
-# 
-# #################################################################
-# #
-# #    Individuals
-# #
-# #################################################################
-# 
-# 
-# http://isagog.com/ontologies/language#ADJECTIVE
 
-:ADJECTIVE a owl:NamedIndividual , :GrammarCategory .
-# 
-# http://isagog.com/ontologies/language#ADVERB
+###  http://isagog.com/ontologies/language#Word
+:Word rdf:type owl:Class ;
+      rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :baseForm ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:string
+                      ] ;
+      rdfs:comment "Abstract lexical unit (lexeme)" .
 
-:ADVERB a owl:NamedIndividual , :GrammarCategory .
-# 
-# http://isagog.com/ontologies/language#NOUN
 
-:NOUN a owl:NamedIndividual , :GrammarCategory .
-# 
-# http://isagog.com/ontologies/language#VERB
+###  http://isagog.com/ontologies/top#Identifier
+<http://isagog.com/ontologies/top#Identifier> rdf:type owl:Class .
 
-:VERB a owl:NamedIndividual , :GrammarCategory .
-# 
 
-_:genid10 owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger .
+###  http://isagog.com/ontologies/top#Number
+<http://isagog.com/ontologies/top#Number> rdf:type owl:Class .
 
-_:genid11 owl:minCardinality "1"^^xsd:nonNegativeInteger .
-# Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://isagog.com/ontologies/language#ADJECTIVE
+:ADJECTIVE rdf:type owl:NamedIndividual ,
+                    :GrammarCategory .
+
+
+###  http://isagog.com/ontologies/language#ADVERB
+:ADVERB rdf:type owl:NamedIndividual ,
+                 :GrammarCategory .
+
+
+###  http://isagog.com/ontologies/language#NOUN
+:NOUN rdf:type owl:NamedIndividual ,
+               :GrammarCategory .
+
+
+###  http://isagog.com/ontologies/language#VERB
+:VERB rdf:type owl:NamedIndividual ,
+               :GrammarCategory .
+
+
+[ owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+[ owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+ ] .
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
