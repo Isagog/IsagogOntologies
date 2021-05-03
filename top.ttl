@@ -13,8 +13,10 @@
 	owl:versionIRI <http://isagog.com/ontologies/top/1.0.0> ;
 	dc:creator "Guido Vetere" ;
 	dcterms:license "CC-BY-SA, Isagog Srl" ;
-	rdfs:comment "An upper ontology for Customizable Knowledge Graphs" , "This ontology adopts a 'deflationary' approach: the set of entities required to account for elements in the domain of discourse is minimal. For instance, a relationship (e.g. the connection of two persons) can also be an event, insofar the representation of its temporal properties is required. This way, there is no need of having an instance for the reified relation (continuant) and another one for its temporal aspects (occurrent). This implies that there's no disjointess at the level of basic categories such as 'continuants' and 'occurrents'. The resulting conceptualization trades metaphysics for natural language, by providing an easy accommodation for regular polysemy. At the cost of weakening the ontological import of the conceptualization, this is expected to improve linguistic usability." ;
-	rdfs:label "Custom Knowledge Graph Ontology" .
+	rdfs:comment "A non categorial conceptualization" , """Concepts in this ontology are not intended to be 'categories', since they do not satisfy mutual exclusivity and general exhaustiveness. There's no disjointess at the level of basic concepts such as 'Continuant' and 'Occurrent', although disjointness may occur at lower levels.
+As a result, this ontology minimizes compatibility issues among different possible worlds. Also, this ontology is 'deflationary': there is no need of having different individuals to predicate different aspects of the same entity. For instance, there's no need to represent a book (object) and its content (information) as two separate individuals, even if nothing prevents to do that.
+Moreover, nothing prevents to supplement categorial axioms (disjointness), e.g. to sort out non intended models, as a separate layer.""" ;
+	rdfs:label "Isagog semi-ontology" .
 # 
 # 
 # #################################################################
@@ -565,31 +567,6 @@ _:genid28 a owl:Restriction ;
 :Substance a owl:Class ;
 	rdfs:subClassOf :Continuant ;
 	rdfs:comment "Tangible non countable independent continuants, e.g. water, air" .
-# 
-# 
-# 
-# #################################################################
-# #
-# #    Individuals
-# #
-# #################################################################
-# 
-# 
-# http://isagog.com/ontologies/top#ADJECTIVE
-
-:ADJECTIVE a owl:NamedIndividual .
-# 
-# http://isagog.com/ontologies/top#ADVERB
-
-:ADVERB a owl:NamedIndividual .
-# 
-# http://isagog.com/ontologies/top#NOUN
-
-:NOUN a owl:NamedIndividual .
-# 
-# http://isagog.com/ontologies/top#VERB
-
-:VERB a owl:NamedIndividual .
 # 
 
 _:genid29 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
