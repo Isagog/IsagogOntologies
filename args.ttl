@@ -1,0 +1,275 @@
+@prefix : <http://isagog.com/ontologies/args#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix info: <http://isagog.com/ontologies/info#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://isagog.com/ontologies/args> .
+
+<http://isagog.com/ontologies/args> rdf:type owl:Ontology ;
+                                           owl:imports <http://isagog.com/ontologies/info> ;
+                                           <http://purl.org/dc/elements/1.1/creator> "Guido Vetere" ;
+                                           rdfs:comment "An ontology of argumentation" .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://isagog.com/ontologies/args#compatibleWith
+:compatibleWith rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :relatesTo ;
+                owl:propertyDisjointWith :nonCompatibleWith ;
+                rdfs:comment "Relatedness among factoids that may be part of the same possible World" .
+
+
+###  http://isagog.com/ontologies/args#conveys
+:conveys rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasQuality> .
+
+
+###  http://isagog.com/ontologies/args#nonCompatibleWith
+:nonCompatibleWith rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :relatesTo ;
+                   rdfs:comment "Relatedness among factoids that may not be part of the same possible World" .
+
+
+###  http://isagog.com/ontologies/args#object
+:object rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf <http://isagog.com/ontologies/top#qualityOf> ;
+        rdfs:domain :Attitude ;
+        rdfs:range :Statement .
+
+
+###  http://isagog.com/ontologies/args#relatesTo
+:relatesTo rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
+           rdfs:domain :Proposition ;
+           rdfs:range :Proposition ;
+           rdfs:comment "Relatedness among factual statements (factoids)" .
+
+
+###  http://isagog.com/ontologies/args#subjectOf
+:subjectOf rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf <http://isagog.com/ontologies/top#hasDependent> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://isagog.com/ontologies/args#confidence
+:confidence rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Trust ;
+            rdfs:range xsd:double .
+
+
+###  http://isagog.com/ontologies/args#evidence
+:evidence rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Proposition ;
+          rdfs:range xsd:double .
+
+
+###  http://isagog.com/ontologies/args#strenght
+:strenght rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Support ;
+          rdfs:range xsd:double .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://isagog.com/ontologies/args#Acceptance
+:Acceptance rdf:type owl:Class ;
+            rdfs:subClassOf :Positive ,
+                            :Support ;
+            rdfs:comment "Positive support" .
+
+
+###  http://isagog.com/ontologies/args#Appreciation
+:Appreciation rdf:type owl:Class ;
+              rdfs:subClassOf :Positive ,
+                              :Valuation .
+
+
+###  http://isagog.com/ontologies/args#Argument
+:Argument rdf:type owl:Class ;
+          rdfs:subClassOf :Judgement ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :conveys ;
+                            owl:someValuesFrom :Support
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty info:about ;
+                            owl:allValuesFrom :Judgement
+                          ] ;
+          rdfs:comment "Opinion about some other opinion" .
+
+
+###  http://isagog.com/ontologies/args#Attitude
+:Attitude rdf:type owl:Class ;
+          rdfs:subClassOf <http://isagog.com/ontologies/top#Quality> ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://isagog.com/ontologies/top#qualityOf> ;
+                            owl:allValuesFrom :Judgement
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :object ;
+                            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Statement
+                          ] ;
+          rdfs:comment "Subjective frame of mind about a Statement, e.g. propositional attitudes such as beliefs" .
+
+
+###  http://isagog.com/ontologies/args#Belief
+:Belief rdf:type owl:Class ;
+        rdfs:subClassOf :Positive ,
+                        :Trust ;
+        rdfs:comment "Positive trust" .
+
+
+###  http://isagog.com/ontologies/args#Complain
+:Complain rdf:type owl:Class ;
+          rdfs:subClassOf :Negative ,
+                          :Valuation .
+
+
+###  http://isagog.com/ontologies/args#Disbelief
+:Disbelief rdf:type owl:Class ;
+           rdfs:subClassOf :Negative ,
+                           :Trust ;
+           rdfs:comment "Negative trust" .
+
+
+###  http://isagog.com/ontologies/args#Judgement
+:Judgement rdf:type owl:Class ;
+           rdfs:subClassOf :Statement ,
+                           <http://isagog.com/ontologies/top#Action> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :conveys ;
+                             owl:someValuesFrom :Attitude
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty info:about ;
+                             owl:allValuesFrom :Statement
+                           ] ;
+           owl:disjointWith :Proposition ;
+           rdfs:comment "Statement wich conveys a subjective attitude" .
+
+
+###  http://isagog.com/ontologies/args#Negative
+:Negative rdf:type owl:Class ;
+          rdfs:subClassOf :Polarity .
+
+
+###  http://isagog.com/ontologies/args#Neutral
+:Neutral rdf:type owl:Class ;
+         rdfs:subClassOf :Polarity .
+
+
+###  http://isagog.com/ontologies/args#Polarity
+:Polarity rdf:type owl:Class ;
+          rdfs:subClassOf <http://isagog.com/ontologies/top#Quality> ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://isagog.com/ontologies/top#qualityOf> ;
+                            owl:allValuesFrom :Judgement
+                          ] ;
+          rdfs:comment "Attitude quality, which can be one of NEGATIVE, POSITIVE or NEUTRAL" .
+
+
+###  http://isagog.com/ontologies/args#Positive
+:Positive rdf:type owl:Class ;
+          rdfs:subClassOf :Polarity .
+
+
+###  http://isagog.com/ontologies/args#Proposition
+:Proposition rdf:type owl:Class ;
+             rdfs:subClassOf :Statement ;
+             rdfs:comment "Statement about state-of-affairs that could be empirically verified (truth-bearer)" .
+
+
+###  http://isagog.com/ontologies/args#Rebuttal
+:Rebuttal rdf:type owl:Class ;
+          rdfs:subClassOf :Negative ,
+                          :Support ;
+          rdfs:comment "Negative support" .
+
+
+###  http://isagog.com/ontologies/args#Statement
+:Statement rdf:type owl:Class ;
+           rdfs:subClassOf <http://isagog.com/ontologies/language#Sentence> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty info:source ;
+                             owl:someValuesFrom info:InformationSource
+                           ] ;
+           rdfs:comment "Sentence produced by an information source" .
+
+
+###  http://isagog.com/ontologies/args#Support
+:Support rdf:type owl:Class ;
+         rdfs:subClassOf :Attitude ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <http://isagog.com/ontologies/top#qualityOf> ;
+                           owl:allValuesFrom :Judgement
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :strenght ;
+                           owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange owl:rational
+                         ] ;
+         rdfs:comment "Agreement towards judgements (rethorical axis)" .
+
+
+###  http://isagog.com/ontologies/args#Trust
+:Trust rdf:type owl:Class ;
+       rdfs:subClassOf :Attitude ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty <http://isagog.com/ontologies/top#qualityOf> ;
+                         owl:allValuesFrom :Viewpoint
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :confidence ;
+                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange owl:rational
+                       ] ;
+       rdfs:comment "Truth judgements (epistemic axis)" .
+
+
+###  http://isagog.com/ontologies/args#Valuation
+:Valuation rdf:type owl:Class ;
+           rdfs:subClassOf :Attitude ;
+           rdfs:comment "Value judgement (axiological axis)" .
+
+
+###  http://isagog.com/ontologies/args#Viewpoint
+:Viewpoint rdf:type owl:Class ;
+           rdfs:subClassOf :Judgement ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :conveys ;
+                             owl:someValuesFrom :Trust
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty info:about ;
+                             owl:allValuesFrom :Proposition
+                           ] ;
+           rdfs:comment "Account of a subjective statement of someone about a factoid (propositional content)" .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://isagog.com/ontologies/args#NEGATIVE
+:NEGATIVE rdf:type owl:NamedIndividual .
+
+
+###  http://isagog.com/ontologies/args#NEUTRAL
+:NEUTRAL rdf:type owl:NamedIndividual .
+
+
+###  http://isagog.com/ontologies/args#POSITIVE
+:POSITIVE rdf:type owl:NamedIndividual .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
