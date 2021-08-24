@@ -8,7 +8,7 @@
 
 <http://isagog.com/ontologies/social> rdf:type owl:Ontology ;
                                        owl:versionIRI <http://isagog.com/ontologies/social/1.0.0> ;
-                                       owl:imports <http://isagog.com/ontologies/top/1.0.0> ;
+                                       owl:imports <http://isagog.com/ontologies/language> ;
                                        <http://purl.org/dc/elements/1.1/creator> "Guido Vetere" ;
                                        <http://purl.org/dc/terms/license> "CC-BY-SA, Isagog Srl" ;
                                        rdfs:comment "A conceptual model for Professional Knowledge Graphs" ;
@@ -89,7 +89,6 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 :sender rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf <http://isagog.com/ontologies/top#initiator> ;
         rdfs:domain :Email ;
-        rdfs:range <http://isagog.com/ontologies/top#Agent> ;
         rdfs:comment "Emails have senders (any agent)" .
 
 
@@ -146,8 +145,8 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/social#Communication
 :Communication rdf:type owl:Class ;
-               rdfs:subClassOf :SocialInteraction ,
-                               <http://isagog.com/ontologies/top#Text> ,
+               rdfs:subClassOf <http://isagog.com/ontologies/language#Text> ,
+                               :SocialInteraction ,
                                [ rdf:type owl:Restriction ;
                                  owl:onProperty <http://isagog.com/ontologies/top#references> ;
                                  owl:someValuesFrom :Topic
@@ -186,11 +185,6 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
                        [ rdf:type owl:Restriction ;
                          owl:onProperty :replyTo ;
                          owl:allValuesFrom :Email
-                       ] ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :sender ;
-                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                         owl:onClass <http://isagog.com/ontologies/top#Agent>
                        ] ;
        rdfs:comment "Non synchronous message" ;
        rdfs:seeAlso "https://tools.ietf.org/html/rfc3864" .
@@ -263,17 +257,12 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/social#SocialInteraction
 :SocialInteraction rdf:type owl:Class ;
-                   rdfs:subClassOf <http://isagog.com/ontologies/top#Activity> ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty <http://isagog.com/ontologies/top#involves> ;
-                                     owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
-                                     owl:onClass <http://isagog.com/ontologies/top#Person>
-                                   ] .
+                   rdfs:subClassOf <http://isagog.com/ontologies/top#Activity> .
 
 
 ###  http://isagog.com/ontologies/social#SocialNetwork
 :SocialNetwork rdf:type owl:Class ;
-               rdfs:subClassOf <http://isagog.com/ontologies/top#Information> ,
+               rdfs:subClassOf <http://isagog.com/ontologies/top#Relationship> ,
                                [ rdf:type owl:Restriction ;
                                  owl:onProperty <http://isagog.com/ontologies/top#hasElement> ;
                                  owl:someValuesFrom :SocialInteraction
@@ -287,7 +276,7 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/social#Topic
 :Topic rdf:type owl:Class ;
-       rdfs:subClassOf <http://isagog.com/ontologies/top#Denotation> .
+       rdfs:subClassOf <http://isagog.com/ontologies/language#Denotation> .
 
 
 ###  http://isagog.com/ontologies/social#Videoconference
@@ -304,32 +293,12 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 <http://isagog.com/ontologies/top#Activity> rdf:type owl:Class .
 
 
-###  http://isagog.com/ontologies/top#Agent
-<http://isagog.com/ontologies/top#Agent> rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top#Collection
-<http://isagog.com/ontologies/top#Collection> rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top#Document
-<http://isagog.com/ontologies/top#Document> rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top#Information
-<http://isagog.com/ontologies/top#Information> rdf:type owl:Class .
-
-
 ###  http://isagog.com/ontologies/top#Occurrent
 <http://isagog.com/ontologies/top#Occurrent> rdf:type owl:Class .
 
 
 ###  http://isagog.com/ontologies/top#Person
 <http://isagog.com/ontologies/top#Person> rdf:type owl:Class .
-
-
-###  http://isagog.com/ontologies/top#Text
-<http://isagog.com/ontologies/top#Text> rdf:type owl:Class .
 
 
 #################################################################
@@ -368,6 +337,9 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 [ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
 ] .
+
+[ owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger
+ ] .
 
 [ owl:cardinality "1"^^xsd:nonNegativeInteger
  ] .

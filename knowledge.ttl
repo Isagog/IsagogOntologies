@@ -88,7 +88,7 @@
 
 ###  http://isagog.com/ontologies/knowledge#Classifier
 :Classifier rdf:type owl:Class ;
-            rdfs:subClassOf <http://isagog.com/ontologies/top#Abstraction> ,
+            rdfs:subClassOf <http://isagog.com/ontologies/top#AbstractContinuant> ,
                             [ rdf:type owl:Restriction ;
                               owl:onProperty <http://isagog.com/ontologies/top#name> ;
                               owl:someValuesFrom rdfs:Literal
