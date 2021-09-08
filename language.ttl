@@ -128,22 +128,18 @@ owl:minCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/language#snippet
 :snippet rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf :text ;
+         rdfs:subPropertyOf :verbatim ;
          rdfs:domain <http://isagog.com/ontologies/top#AbstractContinuant> ;
          rdfs:range xsd:string ;
          rdfs:comment "Brief summary" .
-
-
-###  http://isagog.com/ontologies/language#text
-:text rdf:type owl:DatatypeProperty .
 
 
 ###  http://isagog.com/ontologies/language#textIndex
 :textIndex rdf:type owl:DatatypeProperty .
 
 
-###  http://isagog.com/ontologies/top#text
-<http://isagog.com/ontologies/top#text> rdf:type owl:DatatypeProperty .
+###  http://isagog.com/ontologies/language#verbatim
+:verbatim rdf:type owl:DatatypeProperty .
 
 
 #################################################################
@@ -158,7 +154,7 @@ owl:minCardinality rdf:type owl:AnnotationProperty .
 ###  http://isagog.com/ontologies/language#Denotation
 :Denotation rdf:type owl:Class ;
             rdfs:subClassOf <http://isagog.com/ontologies/top#AbstractContinuant> ;
-            rdfs:comment "Interpretable description of entties or classes, e.g. 'The menthor o Alexander the Great', 'Greek philosopher'" ;
+            rdfs:comment "Interpretable description, e.g. 'The menthor o Alexander the Great', 'Greek philosopher'" ;
             rdfs:seeAlso "SKOS Concept" .
 
 
@@ -173,7 +169,11 @@ owl:minCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/language#GrammarCategory
 :GrammarCategory rdf:type owl:Class ;
-                 rdfs:subClassOf <http://isagog.com/ontologies/top#Quality> ;
+                 rdfs:subClassOf <http://isagog.com/ontologies/top#Classifier> ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://isagog.com/ontologies/top#hasInstance> ;
+                                   owl:allValuesFrom :Token
+                                 ] ;
                  rdfs:comment "Class of grammar categories" .
 
 
@@ -229,7 +229,11 @@ owl:minCardinality rdf:type owl:AnnotationProperty .
 :Token rdf:type owl:Class ;
        rdfs:subClassOf <http://isagog.com/ontologies/top#AbstractContinuant> ,
                        [ rdf:type owl:Restriction ;
-                         owl:onProperty <http://isagog.com/ontologies/top#text> ;
+                         owl:onProperty <http://isagog.com/ontologies/top#instanceOf> ;
+                         owl:someValuesFrom :GrammarCategory
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :verbatim ;
                          owl:someValuesFrom xsd:string
                        ] ;
        rdfs:comment "Word occurrence in a text" .
