@@ -41,7 +41,6 @@
 
 ###  http://isagog.com/ontologies/knowledge#slotBinding
 :slotBinding rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf <http://isagog.com/ontologies/top#references> ;
              rdfs:domain :Slot ;
              rdfs:range :Slot .
 
@@ -69,7 +68,7 @@
 ###  http://isagog.com/ontologies/knowledge#predicate
 :predicate rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf <http://isagog.com/ontologies/top#identifier> ;
-           rdfs:domain :Classifier ;
+           rdfs:domain <http://isagog.com/ontologies/top#Classifier> ;
            rdfs:comment "Reference to a conceptual element, e.g. any owl:Class or owl.ObjectProperty instance." .
 
 
@@ -86,21 +85,6 @@
                                  ] .
 
 
-###  http://isagog.com/ontologies/knowledge#Classifier
-:Classifier rdf:type owl:Class ;
-            rdfs:subClassOf <http://isagog.com/ontologies/top#AbstractContinuant> ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty <http://isagog.com/ontologies/top#name> ;
-                              owl:someValuesFrom rdfs:Literal
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :arity ;
-                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                              owl:onDataRange xsd:integer
-                            ] ;
-            rdfs:comment "Denomination of classes" .
-
-
 ###  http://isagog.com/ontologies/knowledge#ConceptualSlot
 :ConceptualSlot rdf:type owl:Class ;
                 rdfs:subClassOf :Slot .
@@ -108,7 +92,7 @@
 
 ###  http://isagog.com/ontologies/knowledge#Frame
 :Frame rdf:type owl:Class ;
-       rdfs:subClassOf :Classifier ,
+       rdfs:subClassOf <http://isagog.com/ontologies/top#Classifier> ,
                        [ rdf:type owl:Restriction ;
                          owl:onProperty <http://isagog.com/ontologies/top#hasElement> ;
                          owl:someValuesFrom :Slot
@@ -131,8 +115,20 @@
 
 ###  http://isagog.com/ontologies/knowledge#Slot
 :Slot rdf:type owl:Class ;
-      rdfs:subClassOf :Classifier ;
+      rdfs:subClassOf <http://isagog.com/ontologies/top#Classifier> ;
       rdfs:comment "Element of a conceptual pattern (frame)" .
+
+
+###  http://isagog.com/ontologies/top#Classifier
+<http://isagog.com/ontologies/top#Classifier> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <http://isagog.com/ontologies/top#name> ;
+                                                                owl:someValuesFrom rdfs:Literal
+                                                              ] ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty :arity ;
+                                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                owl:onDataRange xsd:integer
+                                                              ] .
 
 
 [ owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger

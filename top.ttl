@@ -15,8 +15,8 @@
                                     dc:creator "Guido Vetere" ;
                                     dcterms:license "CC-BY-SA, Isagog Srl" ;
                                     rdfs:comment "A non categorial ontology" ,
-                                                 """Concepts in this ontology are not to be intended as 'categories', since they do not (necessarily) satisfy mutual exclusivity and domain exhaustiveness. As top-level concepts are not disjoint, there is no need of introducing different individuals to predicate different aspects of the same conceptual entity. For instance, there's no need to represent a book (object) and its content (information) as two separate individuals (even if nothing prevents to do that), since the same individual can be assigned to both classes.  In fact, our approach is deflationary, but non reductionist. 
-By allowing polysemy, this ontology reduces compatibility issues among different possible worlds (interpretations). Of course, this opens to misunderstanding, vagueness, i.e. linguistic issues. Nevertheless, nothing prevents to supplement categorial axioms (e.g. disjointness)  in a separate layer, when restricting intended models is a priority.""" ;
+                                                 """Concepts in this ontology are not 'categories', since they do not (necessarily) satisfy mutual exclusivity and domain exhaustiveness. Root classes are not disjoint, therefore there is no need of introducing different individuals to predicate different aspects of the same linguistic entity. For instance, there's no need to represent a book (object) and its content (information) as two separate individuals (even if nothing prevents to do that), since the same individual can be assigned to both classes. In fact, this approach is deflationary, but non reductionist. 
+By allowing regular polysemy, this ontology reduces compatibility issues among different possible worlds (interpretations). On the other hand, this approach opens to linguistic mismaches. Nevertheless, nothing prevents to supplement categorial axioms (e.g. disjointness)  in a separate layer, when restrictions on intended models are a priority.""" ;
                                     rdfs:label "Isagog upper ontology" .
 
 #################################################################
@@ -114,24 +114,36 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 ###  http://isagog.com/ontologies/top#hasElement
 :hasElement rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
-            rdfs:domain :Collection ;
+            rdfs:domain :Relationship ;
             rdfs:comment "Relationships have entities as elements" .
 
 
 ###  http://isagog.com/ontologies/top#hasInstance
 :hasInstance rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
              owl:inverseOf :instanceOf ;
-             rdfs:domain :Classifier .
+             rdfs:domain :AbstractContinuant ;
+             rdfs:comment "Inherence relation" .
 
 
 ###  http://isagog.com/ontologies/top#hasPart
 :hasPart rdf:type owl:ObjectProperty ;
-         owl:inverseOf :partOf .
+         owl:inverseOf :partOf ;
+         rdfs:domain :Continuant ;
+         rdfs:range :Continuant .
+
+
+###  http://isagog.com/ontologies/top#hasPhase
+:hasPhase rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          owl:inverseOf :phaseOf ;
+          rdfs:domain :Occurrent ;
+          rdfs:range :Occurrent .
 
 
 ###  http://isagog.com/ontologies/top#hasQuality
 :hasQuality rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :dependsOn ;
+            rdfs:subPropertyOf :hasDependent ;
             owl:inverseOf :qualityOf ;
             rdfs:range :Quality .
 
@@ -149,26 +161,13 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/top#instanceOf
 :instanceOf rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
             rdfs:range :Classifier .
-
-
-###  http://isagog.com/ontologies/top#involvedIn
-:involvedIn rdf:type owl:ObjectProperty ;
-            owl:inverseOf :involves ;
-            rdfs:domain :Continuant ;
-            rdfs:range :Occurrent ;
-            rdfs:comment "Continuants (objects) involved in occurrents (events)" .
-
-
-###  http://isagog.com/ontologies/top#involves
-:involves rdf:type owl:ObjectProperty ;
-          rdfs:domain :Occurrent ;
-          rdfs:range :Continuant .
 
 
 ###  http://isagog.com/ontologies/top#locatedIn
 :locatedIn rdf:type owl:ObjectProperty ;
-           rdfs:domain :SpatialContinuant ;
+           rdfs:domain :MaterialContinuant ;
            rdfs:range :SpaceRegion .
 
 
@@ -185,36 +184,32 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 
 ###  http://isagog.com/ontologies/top#partOf
-:partOf rdf:type owl:ObjectProperty .
+:partOf rdf:type owl:ObjectProperty ;
+        rdfs:range :Continuant .
 
 
 ###  http://isagog.com/ontologies/top#participant
 :participant rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf :involves ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
              owl:inverseOf :participedBy .
 
 
 ###  http://isagog.com/ontologies/top#participedBy
 :participedBy rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf :involvedIn .
+              rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://isagog.com/ontologies/top#phaseOf
+:phaseOf rdf:type owl:ObjectProperty ;
+         rdfs:domain :Occurrent ;
+         rdfs:range :Occurrent .
 
 
 ###  http://isagog.com/ontologies/top#qualityOf
 :qualityOf rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :hasDependent ;
+           rdfs:subPropertyOf :dependsOn ;
            rdfs:domain :Quality ;
            rdfs:comment "Quality inherence relation" .
-
-
-###  http://isagog.com/ontologies/top#references
-:references rdf:type owl:ObjectProperty ;
-            owl:inverseOf :referredBy ;
-            rdfs:domain :AbstractContinuant ;
-            rdfs:comment "Information entities refer to other entities or relationships" .
-
-
-###  http://isagog.com/ontologies/top#referredBy
-:referredBy rdf:type owl:ObjectProperty .
 
 
 #################################################################
@@ -352,29 +347,24 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 ###  http://isagog.com/ontologies/top#AbstractContinuant
 :AbstractContinuant rdf:type owl:Class ;
                     rdfs:subClassOf :Continuant ;
-                    rdfs:comment "Continuants considered as not located in space" .
+                    rdfs:comment "Continuants considered without relation with space and mass" .
 
 
 ###  http://isagog.com/ontologies/top#Action
 :Action rdf:type owl:Class ;
-        rdfs:subClassOf :Event ;
+        rdfs:subClassOf :Event ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :initiatedBy ;
+                          owl:someValuesFrom :Animate
+                        ] ;
         :DOLCE "Event  depending on agents" .
-
-
-###  http://isagog.com/ontologies/top#Activity
-:Activity rdf:type owl:Class ;
-          rdfs:subClassOf :Event ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :hasElement ;
-                            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onClass :Action
-                          ] .
 
 
 ###  http://isagog.com/ontologies/top#Animate
 :Animate rdf:type owl:Class ;
          rdfs:subClassOf :Entity ;
-         owl:disjointWith :Inanimate .
+         owl:disjointWith :Inanimate ;
+         rdfs:comment "Agentive entity" .
 
 
 ###  http://isagog.com/ontologies/top#Artifact
@@ -385,33 +375,43 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/top#Classifier
 :Classifier rdf:type owl:Class ;
-            owl:equivalentClass [ rdf:type owl:Restriction ;
-                                  owl:onProperty :hasInstance ;
-                                  owl:someValuesFrom owl:Thing
-                                ] ;
-            rdfs:subClassOf :AbstractContinuant ;
-            rdfs:comment "Non dependent characterization" .
+            rdfs:subClassOf :AbstractContinuant ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasInstance ;
+                              owl:someValuesFrom [ rdf:type owl:Class ;
+                                                   owl:unionOf ( :Continuant
+                                                                 :Occurrent
+                                                               )
+                                                 ]
+                            ] ;
+            rdfs:comment "Arbitrary characterization" .
 
 
 ###  http://isagog.com/ontologies/top#Collection
 :Collection rdf:type owl:Class ;
-            owl:equivalentClass [ rdf:type owl:Restriction ;
-                                  owl:onProperty :hasElement ;
-                                  owl:someValuesFrom owl:Thing
-                                ] ;
-            rdfs:subClassOf :AbstractContinuant ;
-            rdfs:comment "Collective things" .
+            rdfs:subClassOf :Relationship ;
+            rdfs:comment "Non agentive collective entity" .
 
 
 ###  http://isagog.com/ontologies/top#Continuant
 :Continuant rdf:type owl:Class ;
-            rdfs:comment "Indivudual things considered without relation to time (atemporal)" .
+            rdfs:comment "Things considered without relation to time (atemporal)" .
+
+
+###  http://isagog.com/ontologies/top#Course
+:Course rdf:type owl:Class ;
+        rdfs:subClassOf :Event ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :hasPhase ;
+                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :Action
+                        ] .
 
 
 ###  http://isagog.com/ontologies/top#Entity
 :Entity rdf:type owl:Class ;
-        rdfs:subClassOf :SpatialContinuant ;
-        rdfs:comment "Spatial, countable, independent continuant, e.g. natural objects, living beings, artifacts" .
+        rdfs:subClassOf :MaterialContinuant ;
+        rdfs:comment "Independent, countable continuant, e.g. natural objects, living beings, artifacts" .
 
 
 ###  http://isagog.com/ontologies/top#Event
@@ -422,12 +422,12 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/top#Feature
 :Feature rdf:type owl:Class ;
-         rdfs:subClassOf :SpatialContinuant ,
+         rdfs:subClassOf :MaterialContinuant ,
                          [ rdf:type owl:Restriction ;
                            owl:onProperty :dependsOn ;
                            owl:someValuesFrom :Entity
                          ] ;
-         rdfs:comment "Spatial, countable, dependent continuants, e.g. holes" .
+         rdfs:comment "Dependent countable continuants, e.g. holes, affordances, etc" .
 
 
 ###  http://isagog.com/ontologies/top#Identifier
@@ -439,7 +439,23 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 ###  http://isagog.com/ontologies/top#Inanimate
 :Inanimate rdf:type owl:Class ;
            rdfs:subClassOf :Entity ;
-           rdfs:comment "Non agentive natural things, e.g. mountains, trees" .
+           rdfs:comment "Non agentive entities" .
+
+
+###  http://isagog.com/ontologies/top#MaterialContinuant
+:MaterialContinuant rdf:type owl:Class ;
+                    rdfs:subClassOf :Continuant ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :locatedIn ;
+                                      owl:someValuesFrom :SpaceRegion
+                                    ] ;
+                    rdfs:comment "Continuants considered as  located in space and  provided with mass" .
+
+
+###  http://isagog.com/ontologies/top#NaturalObject
+:NaturalObject rdf:type owl:Class ;
+               rdfs:subClassOf :Inanimate ;
+               rdfs:comment "Natural entities, e.g. mountains, trees" .
 
 
 ###  http://isagog.com/ontologies/top#Number
@@ -454,7 +470,7 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
                              owl:onProperty :happeningIn ;
                              owl:someValuesFrom :TimeRegion
                            ] ;
-           rdfs:comment "Individual things considered with relation to time (temporal)" .
+           rdfs:comment "Things considered with relation to time (temporal)" .
 
 
 ###  http://isagog.com/ontologies/top#Organization
@@ -482,18 +498,22 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/top#Place
 :Place rdf:type owl:Class ;
-       rdfs:subClassOf :SpatialContinuant ;
+       rdfs:subClassOf :MaterialContinuant ;
        rdfs:comment "Identified spatial region" .
 
 
 ###  http://isagog.com/ontologies/top#Quality
 :Quality rdf:type owl:Class ;
-         owl:equivalentClass [ rdf:type owl:Restriction ;
-                               owl:onProperty :qualityOf ;
-                               owl:someValuesFrom owl:Thing
-                             ] ;
-         rdfs:subClassOf :AbstractContinuant ;
-         rdfs:comment "Abstract dependent characterizing entity" .
+         rdfs:subClassOf :AbstractContinuant ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :qualityOf ;
+                           owl:someValuesFrom [ rdf:type owl:Class ;
+                                                owl:unionOf ( :Continuant
+                                                              :Occurrent
+                                                            )
+                                              ]
+                         ] ;
+         rdfs:comment "Manifest dependent character" .
 
 
 ###  http://isagog.com/ontologies/top#Relationship
@@ -501,7 +521,11 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
               rdfs:subClassOf :AbstractContinuant ,
                               [ rdf:type owl:Restriction ;
                                 owl:onProperty :hasElement ;
-                                owl:someValuesFrom owl:Thing
+                                owl:someValuesFrom [ rdf:type owl:Class ;
+                                                     owl:unionOf ( :Continuant
+                                                                   :Occurrent
+                                                                 )
+                                                   ]
                               ] ;
               rdfs:comment "Reified relationship" .
 
@@ -509,16 +533,6 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 ###  http://isagog.com/ontologies/top#SpaceRegion
 :SpaceRegion rdf:type owl:Class ;
              rdfs:subClassOf :AbstractContinuant .
-
-
-###  http://isagog.com/ontologies/top#SpatialContinuant
-:SpatialContinuant rdf:type owl:Class ;
-                   rdfs:subClassOf :Continuant ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty :locatedIn ;
-                                     owl:someValuesFrom :SpaceRegion
-                                   ] ;
-                   rdfs:comment "Continuants considered as located in space" .
 
 
 ###  http://isagog.com/ontologies/top#State
@@ -529,8 +543,8 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
 
 ###  http://isagog.com/ontologies/top#Substance
 :Substance rdf:type owl:Class ;
-           rdfs:subClassOf :SpatialContinuant ;
-           rdfs:comment "Non countable independent continuants, e.g. water, air" .
+           rdfs:subClassOf :MaterialContinuant ;
+           rdfs:comment "Independent non countable continuants, e.g. water, air" .
 
 
 ###  http://isagog.com/ontologies/top#TimeRegion
@@ -538,10 +552,10 @@ owl:qualifiedCardinality rdf:type owl:AnnotationProperty .
             rdfs:subClassOf :AbstractContinuant .
 
 
-[ owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger
+[ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
 ] .
 
-[ owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+[ owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger
  ] .
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
